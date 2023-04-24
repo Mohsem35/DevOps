@@ -1,4 +1,4 @@
-Time complexity -> abstract concept
+#Time complexity -> abstract concept
 Number of operations বুঝায়  / data কে process করতে কতটা operations লাগবে তা বুঝায়
 So, operation count = time complexity why?
 কারণ, এতে operation count বের করা যায়
