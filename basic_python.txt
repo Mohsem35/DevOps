@@ -1,0 +1,14 @@
+Time complexity -> abstract concept
+Number of operations বুঝায়  / data কে process করতে কতটা operations লাগবে তা বুঝায়
+So, operation count = time complexity why?
+কারণ, এতে operation count বের করা যায়
+
+execution time: পুরা program চলতে কত টাইম লাগে
+compile time: Program টাকে machine code এ convert করতে কত সময়  লাগে
+
+২ pointer approach
+i, j
+swap করতে 3 টা operations লাগবে, একটা memeory থেকে আরেকটা memory তে data নিয়ে যাওয়া
+
+complexity constant মানে, operation কাউন্ট ও same
+core i5 তে 5 টা operations লাগলে, core i9 তে  5  টা operations লাগ
