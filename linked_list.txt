@@ -1,0 +1,35 @@
+যে  কোন program, computer এ process হিসেবে run হয়
+
+
+Process Control Block (PCB): is a data structure used by the operating system to manage and keep track of processes in a computer system. It is a kernel-level data structure that contains all the information needed to manage and control a particular process.
+
+Each process in the system is associated with a unique PCB that stores important information about the process, including its
+1.process ID(unique number)
+2.process state(new/running/waiting),
+3.cpu registers
+4.priority,
+3.program counter,
+4.memory allocation,
+5.input/output (I/O) status,
+and other relevant details. The PCB serves as a link between the process and the operating system, enabling the operating system to manage the process and provide resources to it as needed.
+
+The PCB is a critical component of process management in operating systems and plays a crucial role in ensuring that processes run efficiently and without conflicts. By maintaining detailed information about each process in the system, the operating system can allocate resources, schedule processes, and manage memory and other system resources more effectively.
+
+Contiguous array: is a data structure in which elements are stored in contiguous or sequential memory locations. In a contiguous array, each element occupies a fixed amount of memory, and the position of each element is determined by its index in the array.
+
+Contiguous arrays are also known as static arrays or fixed-size arrays because they have a fixed size and cannot be resized dynamically during program execution. To modify the size of a contiguous array, a new array must be created, and the elements from the old array must be copied over.
+
+a=[1,2,3,4,5]
+array_size=5
+এখানে, python 10 size এর array memory allocate করবে, যেহেতু a এর array elements এখানে 5  টা
+এই 10 size array fullfill হয়ে গেলে , array_size previous সাইজের 2x memory allocate করবে 2 x 10 = 20 এবং আগের  সব ডাটা কপি করে এনে এই নতুন 20 array_size তে allocate করবে।
+array_size=20(now)
+
+note: python এ যে size এর array declare করা হয়, তার 2x memory allocate করে
+approach:
+1. double size allocate
+2. double full হইলে, তার  double allocate
+3. then copy operation
+
+array time complexity: O(1)
+linked list time complexity: O(n)
