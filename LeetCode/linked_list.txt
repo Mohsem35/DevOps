@@ -75,7 +75,7 @@ f(j)=j^2
 n=5
    n=5
 ∑f(∑g(i))
-   x=1
+   i=1
 j=1
 
 এখানে আগে ভিতরের equation টা calculate করতে হয়,then বাহিরের equation নিয়ে কাজ
