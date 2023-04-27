@@ -1,7 +1,11 @@
 যে  কোন program, computer এ process হিসেবে run হয়
 
 
-Process Control Block (PCB): is a data structure used by the operating system to manage and keep track of processes in a computer system. It is a kernel-level data structure that contains all the information needed to manage and control a particular process.
+Process Control Block (PCB):
+---------------------------
+
+PCB is a data structure used by the operating system to manage and keep track of processes in a computer system. It is a kernel-level data structure that contains all the information needed to manage and
+control a particular process.
 
 Each process in the system is associated with a unique PCB that stores important information about the process, including its
 1.process ID(unique number)
@@ -15,7 +19,11 @@ and other relevant details. The PCB serves as a link between the process and the
 
 The PCB is a critical component of process management in operating systems and plays a crucial role in ensuring that processes run efficiently and without conflicts. By maintaining detailed information about each process in the system, the operating system can allocate resources, schedule processes, and manage memory and other system resources more effectively.
 
-Contiguous array: is a data structure in which elements are stored in contiguous or sequential memory locations. In a contiguous array, each element occupies a fixed amount of memory, and the position of each element is determined by its index in the array.
+Contiguous array:
+-----------------
+
+contiguous array is a data structure in which elements are stored in contiguous or sequential memory locations. In a contiguous array, each element occupies a fixed amount of memory,
+and the position of each element is determined by its index in the array.
 
 Contiguous arrays are also known as static arrays or fixed-size arrays because they have a fixed size and cannot be resized dynamically during program execution. To modify the size of a contiguous array, a new array must be created, and the elements from the old array must be copied over.
 
@@ -33,3 +41,64 @@ approach:
 
 array time complexity: O(1)
 linked list time complexity: O(n)
+
+
+Summation in mathematics:
+------------------------
+
+If,f(i)= x^2
+n=5
+∑f(i)=f(1^2)+f(2^2)+f(3^2)+f(4^2)+f(5^2)
+i=1
+এই euquation টাকে python for loop এ convert করতে চাইলে
+sum=0
+for i in range(1,6):
+    sum=sum+(i*i)
+
+If,f(i)=i
+n=5
+∑f(i)=f(1)+f(2)+f(3)+f(4)+f(5)
+i=1
+এই euquation টাকে python for loop এ convert করতে চাইলে 
+sum=0
+for i in range(1,6):
+    sum=sum+i
+
+
+Summation এর ভিতরে summation:
+---------------------------
+
+g(i)=2i
+f(j)=j^2
+
+তাহলে এইটার equation টা হবেঃ
+n=5
+   n=5
+∑f(∑g(i))
+   x=1
+j=1
+
+এখানে আগে ভিতরের equation টা calculate করতে হয়,then বাহিরের equation নিয়ে কাজ
+=f1(g(1)+g(2)+g(3)+g(4)+g(5))+
+f2(g(1)+g(2)+g(3)+g(4)+g(5))+
+f3(g(1)+g(2)+g(3)+g(4)+g(5))+
+............................
+............................
+=5+5+5+5+5
+25
+gof formula দিয়ে চিন্তা করব
+
+তাহলে এইটার python এ code হবে অনেকটা এরকম
+for i in range(1,6):
+    fro j in range(1,6):
+    -------------
+    -------------
+
+nested loop time complexity: 0(n^2)
+
+
+gof formula:
+------------
+
+Let f: A→ B and g:B→ C be two functions then gof: A→ C is defined by gof(x) = g(f(x))
+
