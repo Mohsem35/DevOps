@@ -162,10 +162,12 @@ array কে linked-list তে convert করতে হলে প্রথম�
 
 NODE CLASS:
 ----------
+```
 class Node:
     def __init__(self, data):          // A node of a linked list has two things in it. (1) data value, (2) reference to the next node.
         self.data = data
         self.next = None
+```
 
 CREATING A LINKED LIST:
 -----------------------
