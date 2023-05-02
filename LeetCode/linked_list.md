@@ -52,10 +52,11 @@ n=5
 ∑f(i)=f(1^2)+f(2^2)+f(3^2)+f(4^2)+f(5^2)
 i=1
 এই euquation টাকে python for loop এ convert করতে চাইলে
+```
 sum=0
 for i in range(1,6):
     sum=sum+(i*i)
-
+```
 If,f(i)=i
 n=5
 ∑f(i)=f(1)+f(2)+f(3)+f(4)+f(5)
