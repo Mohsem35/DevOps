@@ -21,8 +21,8 @@ The PCB serves as a link between the process and the operating system, enabling 
 The PCB is a critical component of process management in operating systems and plays a crucial role in ensuring that processes run efficiently and without conflicts.
 By maintaining detailed information about each process in the system, the operating system can allocate resources, schedule processes, and manage memory and other system resources more effectively.
 
-Contiguous array:
------------------
+### Contiguous array:
+
 
 contiguous array is a data structure in which elements are stored in contiguous or sequential memory locations. In a contiguous array, each element occupies a fixed amount of memory,
 and the position of each element is determined by its index in the array.
