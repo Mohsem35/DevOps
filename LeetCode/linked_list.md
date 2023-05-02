@@ -7,6 +7,7 @@ PCB is a data structure used by the operating system to manage and keep track of
 It is a kernel-level data structure that contains all the information needed to manage and control a particular process.
 
 Each process in the system is associated with a unique PCB that stores important information about the process, including its
+
 1.process ID(unique number)
 2.process state(new/running/waiting),
 3.cpu registers
