@@ -2,7 +2,6 @@
 
 
 Process Control Block (PCB):
----------------------------
 
 PCB is a data structure used by the operating system to manage and keep track of processes in a computer system.
 It is a kernel-level data structure that contains all the information needed to manage and control a particular process.
