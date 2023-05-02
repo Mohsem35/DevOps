@@ -171,21 +171,23 @@ class Node:
 
 CREATING A LINKED LIST:
 -----------------------
-class Linked_List:                 // Initially the linked list contains the head node. This is referenced as the start node/first node of the linked list.
+```
+class Linked_List:                 //Initially the linked list contains the head node.This is referenced as the start node/first node of the linked list.
     def __init__(self):
         self.head = None
-
-INSERT AT BEGINNING:
+        
     def insert_at_begining(self, data):
         node = Node(data)          // created node object
         node.next = self.head
         self.head = node
+```  
 
 ADDING ELEMENTS AT THE END OF A LINKED LIST:
 This is a time-consuming process because we will traverse the complete linked list.
 As we reach the tail of the linked list, we will insert the node at the final position. we will make the 'node object' of the 'node class' and make the temp pointer for traversing the linked list.
 reaching the end of the linked list we will stop traversing. Assign the reference of the tail of the linked list to the above created node object.
 
+```
 def insert_at_end(self, data):
     node = Node(data)
     if self.head is None:
@@ -195,7 +197,7 @@ def insert_at_end(self, data):
     while temp.next is not None:
         temp = temp.next
     temp.next = node
-
+```
 
 TRAVERSING A LINKED LIST:
 Linked list traversal is the process of visiting each node of the linked list. We do it by making the start pointer refer as temp start from the head of the linked list.
