@@ -1,8 +1,7 @@
 DevOps Career TrackA
 Announcement
 Poridhi Limited
-•
-6:28 PM
+
 Resources from yesterday's class; 
 
 JavaScript Documentation:
@@ -16,13 +15,10 @@ https://www.hackerrank.com/
 https://leetcode.com/
 
 Nodejs Installation (Use any of the following. Preferred nvm)
+
 direct/non-nvm: https://nodejs.org/en
+
 nvm: https://github.com/nvm-sh/nvm
-README.pdf
-PDF
-README.md
-Text
-Class comments
 
 # JS basics
 
