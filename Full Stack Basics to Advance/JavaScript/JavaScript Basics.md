@@ -85,7 +85,7 @@ let children = null;
 
 // Object: Reference data type that represents the object
 
-const family = ['Jane', 'Mark', 'Bob'],
+const family = ['Jane', 'Mark', 'Bob'];
 
 const john = {
   firstName: 'John',
