@@ -1,4 +1,4 @@
-let person = {
+let person = {                              //{} is called ‘object literal’.
     firstName: 'maly',
     lastName: 'ahmed',
     age: 26,
@@ -11,19 +11,19 @@ let person = {
     }
 }
 
-//bracket notation
-console.log(person.hobbies[2]);
 
-//dot notation
-console.log(person.address.country);
+console.log(person.hobbies[2]);                  //bracket notation
 
-//add new property in object
-person.email = 'maly.mohsem@cellosco.pe';
+
+console.log(person.address.country);            //dot notation
+
+
+person.email = 'maly.mohsem@cellosco.pe';      //add new property in object
 console.log(person);
 
 
-//array of objects
-let todos = [
+
+let todos = [                                   //array of objects
     {
         id: 1,
         text: 'complete JS crash course',
@@ -42,8 +42,8 @@ let todos = [
 ];
 
 
-//convert to JSON
-let todoJSON = JSON.stringify(todos);
+
+let todoJSON = JSON.stringify(todos);               //convert to JSON
 console.log(todoJSON);
 
 console.log("daily tasks of mine: "+todos[1].text);

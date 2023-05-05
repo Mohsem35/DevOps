@@ -1,24 +1,27 @@
-//array object
-let numbers = new Array('sqish', 5,6,3.8, true);
+//Technically an array is an object
+
+
+let numbers = new Array('sqish', 5,6,3.8, true);            //array object
 console.log(numbers);
 
-//adding elemnt to array with index
-fruits = ['mango', 'banana', 'watermelon', 'papaya'];
+
+fruits = ['mango', 'banana', 'watermelon', 'papaya'];       //adding elemnt to array with index
 fruits[4] = 'guava';
 console.log(fruits);
 
 
-//array length
-console.log(fruits.length);
 
-//add elemnt at end of an array
-fruits.push(3.1416);
+console.log(fruits.length);             //array length
 
-//add elements at the beginning
-fruits.unshift('strawberry');
 
-//if something is present in array
-console.log(Array.isArray(fruits));
+fruits.push(3.1416);                    //add elemnt at end of an array
+fruits.pop();                           // Remove an element 
 
-//find out index
-console.log(fruits.indexOf('mango'));
+fruits.unshift('strawberry');           //add elements at the beginning
+
+
+console.log(Array.isArray(fruits));     //if something is present in array
+
+
+console.log(fruits.indexOf('mango'));   //find out index
+

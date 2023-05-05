@@ -10,3 +10,5 @@ console.log(s.substring(0,8));
 //split a string
 let p = "technology, computer, pepsi, johad";
 console.log(p.split(","));
+
+
