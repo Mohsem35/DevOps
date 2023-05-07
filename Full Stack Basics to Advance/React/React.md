@@ -1,12 +1,20 @@
 React reading resource - React Offical Documentation https://react.dev/learn
 
 
-Vite is bundler. We will start React through 'Vite'
+Vite is a bundler. We will start React through 'Vite'
 Getting Started: https://vitejs.dev/guide/
 
+react project initiate: npm create vite@latest
+cd <project_directory>
+npm install
+npm run dev 
+ 
+Q: what us npm(node package manager)?
+- manage node   
+
 Q: how can npm undersatnd which libraries I need?
-- by executing "npm install" it will instsll all dependecy libraries and will create a folder named 'node_modules'.
-it will actually check the 'package.json' file and install libraries according to the file
+- by executing "npm install" it will install all dependecy libraries for running the project and will create a folder named 'node_modules'.
+it will actually check the {dependencies} section of 'package.json' file and install libraries according to the file
 
 
 JSX is a syntax extension to JavaScript. It is used with React to describe what the user interface should look like.
