@@ -55,7 +55,7 @@ function App() {
 }
 
 
-2.State: মুহূর্ত
+2.State: মুহূর্ত। আগে ছিল 0 এখন value 1
 
 - dynamic storage/database
 - state of a component is an object that holds some data.

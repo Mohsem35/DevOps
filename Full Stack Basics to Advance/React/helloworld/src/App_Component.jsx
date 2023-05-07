@@ -14,3 +14,7 @@ function App() {                //parent component
 }
 
 export default App;       //default export can be 'only one'
+
+//component
+//parent component
+//children component
