@@ -5,8 +5,9 @@ function App() {
   //[value, setterFunction]
 
   //মুখস্থ ফরম্যাট
+  //React এ initially কোন value দিতেই হবে useState() এ
   const [counter, setCounter] = React.useState(0);
-  const [currentText, setCurrentText] = useState("")
+  const [currentText, setCurrentText] = useState("");
 
   const handleClick = () => {
     //handleClick() itself is a function
@@ -16,18 +17,18 @@ function App() {
   };
 
   const handleChange = (event) => {
-    setCurrentText(event.target.value);                     // মুখস্থ ফরম্যাট
-  }
+    setCurrentText(event.target.value); // মুখস্থ ফরম্যাট
+  };
 
   return (
     <div>
       <p>{counter}</p>
       <button onClick={handleClick}>Add one</button>
-      <br/>
-      <br/>
-      <br/>
-      <input type="text" onChange={handleChange}/>
-        <p>{currentText}</p>
+      <br />
+      <br />
+      <br />
+      <input type="text" onChange={handleChange} />
+      <p>{currentText}</p>
     </div>
   );
 }
