@@ -16,8 +16,11 @@ function App() {
     // console.log("counter value", counter);
   };
 
+  // মুখস্থ ফরম্যাট
+  // text লিখার পরে সাথে সাথে UI তে render হওয়ার জন্য, onChange{} এ event.target.value মুখস্থ 
+
   const handleChange = (event) => {
-    setCurrentText(event.target.value); // মুখস্থ ফরম্যাট
+    setCurrentText(event.target.value); 
   };
 
   return (
