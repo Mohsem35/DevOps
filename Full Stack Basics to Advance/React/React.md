@@ -1,19 +1,21 @@
-React reading resource - React Offical Documentation https://react.dev/learn
+### React
 
+React reading resource: [React Offical Documentation](https://react.dev/learn)
 
-Vite is a bundler. We will start React through 'Vite'
-Getting Started: https://vitejs.dev/guide/
+`Vite` is a bundler. We will start React through vite through [Getting Started](https://vitejs.dev/guide/)
 
-react project initiate: npm create vite@latest
+### React project initiate: 
+```
+npm create vite@latest
 cd <project_directory>
 npm install
 npm run dev 
- 
-Q: what us npm(node package manager)?
-- manage node   
+```
+Q: what us `npm(node package manager)`?
+- manages different node versioning 
 
 Q: how can npm undersatnd which libraries I need?
-- by executing "npm install" it will install all dependecy libraries for running the project and will create a folder named 'node_modules'.
+- by executing `npm install` it will install all dependecy libraries for running the project and will create a folder named 'node_modules'.
 it will actually check the {dependencies} section of 'package.json' file and install libraries according to the file
 
 
