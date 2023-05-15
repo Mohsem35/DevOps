@@ -1,9 +1,21 @@
-GET http://localhost:3000/html
+GET http://localhost:4000/
 
 ###
+POST http://localhost:4000/
+content-type: application/json
 
-GET http://localhost:3000/
+{
+    "title": "foo",
+    "body": "bar",
+    "userId": 1
+}
+
 
 ###
+PUT http://localhost:4000/
+content-type: application/json
 
-GET http://localhost:3000/json
+{
+    "title": "final title"
+}
+ 

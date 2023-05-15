@@ -1,34 +1,36 @@
-//code direct copied from npm express documentation
-// 1st server বানায়ে ফেললাম
-
 const express = require("express");
-const path = require("path");
 
 const app = express();
+// নিচের লাইনের জন্য, server body read করবে.  POST/PUT request এর জন্য এদের দরকার 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//req = request, res = response
-// res.send() expectation হচ্ছে আপনি শুধু text পাঠাবেন, JSON পাঠাবেন না
-//localhost:3000
+let mytodo = {
+  id: 1,
+  title: "title no 1",
+};
+
+//GET
 app.get("/", function (req, res) {
-  res.send("Hello World");
+  res.json(mytodo);
 });
 
-//localhost:3000/json
-app.get("/json", function (req, res) {
-  res.json({
-    source: "server",
-    message: "hello",
-  });
+
+//POST
+// body তে যা কিছু request করতেছি সেইটাই আমারে response হিসেবে show করতাছে 
+app.post("/", function (req, res) {
+  const body = req.body;
+  body.id = 102;
+  res.json(body);
 });
 
-// sendFile will go here
-// '/html' endpoint এ গেলে, index.html page show করব
-//__dirname = current directory
-//check this documentation: https://www.digitalocean.com/community/tutorials/use-expressjs-to-deliver-html-files
-app.get("/html", function (req, res) {
-  res.sendFile(path.join(__dirname, "/index.html"));
+//PUT
+app.put("/", function (req, res) {
+  const body = req.body;
+  const newTitle = body.title;
+
+  mytodo.title = newTitle;
+  res.json(mytodo);
 });
 
-// app.listen(port);
-// console.log("Server started at http://localhost:" + port);
-app.listen(3000);
+app.listen(4000);
