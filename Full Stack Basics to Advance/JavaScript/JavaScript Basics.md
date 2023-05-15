@@ -28,13 +28,13 @@ JavaScript is a programming language that adds interactivity to your website. Pr
 
 - High-level
 - Just-in-time compiled (JIT)
-- Multi-paradigm
-- Prototype-based: Instead of using class definitions to create objects with predefined properties and methods, a prototype-based language allows objects to be directly created or 
+- `Multi-paradigm`
+- `Prototype-based:` Instead of using class definitions to create objects with predefined properties and methods, a prototype-based language allows objects to be directly created or 
                   duplicated from existing objects
-- Garbage-collected: garbage collection refers to the automatic management of memory allocation and deallocation for objects or data structures. When you create objects or allocate memory 
+- `Garbage-collected:` garbage collection refers to the automatic management of memory allocation and deallocation for objects or data structures. When you create objects or allocate memory 
   dynamically during program execution, it's important to ensure that the memory is released when it's no longer needed
-- Dynamically-typed: Dynamic typing refers to the characteristic of a programming language where variable types are checked during runtime, as opposed to being checked at compile-time (static typing)
-- Single-threaded
+- `Dynamically-typed:` Dynamic typing refers to the characteristic of a programming language where variable types are checked during runtime, as opposed to being checked at compile-time (static typing)
+- `Single-threaded`
 - Non-blocking event loop
 
 ## 2. Variables and Data Types
