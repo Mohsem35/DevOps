@@ -83,7 +83,8 @@ connection.query(
 
 ### MongoDB
 
-[MongoDB Cheat Sheet](https://www.mongodb.com/developer/products/mongodb/cheat-sheet/)
+For run any query: [MongoDB Cheat Sheet](https://www.mongodb.com/developer/products/mongodb/cheat-sheet/)
+Default port: 27017
 
 #### Terminology
 
@@ -110,6 +111,11 @@ arrays instead of just strings, number, booleans, etc.
 Installation:
 ```
 npm install mongodb
+```
+
+Connect from CLI:
+```
+# mongosh --host localhost --port 27017 -u root -p
 ```
 First Query: যে কোন একটা .js ফাইলে গিয়ে নিচের configuration code declare করে আসব 
 
