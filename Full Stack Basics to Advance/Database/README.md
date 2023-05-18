@@ -15,6 +15,9 @@ A database is an `organized collection of structured data stored and managed in 
 
 ORM stands for Object-Relational Mapping. It is a `programming technique that enables developers to interact with databases using an object-oriented paradigm instead of writing SQL (Structured Query Language) queries directly.` ORM tools provide a high-level abstraction layer that `maps objects in the application code to tables in the database,` allowing developers to interact with the database using familiar programming concepts like classes, objects, and methods.
 
+![orm-879](https://github.com/Mohsem35/DevOps/assets/58659448/8e6c0a9e-b470-4070-a139-6593c008a3a0)
+
+
 **_Q. Why there are so many data types in database?_**
 
 Databases support different data types to `accommodate the diverse types of information that need to be stored and processed.` Each data type has specific characteristics and is designed to handle different kinds of data in an efficient and meaningful way.Here are some reasons why there are multiple data types in databases:
