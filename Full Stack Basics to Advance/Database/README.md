@@ -1,4 +1,4 @@
-Dynamic data refers to information that is not static or fixed, but rather changes or updates over time. It is data that can be modified, added, or removed as new information becomes available or circumstances change
+_**Dynamic data**_ refers to information that is `not static or fixed, but rather changes or updates over time.` It is data that can be modified, added, or removed as new information becomes available or circumstances change
 Examples of dynamic data include:
 
 - `Sensor data:` Readings from sensors such as temperature sensors, pressure sensors, or motion sensors that continuously provide updated information.
@@ -7,8 +7,23 @@ Examples of dynamic data include:
 - `Website content:` Content on websites that can be dynamically generated based on user input, database queries, or other factors.
 - `Social media feeds:` Posts, comments, and updates on platforms like Twitter or Facebook that are constantly changing as users interact with the platform.
 
-A database is an organized collection of structured data stored and managed in a systematic way. It is designed to efficiently store, retrieve, and manage large volumes of information. Databases are widely used in various applications and industries to handle data in a structured manner, allowing for efficient data manipulation, storage, and retrieval.
+**_Q. What is a database?_** 
 
+A database is an `organized collection of structured data stored and managed in a systematic way.` It is designed to efficiently store, retrieve, and manage large volumes of information. Databases are widely used in various applications and industries to handle data in a structured manner, allowing for efficient data manipulation, storage, and retrieval.
+
+**_Q. What is ORM(Object Relational Mapping)?_**
+
+ORM stands for Object-Relational Mapping. It is a `programming technique that enables developers to interact with databases using an object-oriented paradigm instead of writing SQL (Structured Query Language) queries directly.` ORM tools provide a high-level abstraction layer that `maps objects in the application code to tables in the database,` allowing developers to interact with the database using familiar programming concepts like classes, objects, and methods.
+
+**_Q. Why there are so many data types in database?_**
+
+Databases support different data types to `accommodate the diverse types of information that need to be stored and processed.` Each data type has specific characteristics and is designed to handle different kinds of data in an efficient and meaningful way.Here are some reasons why there are multiple data types in databases:
+
+- Data Representation
+- Data Validation
+- `Storage Efficiency`
+- Data Manipulation
+- Query Optimization
 
 Installation process:
 https://www.npmjs.com/package/mysql2
