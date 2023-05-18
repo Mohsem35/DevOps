@@ -25,6 +25,15 @@ Databases support different data types to `accommodate the diverse types of info
 - Data Manipulation
 - Query Optimization
 
+**_Q. What is JS Prisma?_**
+
+JS Prisma, or simply Prisma, is a `modern database toolkit and Object-Relational Mapping (ORM) tool specifically designed for JavaScript and TypeScript applications.` It enables developers to work with databases using a type-safe and intuitive API, making it easier to interact with the database and perform database operations.
+
+For further information: [Prisma GitHub](https://github.com/prisma/prisma)
+
+**_JSONB (JSON Binary)_** is a data type found in certain databases, most notably in PostgreSQL. It is specifically designed to `store and manipulate JSON (JavaScript Object Notation) data in a binary format.`SON is a popular data interchange format that represents structured data as key-value pairs, lists, and nested objects. 
+
+---------------
 ### MySQL
 
 Default port: 3306
@@ -70,11 +79,16 @@ connection.query(
   }
 );
 ```
+--------
 
-https://github.com/prisma/prisma
+### MongoDB
+[MongoDB installation in node.js server](https://www.npmjs.com/package/mongodb)
 
-Installation Process:
-https://www.npmjs.com/package/mongodb
+Installation:
+```
+npm install mongodb
+```
+First Query: যে কোন একটা .js ফাইলে গিয়ে নিচের configuration code declare করে আসব 
 
 ```
 const { MongoClient } = require('mongodb');
@@ -82,7 +96,7 @@ const { MongoClient } = require('mongodb');
 // import { MongoClient } from 'mongodb'
 
 // Connection URL
-const url = 'mongodb://root:example@localhost:27017';
+const url = 'mongodb://root:example@localhost:27017';    // ফরম্যাট টা এইভাবে লিখতে হবে
 const client = new MongoClient(url);
 
 // Database Name
@@ -93,7 +107,7 @@ async function main() {
   await client.connect();
   console.log('Connected successfully to server');
   const db = client.db(dbName);
-  const collection = db.collection('<collection_name>');
+  const collection = db.collection('<collection_name>');  // collection names have to decalre here
 
 // Find and convert to array
   const findResult = await collection.find({}).toArray();
