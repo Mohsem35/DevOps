@@ -28,6 +28,8 @@ Databases support different data types to `accommodate the diverse types of info
 - Data Manipulation
 - Query Optimization
 
+> **_NOTE:_**  Production এ বেশিরভাগ case এ 'int' use হবে না
+
 **_Q. What is JS Prisma?_**
 
 JS Prisma, or simply Prisma, is a `modern database toolkit and Object-Relational Mapping (ORM) tool specifically designed for JavaScript and TypeScript applications.` It enables developers to work with databases using a type-safe and intuitive API, making it easier to interact with the database and perform database operations.
@@ -82,6 +84,10 @@ connection.query(
   }
 );
 ```
+Run your app from the command line with:
+```
+node app.js
+```
 --------
 
 ### MongoDB
@@ -107,6 +113,8 @@ Each document will have some number of fields that contain information
 such as name, address, hobbies, etc. An important difference between SQL
 and MongoDB is that a field can contain values such as JSON objects, and
 arrays instead of just strings, number, booleans, etc.
+
+> **_NOTE:_** কোন  application/software বানানোর জন্য যদি data pattern জানা না থাকে, তবে MongoDB 
 
 
 [MongoDB installation in node.js server](https://www.npmjs.com/package/mongodb)
@@ -156,8 +164,12 @@ main()
   .finally(() => client.close());
 
 ```
-
-
-Elastic Installation Process:
-https://www.npmjs.com/package/@elastic/elasticsearch
+Run your app from the command line with:
+```
+node app.js
+```
+----------
+### Elastic Search:
+ 
+Installation Process: https://www.npmjs.com/package/@elastic/elasticsearch
 
