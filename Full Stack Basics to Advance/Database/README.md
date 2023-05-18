@@ -25,14 +25,15 @@ Databases support different data types to `accommodate the diverse types of info
 - Data Manipulation
 - Query Optimization
 
-Installation process:
-https://www.npmjs.com/package/mysql2
+### MySQL
 
+[MySQL installation in node.js server](https://www.npmjs.com/package/mysql2)
+
+Installation:
 ```
 npm install --save mysql2
-
 ```
-
+First Query:
 ```
 // get the client
 const mysql = require('mysql2');
@@ -40,9 +41,10 @@ const mysql = require('mysql2');
 // create the connection to database
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  database: 'test',
-  passwoed: 'example',
+  user: '<db_user>',
+  database: '<db_name>',
+  password: 'example',
+  port: '<port_number>'
 });
 
 // simple read query
