@@ -1,3 +1,14 @@
+Dynamic data refers to information that is not static or fixed, but rather changes or updates over time. It is data that can be modified, added, or removed as new information becomes available or circumstances change
+Examples of dynamic data include:
+
+- `Sensor data:` Readings from sensors such as temperature sensors, pressure sensors, or motion sensors that continuously provide updated information.
+- `Financial data:` Stock prices, currency exchange rates, or market indices that fluctuate throughout the day.
+- `Weather data:` Current weather conditions, forecasts, or radar imagery that change based on real-time weather patterns.
+- `Website content:` Content on websites that can be dynamically generated based on user input, database queries, or other factors.
+- `Social media feeds:` Posts, comments, and updates on platforms like Twitter or Facebook that are constantly changing as users interact with the platform.
+
+A database is an organized collection of structured data stored and managed in a systematic way. It is designed to efficiently store, retrieve, and manage large volumes of information. Databases are widely used in various applications and industries to handle data in a structured manner, allowing for efficient data manipulation, storage, and retrieval.
+
 
 Installation process:
 https://www.npmjs.com/package/mysql2
