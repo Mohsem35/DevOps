@@ -170,6 +170,19 @@ node app.js
 ```
 ----------
 ### Elastic Search:
+
+`Application এর Google.` A serach engine based on 'Apache Lucene' library.
+
+**_Q. What does ElasticSearch do?_**
+
+- Log Analysis
+- Full Text Search
+- Security Intelligence
+- Business Analysis
+- Operation Intelligence
  
-Installation Process: https://www.npmjs.com/package/@elastic/elasticsearch
+[Elasticsearch installation in node.js server](https://www.npmjs.com/package/@elastic/elasticsearch)
+![elasticsearch 1](https://github.com/Mohsem35/DevOps/assets/58659448/ec904391-4b28-484b-818f-c16d01021d7e)
+
+
 
