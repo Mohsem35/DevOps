@@ -27,18 +27,21 @@ Databases support different data types to `accommodate the diverse types of info
 
 ### MySQL
 
+Default port: 3306
+
 [MySQL installation in node.js server](https://www.npmjs.com/package/mysql2)
 
 Installation:
 ```
 npm install --save mysql2
 ```
-First Query:
+First Query: যে কোন একটা .js ফাইলে গিয়ে নিচের configuration code declare করে আসব 
 ```
 // get the client
 const mysql = require('mysql2');
 
 // create the connection to database
+// node.js server দিয়ে আমি DB থেকে data আনতেছি MySQL থেকে
 const connection = mysql.createConnection({
   host: 'localhost',
   user: '<db_user>',
@@ -53,13 +56,13 @@ connection.query(
   function(err, results, fields) {
     console.log(results); // results contains rows returned by server
     console.log(fields); // fields contains extra meta data about results, if available
-    connection.end()
+    connection.end() // এই লাইন না লিখলে সার্ভার connection ধরে রাখবে 
   }
 );
 
 // simple insert query
 connection.query(
-  'INSERT INTO user(name) VALUES("john")',
+  'INSERT INTO user(name) VALUES("john")',      // CLI query code direct এখানে use করা যাবে
   function(err, results, fields) {
     console.log(results); // results contains rows returned by server
     console.log(fields); // fields contains extra meta data about results, if available
