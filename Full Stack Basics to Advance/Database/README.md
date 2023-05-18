@@ -180,6 +180,14 @@ node app.js
 - Security Intelligence
 - Business Analysis
 - Operation Intelligence
+
+#### Use Cases:
+`Netflix:` monitor & analysis, customer service operations and security
+
+`ebay:` text search analysis
+
+`walmart:` customer purchase pattern, track stores, holiday analysis
+
  
 [Elasticsearch installation in node.js server](https://www.npmjs.com/package/@elastic/elasticsearch)
 ![elasticsearch 1](https://github.com/Mohsem35/DevOps/assets/58659448/ec904391-4b28-484b-818f-c16d01021d7e)
