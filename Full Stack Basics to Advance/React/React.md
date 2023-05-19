@@ -1,3 +1,5 @@
+
+
 **_Q: What is a bundler?_**
 
 A bundler is a tool that `takes multiple JavaScript or CSS files and combines them into a single file (or multiple files) for optimized delivery to the browser.` The primary purpose of a bundler is to improve performance by reducing the number of HTTP requests needed to fetch individual files.
@@ -11,6 +13,9 @@ npm (Node Package Manager) is a package manager for JavaScript and the default p
 
 
 ## React
+
+`React is a library` but 'Angular' is a framework. Angular এর ভিতরে React use করতে পারবেন 
+
 
 React reading resource: [React Offical Documentation](https://react.dev/learn)
 
