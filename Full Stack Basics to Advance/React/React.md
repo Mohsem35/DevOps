@@ -134,23 +134,25 @@ onChange={HandleChange}
 
 **_3. Data Fetching:_**  `useState()`, `useEffect()` are a Hooks in React
 
-JSON.stringfy(data, null, 2)
+In React, hooks are `functions` that allow you to `use state and other React features in functional components.`
+<p>Hooks provide a more straightforward and flexible approach to managing state and side effects in functional components, reducing the need for class components and improving code organization and reusability.</p>
 
-data=
-null = মুখস্ত
-2 = spacing big or small
 
-HTTP request: GET, POST
+The **JSON.stringify()** function is a built-in JavaScript function that converts a `JavaScript object or value to a JSON string`
 
+HTTP request: GET, POST, DELETE, PUT
+
+```
+JSON.stringfy(data, null, 2)      // data=, null = মুখস্ত, 2 = spacing big or small
 //মুখস্ত
 useEffect(()=>{
-    fetch("url").then((responses) => responses.JSON()).
+    fetch("url").then((responses) => responses.JSON()).       // আগের function যেইটা return হয়, পরের function এ সেইটা argument হিসাবে pass হয়
                 .then((data) => console.log(data));
 },[]);
+```
 
-আগের function যেইটা return হয়, পরের function এ সেইটা argument হিসাবে pass হয়
+> **_NOTE:_**: পুরা function থেকে কেবল একটা return possible, তাই বারবার `<div>` tag করব
 
-পুরা function থেকে কেবল একটা return possible, তাই বারবার <div> tag করব
 
 
 DOM treats an XML or HTML document as a tree structure in which each node is an object representing a part of the document.
