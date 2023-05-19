@@ -7,10 +7,16 @@ A bundler is a tool that `takes multiple JavaScript or CSS files and combines th
 npm (Node Package Manager) is a package manager for JavaScript and the default package manager for the Node.js runtime environment. It `allows developers to easily manage and install various libraries, frameworks, and tools for their JavaScript projects.` NPM is bundled with Node.js, so when you install Node.js, NPM is automatically installed as well.
 - NPM can automatically install the dependencies listed in the _**package.json**_ file
 
+![How-To-Use-Node js-Modules-with-npm-and-package json-](https://github.com/Mohsem35/DevOps/assets/58659448/e98372f8-5bb7-4133-8a66-ce742576528b)
 
-### React
+
+## React
 
 React reading resource: [React Offical Documentation](https://react.dev/learn)
+
+```
+import React from "react"   //must line
+```
 
 `Vite` is a bundler. We will start React through vite through [Getting Started](https://vitejs.dev/guide/)
 
@@ -32,7 +38,9 @@ npm run dev
 it will actually check the {dependencies} section of 'package.json' file and install libraries according to the file.
 
 
-### JSX 
+
+
+#### JSX 
 
 JSX (JavaScript XML) is an extension to the JavaScript language syntax that allows developers to `write HTML-like code within JavaScript. JSX is commonly used with React,` a popular JavaScript library for building user interfaces.
 
@@ -40,31 +48,51 @@ JSX (JavaScript XML) is an extension to the JavaScript language syntax that allo
 
 ![jsx-tutorial-0](https://github.com/Mohsem35/DevOps/assets/58659448/a5e3aa16-24dd-442a-ad0c-27fa4e24d83d)
 
+#### App.jsx
 
-App.jsx = is the root component file
-1. it must contain `function App()`
-2. retrun JSX
-3. export default App
+The App.jsx component serves as the `entry point for the React application` and typically `represents the top-level component that encapsulates the entire application's functionality and UI structure.`
+
+```
+import React from 'react';
+
+function App() {
+  return (
+    <div>
+      <h1>Welcome to My React App</h1>
+      {/* Other components and UI elements */}
+    </div>
+  );
+}
+export default App;
+```
+
+In App.jsx file there should be must 3 items:
+- contains `function App()`
+- retrun `JSX`
+- `export default App`
 
 
-Building blocks of react:
+#### Building blocks of react:
 
-1. Component: loosely coupled units
+**_1. Component:_** loosely coupled units
 
-- components are the building blocks of any React application, and a single app usually consists of multiple components
-- a component is essentially a piece of the UI. It is like a function that returns HTML elements
-- react components remain discrete and are processed independently.
+- components are the `building blocks` of any React application, and a single app usually consists of multiple components
+- a component is essentially a piece of the UI. It is like a `function that returns HTML elements`
+- react components remain `discrete and are processed independently.`
 - components can be resued multiple times across the application.
+- Root component(**function App()**) `contains multiple components.`
 
 Form JSX to convert vanila JS, we need 'webpack' library 
 
-Root component(function App()) contains multiple components.
-We can declare other components in seperate files but have to declare 'export'
+We will declare components in seperate files for better understanding and have to `export` 
 
+```
 //ContactMe.jsx
 export function ContactMe(){}
+```
+and in App.jsx, you have to `import` that file
 
-and in App.jsx, you have to import that file
+```
 //App.jsx
 import {ContactMe} from "./ContactMe";
 
@@ -73,23 +101,18 @@ function App() {
         contains all components
         return jsx
 }
+```
 
+**_2.State:_** মুহূর্ত। আগে ছিল 0 এখন value 1
 
-2.State: মুহূর্ত। আগে ছিল 0 এখন value 1
-
-- dynamic storage/database
-- state of a component is an object that holds some data.
+- `dynamic storage/database`
+- state of a component is `an object that holds some data.`
 - this data influences the output of a component
-- every time the state of an object changes, the component is re-rendered onto the screen
-
-import React from "react"   //must line
+- `every time the state of an object changes, the component is re-rendered onto the screen`
 
 
+```
 const [counter, setCounter] = useState(0)
-
-counter = variable
-setCounter = setter function
-useState(0) passes initial value, means counter = 0
 
 setCounter(counter+1);
 onClick={HandleClick}
@@ -97,10 +120,19 @@ onClick={HandleClick}
 const [currentText, setCurrentText] = useState("")
 function HandleChange(event) {
     setCurrentText(event.target.value)              // মুখস্ত
-}
+}                                                   // text type করার সাথে সাথে UI change হবে
 onChange={HandleChange} 
+```
 
-3. Data Fetching: useState is a Hook in React
+`counter`= variable
+
+`setCounter` = setter function()
+
+`useState(0)` = passes initial value, means value zero
+
+
+
+**_3. Data Fetching:_**  `useState()`, `useEffect()` are a Hooks in React
 
 JSON.stringfy(data, null, 2)
 
