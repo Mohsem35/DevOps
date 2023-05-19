@@ -23,6 +23,11 @@ npm run preview
 
 'React' is a library but 'Angular' is a framework. Angular এর ভিতরে React use করতে পারবেন 
 
-How to inital an express project: https://www.youtube.com/watch?v=huc9RWb0yX4&ab_channel=Simplilearn
+#### Installation 
+[How to initaially start an express project](https://www.youtube.com/watch?v=huc9RWb0yX4&ab_channel=Simplilearn)
+
+![1 f7ztMaMM0etsFHpEfkdiwA](https://github.com/Mohsem35/DevOps/assets/58659448/2da64e3e-43c9-4062-a83b-4c6a5c1c62f7)
+
 
 https://www.npmjs.com/package/express
+
