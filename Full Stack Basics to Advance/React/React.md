@@ -1,30 +1,41 @@
+**_Q: What is a bundler?_**
+
+A bundler is a tool that `takes multiple JavaScript or CSS files and combines them into a single file (or multiple files) for optimized delivery to the browser.` The primary purpose of a bundler is to improve performance by reducing the number of HTTP requests needed to fetch individual files.
+
+**_Q: What is npm(node package manager)?_**
+
+npm (Node Package Manager) is a package manager for JavaScript and the default package manager for the Node.js runtime environment. It `allows developers to easily manage and install various libraries, frameworks, and tools for their JavaScript projects.` NPM is bundled with Node.js, so when you install Node.js, NPM is automatically installed as well.
+- NPM can automatically install the dependencies listed in the _**package.json**_ file
+
+
 ### React
 
 React reading resource: [React Offical Documentation](https://react.dev/learn)
 
 `Vite` is a bundler. We will start React through vite through [Getting Started](https://vitejs.dev/guide/)
 
-### React project initiate: 
+#### React project initiate through vite: 
 ```
 npm create vite@latest
 cd <project_directory>
 npm install
 npm run dev 
 ```
-Q: what us `npm(node package manager)`?
-- manages different node versioning 
 
-Q: how can npm undersatnd which libraries I need?
-- by executing `npm install` it will install all dependecy libraries for running the project and will create a folder named 'node_modules'.
-it will actually check the {dependencies} section of 'package.json' file and install libraries according to the file
+**_Q: how can npm undersatnd which libraries I need?_**
+
+- By executing `npm install`, it will install all dependecy libraries for running the project and will create a folder named **_'node_modules'_** where all the packages reside.
+it will actually check the {dependencies} section of 'package.json' file and install libraries according to the file.
 
 
-JSX is a syntax extension to JavaScript. It is used with React to describe what the user interface should look like.
-By using JSX, you can write HTML structures in the same file that contains JavaScript code
-JSX = JavaScript + HTML
+### JSX 
 
-App.jsx = root component file
-1. it must contain function App()
+JSX (JavaScript XML) is an extension to the JavaScript language syntax that allows developers to `write HTML-like code within JavaScript. JSX is commonly used with React,` a popular JavaScript library for building user interfaces.
+
+`JSX = JavaScript + HTML`
+
+App.jsx = is the root component file
+1. it must contain `function App()`
 2. retrun JSX
 3. export default App
 
