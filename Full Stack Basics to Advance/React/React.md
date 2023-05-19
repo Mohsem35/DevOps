@@ -140,6 +140,32 @@ In React, hooks are `functions` that allow you to `use state and other React fea
 
 The **JSON.stringify()** function is a built-in JavaScript function that converts a `JavaScript object or value to a JSON string`
 
+```
+INPUT:
+const data = {
+  name: 'John',
+  age: 30,
+  city: 'New York'
+};
+
+const jsonString = JSON.stringify(data, null, 2);
+console.log(jsonString);
+```
+
+```
+OUTPUT:
+{
+  "name": "John",
+  "age": 30,
+  "city": "New York"
+}
+```
+
+
+const jsonString = JSON.stringify(data, null, 2);
+console.log(jsonString);
+
+
 HTTP request: GET, POST, DELETE, PUT
 
 ```
@@ -155,25 +181,31 @@ useEffect(()=>{
 
 
 
-DOM treats an XML or HTML document as a tree structure in which each node is an object representing a part of the document.
+#### DOM 
 
-React creats Virtual DOM
-Virtual DOM - React keeps a lightweight representation of the Real DOM in the memory, and that is knows as Virtual DOM
-Manipulating Real DOM is much slower than manipulating virtual DOM, because nothing gets drawn onscreen
-When the state of an object changes, Virtual DOM changes only that object in the real DOM instead of updating all the objects.
+**_Q. What is DOM(document object model)?_**
 
-One-way data binding means information flows in only one way data direction
+It represents `the structure and content of a web page as a tree-like data structure` where each node corresponds to an element, attribute, or text in the document.
 
-components of react are fucntional in nature that is they receive information through arguments and pass information via there return values.
+#### Virtual DOM
 
-React provides server-side rendering means the application is rendered on the server rather than in browser.
+**_Q. What is virtual DOM?_**
 
-React extension - Flux
-Flux: is application architecture that facebook uses.
+React `keeps a lightweight representation of the Real DOM in the memory,` and that is knows as **Virtual DOM**.
+`Manipulating Real DOM is much slower` than manipulating virtual DOM, because nothing gets drawn onscreen
+`When the state of an object changes, Virtual DOM changes only that object in the real DOM instead of updating all the objects.`
+
+- One-way data binding means information flows in only one way data direction
+
+- `components of react are fucntional in nature` that is they **receive information through arguments and pass information via there return values.**
+- React provides server-side rendering means the application is rendered on the server rather than in browser.
+- `render()` method is responsible for how the UI looks and feels to the user
 
 
+- React extension - Flux
 
-3.Props:
-- props is short for properties, that allow us to pass arguments or data to components
+`Flux:` is application architecture that facebook uses.
 
-render() method is responsible for how the UI looks and feels to the user
+#### Props
+props is short for properties, that allow us to pass arguments or data to components
+
