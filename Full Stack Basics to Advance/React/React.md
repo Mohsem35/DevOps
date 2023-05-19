@@ -14,6 +14,10 @@ React reading resource: [React Offical Documentation](https://react.dev/learn)
 
 `Vite` is a bundler. We will start React through vite through [Getting Started](https://vitejs.dev/guide/)
 
+![logo](https://github.com/Mohsem35/DevOps/assets/58659448/e54d6164-9225-402b-9f31-2489d3ad7d26)
+
+
+
 #### React project initiate through vite: 
 ```
 npm create vite@latest
@@ -33,6 +37,9 @@ it will actually check the {dependencies} section of 'package.json' file and ins
 JSX (JavaScript XML) is an extension to the JavaScript language syntax that allows developers to `write HTML-like code within JavaScript. JSX is commonly used with React,` a popular JavaScript library for building user interfaces.
 
 `JSX = JavaScript + HTML`
+
+![jsx-tutorial-0](https://github.com/Mohsem35/DevOps/assets/58659448/a5e3aa16-24dd-442a-ad0c-27fa4e24d83d)
+
 
 App.jsx = is the root component file
 1. it must contain `function App()`
