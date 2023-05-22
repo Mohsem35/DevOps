@@ -1,3 +1,9 @@
+- আমাদের সর্বপ্রথম `context বুঝতে হবে`, মানে code কার জন্য লিখতেছি সেইটাই সবচেয়ে important। `কোড server সাইডে execute হবে, নাকি client সাইডে execute হবে বুঝতে হবে`
+- next.js - client side rendering and server side rendering দুইটাই করতে পারে
+- React(JavaScript) এ যা যা হচ্ছে, সব browser ই হচ্ছে
+- React `fs.readFile()` code কাজ করবে না, কারণ browser এর direct `file access` করার permission নাই  `due to security threat` কিন্তু Express.js এ কাজ করবে। Express.js এর file access করার permission আছে. 
+- webpage inspect করলে browser একটা temporary file source দেখায়, but `it's not the absoulate path`
+
 npm - Javascript Package Manager
 
 How to install a npm package:
