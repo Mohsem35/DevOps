@@ -31,7 +31,7 @@ app.get("/", function (req, res) {
 
 //WORKING WITH FS
 // sendFile will go here
-// '/html' endpoint এ গেলে, index.html page show করব
+// '/html' endpoint এ গেলে, index.html page show করব এবং কোন directory তে এইচটিএমএল file আছে তা চিনাই দিতে হবে 
 //__dirname = current directory
 //check this documentation: https://www.digitalocean.com/community/tutorials/use-expressjs-to-deliver-html-files
 app.get("/html", function (req, res) {
