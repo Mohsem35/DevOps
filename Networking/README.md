@@ -1,11 +1,9 @@
 ### Network Devices
-
-Hosts: hosts are any device which sends or receive traffic over a network.
+Hosts are any device which sends or receive traffic over a network.
 
 Ex - computer, laptop, phones, printers, servers, cloud server, IoT devices
 
 Hosts typicall fall in 2 categories.
-
 1. Clients: Client initiate requests, Servers respond
     - Relative to specific communication
 2. Servers: Servers are simply computers with software installed which responds to specific requests
