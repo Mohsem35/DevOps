@@ -101,3 +101,13 @@ Hosts must follow a set of rules. The rules for networking are divided into seve
     - Every NIC has a unique MAC address
 - L2 Technologies: Switches, NICs
 - Often communication between hosts require multiple hops.
+
+### Layer 3 - Network - End to End
+
+- Addressing Scheme - IP addresses
+    - 32 bits, 4 octets, 0-255
+ - L3 Technologies: Routers, Hosts, (anything with IP) 
+
+#### ARP - Address Resolution Protocol
+- Links a L3 address to a L2 address
+`L2 + L3`
