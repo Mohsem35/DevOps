@@ -149,6 +149,7 @@ Layer 2: L2 + IP + TCP + Data = `Frame`
 ### Scenario - Host A has some data to send to Host B
 
 Host A knows the IP address of Host B. Host A can create the `L3 header` to attach to the data. 
+
 - Host A doesn't know Host B's MAC address.
     - Host A must use **ARP** to resolve target's MAC address.
     - ARP Request includes sender's MAC address
