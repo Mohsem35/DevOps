@@ -140,4 +140,8 @@ Layer 2: L2 + IP + TCP + Data = `Frame`
 
 <img width="1161" alt="Screenshot 2023-06-06 at 10 50 58 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e0ed8a20-50f2-43e9-b417-fe9f711050ea">
 
+<img width="1395" alt="Screenshot 2023-06-06 at 11 02 06 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/2ad5c28a-8490-4478-8837-723c0c5f2f29">
+
+> **_NOTE:_**  OSI Model is simply a model, not rigid rules everything adheres to
+
 
