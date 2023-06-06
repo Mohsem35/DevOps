@@ -1,3 +1,4 @@
+## How data flows through the internet
 ## Network Devices
 
 ### Hosts
@@ -77,4 +78,26 @@ Routers faciliate communocation **between** networks.
 - Proxies
 - Virtial Routers
 
-All of them perform Routing And/Or Switching 
+All of them perform Routing And/Or Switching.
+
+## OSI Model - Practical Prespective
+
+Hosts must follow a set of rules. The rules for networking are divided into seven layers. Each layer servers a specific function.
+
+![The-Physical-Layer-in-OSI-Model-Explained-thumbnail](https://github.com/Mohsem35/DevOps/assets/58659448/ab0dc990-ca8d-4206-8051-4bee3c1e4f24)
+
+### Layer 1 - Physical - Transporting Bits
+
+- Computer data exists in form of Bits(0 & 1)
+- Something has to transport those bits between hosts
+- L1 Technologies: Cables, Wifi, Repeaters, Hub
+
+### Layer 2 - Data Link - Hop to Hop
+
+- Interacts with the Wire (i.e., Physical layer)
+    - NIC - Network Interface Cards / Wifi Access Cards
+- Addressing Scheme - MAC addresses
+    - 48 bits, 12 hex digits
+    - Every NIC has a unique MAC address
+- L2 Technologies: Switches, NICs
+- Often communication between hosts require multiple hops.
