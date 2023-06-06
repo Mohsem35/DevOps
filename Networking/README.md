@@ -144,4 +144,25 @@ Layer 2: L2 + IP + TCP + Data = `Frame`
 
 > **_NOTE:_**  OSI Model is simply a model, not rigid rules everything adheres to
 
+## Everything Hosts do to speak on the internet 
+
+### Scenario - Host A has some data to send to Host B
+
+Host A knows the IP address of Host B. Host A can create the `L3 header` to attach to the data. 
+- Host A doesn't know Host B's MAC address.
+    - Host A must use **ARP** to resolve target's MAC address.
+    - ARP Request includes sender's MAC address
+    - ARP Request is a Broadcast - sent to everyone on the network.
+    - ARP Mappings are stored in an `ARP Cache`
+    - Host B responds by sending an `ARP Response`
+    - Host A populates it's ARP cache with Host B's IP/MAC mapping
+
+- Data is sent to Host B and L2, L3 header is discarded.
+
+<img width="1378" alt="Screenshot 2023-06-06 at 11 30 12 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/51efa96c-6b3b-4a8f-a0ee-236499ccacb6">
+
+<img width="1385" alt="Screenshot 2023-06-06 at 11 33 44 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ff432027-74e0-4843-932f-cf6ddbe0cc00">
+
+
+
 
