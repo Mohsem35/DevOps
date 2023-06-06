@@ -111,3 +111,33 @@ Hosts must follow a set of rules. The rules for networking are divided into seve
 #### ARP - Address Resolution Protocol
 - Links a L3 address to a L2 address
 `L2 + L3`
+
+### Layer 4 - Transport - Service to Service
+- Distinguish data streams
+- Make sure the right program receives the right data.
+- Addressing Scheme - Ports
+    - 0-65535 - TCP - favors reliability
+    - 0-65535 - UDP - favors efficiency
+- Servers listen for requests to pre-defined Ports
+- Client select random Port number to use as the source Port for the connection.
+    - Response traffic will arrive on this port
+
+### Layer 5,6,7 - Session, Presentation, Application
+- Distinction between these layers is somewhat vague
+- Other Networking Models combine these into one layer.
+
+<img width="608" alt="Screenshot 2023-06-06 at 10 43 30 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/51fca3ce-ffa9-4e55-833f-e57b29fba181">
+
+#### Sending - Encapsulation
+
+Layer 4: TCP + Data = `Segment`
+
+Layer 3: IP + TCP + Data = `Packet`
+
+Layer 2: L2 + IP + TCP + Data = `Frame`
+
+#### De-Encapsulation - Receiving
+
+<img width="1161" alt="Screenshot 2023-06-06 at 10 50 58 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e0ed8a20-50f2-43e9-b417-fe9f711050ea">
+
+
