@@ -69,9 +69,12 @@ Routers faciliate communocation **between** networks.
 
 
 ### Other Network Devices
-- Access points
+- Access Points
 - Firewalls
 - Load Balancers
-- Layer 3 switches
+- Layer 3 Switches
 - IDS/IPS
-- 
+- Proxies
+- Virtial Routers
+
+All of them perform Routing And/Or Switching 
