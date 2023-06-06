@@ -30,9 +30,48 @@ Data crossing a wire decays as it travels.
 
 
 ### Hub
-
 Hubs are simply multi-port **Repeaters**
-
 
 <img width="879" alt="Screenshot 2023-06-05 at 11 23 36 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d88ec4a5-be63-461b-b86e-44111676ae6c">
 
+### Bridge
+Bridges sit between Hub-connected hosts.
+
+<img width="869" alt="Screenshot 2023-06-05 at 11 34 57 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d024a0a2-d80c-4e4a-9f5a-5f46dc7b2da4">
+
+
+### Switch
+Switches faciliate communocation **within** a network.
+- Switches are **combinaton of Hubs and Bridges**
+- Multiple ports
+- Learns which hosts are on each port
+
+**Network:**  Grouping of hosts, which require similar connectivity.
+- Hosts on a Network share the same IP address space.
+
+<img width="852" alt="Screenshot 2023-06-05 at 11 43 47 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e8689b90-cd03-4588-be59-b4b3682ee30e">
+
+
+### Router
+Routers faciliate communocation **between** networks.
+- Provides a traffic control point(security, filtering, redirecting)
+- Routers learn which networks they are attached to known as **Routes** - stored in a **Routing Table**
+- Routers create the Hierarchy in Networks and the entire internet.
+
+**Routing Table:** all networks a Router knows about.
+> **_NOTE:_**  Traditionally, switches could not perform such filtering.
+
+- Routers have IP addresses in the Networks thay are attached to.
+
+**Gateway:** Each host's way out of their local Network
+
+<img width="1062" alt="Screenshot 2023-06-05 at 11 57 04 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/25651da2-8f1f-42bc-9cc8-eaf94e4305cc">
+
+
+### Other Network Devices
+- Access points
+- Firewalls
+- Load Balancers
+- Layer 3 switches
+- IDS/IPS
+- 
