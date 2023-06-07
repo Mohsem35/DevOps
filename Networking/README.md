@@ -179,6 +179,21 @@ Before sendind data, Host A determine if target IP is on **local** or **foreign*
     
 ## Everything Switches do to facilitate communication
 
-Switching is the process of **moving data within networks**
-- Devices communicating through a switch belong to the same IP network.
+**Switches:** Switching is the process of **moving data within networks**
+
 - Switches are L2 devices and use only `L2 header to make decisions`.
+- Switches use and maintain **MAC Address Table**
+    - Mapping of Switching `Ports to MAC addresses`
+
+<img width="255" alt="Screenshot 2023-06-07 at 11 10 22 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/0816a546-f3df-428b-9bc4-989d5897a742">
+
+<img width="1022" alt="Screenshot 2023-06-07 at 11 10 41 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bbe11398-55f4-45c6-b8c3-ec9bff217604">
+
+- Switches perform 3 actions
+    - **Learn**: Update MAC Address Table with mapping of `Switch Port to Source MAC`
+    - **Flood**: Duplicate and send frame out all switch ports (except receiving port)
+    - **Forward:** Use MAC Address Table to deliver Frame to appropiate switch port
+
+- Switch has a MAC address and is configured with an IP address.
+
+
