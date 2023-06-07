@@ -156,7 +156,7 @@ Host A knows the IP address of Host B. Host A can create the `L3 header` to atta
     - ARP Request is a Broadcast - sent to everyone on the network.
     - ARP Mappings are stored in an `ARP Cache`
     - Host B responds by sending an `ARP Response`
-    - Host A populates it's ARP cache with Host B's IP/MAC mapping
+    - `Host A populates it's ARP cache` with Host B's IP/MAC mapping
 
 - Data is sent to Host B and L2, L3 header is discarded.
 
@@ -164,6 +164,21 @@ Host A knows the IP address of Host B. Host A can create the `L3 header` to atta
 
 <img width="1385" alt="Screenshot 2023-06-06 at 11 33 44 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ff432027-74e0-4843-932f-cf6ddbe0cc00">
 
+#### Default Gateway
+Router IP address in configured as the Default Gateway
 
+<img width="641" alt="Screenshot 2023-06-07 at 10 48 58 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/7a709931-cc0c-459a-843e-0f4cafb23d04">
 
+Host A creates L2 header -> Data is sent to the Router(L2 header is discarded) ->  Host A's job is done
 
+> **_NOTE:_**  ARP mapping can be used for ANY host in foreign networks
+
+Before sendind data, Host A determine if target IP is on **local** or **foreign** network.
+    - Foreign - ARP for Default Gateway IP
+    - Local - ARP for Target IP
+    
+## Everything Switches do to facilitate communication
+
+Switching is the process of **moving data within networks**
+- Devices communicating through a switch belong to the same IP network.
+- Switches are L2 devices and use only `L2 header to make decisions`.
