@@ -193,6 +193,12 @@ Before sendind data, Host A determine if target IP is on **local** or **foreign*
     - **Learn**: Update MAC Address Table with mapping of `Switch Port to Source MAC`
     - **Flood**: Duplicate and send frame out all switch ports (except receiving port)
     - **Forward:** Use MAC Address Table to deliver Frame to appropiate switch port
+    - `Unicast Frame`  - destination MAC is another host
+        - Switch will flood only if MAC address is not in MAC address table
+    - `Broadcast Frame` - destination MAC address of FFFF.FFFF.FFFF
+        - Broadcast frames are always Flooded
+
+> **_NOTE:_**  Broadcast = Type of Frame. Flood = Switch Action
 
 - Switch has a MAC address and is configured with an IP address.
 
