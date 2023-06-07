@@ -202,4 +202,9 @@ Before sendind data, Host A determine if target IP is on **local** or **foreign*
 
 - Switch has a MAC address and is configured with an IP address.
 
+### VLANs - Virtual Local Area Network
+
+<img width="669" alt="Screenshot 2023-06-07 at 11 36 50 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9cbab576-3cd1-44bf-b04b-00b2fdd31a9c">
+
+
 
