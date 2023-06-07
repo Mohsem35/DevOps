@@ -206,5 +206,19 @@ Before sendind data, Host A determine if target IP is on **local** or **foreign*
 
 <img width="669" alt="Screenshot 2023-06-07 at 11 36 50 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9cbab576-3cd1-44bf-b04b-00b2fdd31a9c">
 
+#### Final picture of sending data through SWITCH
+
+<img width="962" alt="Screenshot 2023-06-07 at 11 38 59 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/5164b601-64af-4d62-ad67-80dc90b81627">
+<img width="957" alt="Screenshot 2023-06-07 at 11 39 23 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bd532570-6545-44f9-884b-f55ac509f4ca">
+
+<img width="931" alt="Screenshot 2023-06-07 at 11 39 41 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bee22cb7-7db6-484b-8e05-fc23171fcda4">
+<img width="947" alt="Screenshot 2023-06-07 at 11 39 55 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/2ebdbcf7-9f1b-452a-b2e5-8a97f9c8876a">
+
+<img width="951" alt="Screenshot 2023-06-07 at 11 48 47 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d768248c-d5e9-4b10-b000-a54966fd2cc4">
+
+<img width="956" alt="Screenshot 2023-06-07 at 11 48 59 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/fe5fce1d-73d2-4fef-a243-7d343b5e7cb3">
+<img width="934" alt="Screenshot 2023-06-07 at 11 49 14 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/63e2d23c-d240-416f-8777-43bc09f01062">
+
+<img width="944" alt="Screenshot 2023-06-07 at 11 49 48 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/26dbfc08-a7da-4b35-a199-9373a8912b4a">
 
 
