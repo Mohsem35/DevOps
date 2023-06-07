@@ -1,3 +1,5 @@
+#### Interface
+
 In Linux networking, an interface refers to a network interface that connects a device, such as a computer or a server, to a network. 
 It can be a **physical interface**, such as an Ethernet port, or a **virtual interface**, such as a loopback interface or a virtual LAN (VLAN) interface.
 
