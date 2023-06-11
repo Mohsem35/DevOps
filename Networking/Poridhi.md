@@ -42,3 +42,13 @@ Q. How many IP addres you can allocate with this?
 2^16 - 2
 
 Minus two, cause one for `network address/gateway` and another for `broadcast address`
+
+#### DHCP Server
+
+DHCP server এর কাজ হল IP allocation করা ভিন্ন ভিন্ন device এর জন্য, Switch এ থাকে DHCP সার্ভার
+
+![1 1KIknnLKXpXptCyVRf6KCQ](https://github.com/Mohsem35/DevOps/assets/58659448/2b58e72c-f1bc-43cf-983a-1f4d18a2c9cd)
+
+We use DHCP (Dynamic Host Configuration Protocol) to `automate the process of assigning IP addresses and configuring network parameters to devices on a network.` DHCP eliminates the need for manual IP address configuration, making it easier and more efficient to manage IP addresses in a network environment.
+
+
