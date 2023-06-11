@@ -34,3 +34,11 @@ CIDR introduced a flexible and hierarchical addressing system that allows for va
 In this example, the IP address is 192.168.0.0, and the suffix "/24" indicates that the first 24 bits of the IP address represent the network portion, while the remaining bits represent the host portion.
 
 CIDR notation allows for more efficient allocation of IP addresses and more flexible network design. It `enables network administrators to divide IP address space into smaller subnets of different sizes`, based on the needs of their networks. This helps reduce IP address exhaustion and allows for better utilization of available address blocks.
+
+> **_NOTE:_**  Network Address যত বড়, Clan তত ছোট 
+
+Q. How many IP addres you can allocate with this?
+
+2^16 - 2
+
+Minus two, cause one for `network address/gateway` and another for `broadcast address`
