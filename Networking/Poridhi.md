@@ -45,7 +45,7 @@ Minus two, cause one for `network address/gateway` and another for `broadcast ad
 
 #### DHCP Server
 
-DHCP server এর কাজ হল IP allocation করা ভিন্ন ভিন্ন device এর জন্য, Switch এ থাকে DHCP সার্ভার
+DHCP server এর কাজ হল IP allocation করা ভিন্ন ভিন্ন MAC address এর জন্য, Switch এ থাকে DHCP সার্ভার
 
 ![1 1KIknnLKXpXptCyVRf6KCQ](https://github.com/Mohsem35/DevOps/assets/58659448/2b58e72c-f1bc-43cf-983a-1f4d18a2c9cd)
 
