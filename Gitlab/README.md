@@ -2,7 +2,12 @@ CI - Continuous Integration
 
 CD - Continuous Deployment/Delivery
 
-Automatically and continuously Code changes -> Test -> Build -> Release
+Automatically and continuously Code changes -> Tests -> Build & Package -> Release
+
+
+
+
+
 
 Jobs: Jobs are the most fundamental building block of a .gitlab-ci.yml file
 - jobs define what we do
