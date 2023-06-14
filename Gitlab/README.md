@@ -25,7 +25,8 @@ Jobs are the most fundamental building block of a `.gitlab-ci.yml` file
 
  ![Screenshot from 2023-06-12 14-47-49](https://github.com/Mohsem35/DevOps/assets/58659448/f3fce85c-3c4a-454c-9aae-bbbdb2ae3374)
 
-- We configure Pipeline for a specific project
+- We configure Pipeline for a specific project.
+- By default, Pipeline is triggered automatically for all branches.
 
 > **_NOTE:_**  Each pipeline is run on a fresh environment
 
@@ -56,7 +57,7 @@ Left sidebar project repository -> Build -> Pipeline Editor
 - Only if al jobs in a stage succeed, the pipeline moves on to the next stage
 - If any job in a stage fails, the next stage in not executed and the pipeline ends
 
-#### Needs
+#### Needs:
 
 
 - Execute jobs in a certain order within a stage. If it fails, it should skip the other dependents jobs.
@@ -90,3 +91,24 @@ Left sidebar project repository -> Build -> Pipeline Editor -> Visualize
  - chmod +x <script_filename>.sh
  - ./<script_filename>.sh
 ```
+
+#### Only:
+
+This pipeline logic jobs should only run for **main** branch and the other jobs should run on **feature** branch 
+```
+Left sidebar project repository -> Code -> Branches -> New branch
+```
+![Screenshot from 2023-06-14 16-43-45](https://github.com/Mohsem35/DevOps/assets/58659448/720b474b-b011-4da8-97fd-5a333e06e1df)
+
+The following `build image` job will be executed only main branch. 
+```
+build_image:
+    only: 
+        - main
+    stage: build
+    script:
+        - echo "Building the docker image..."
+        - echo "Tagging the docker image..."
+```
+
+**except:** Define when a job does not run
