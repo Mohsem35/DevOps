@@ -48,7 +48,7 @@ export const CreateTodoAxios = () => {
 //insted of 'fetch' we will use 'axios' library which presents simplify. 'axios' হলে, code read ability increase করে। চোখের শান্তি।
 //'fetch' by default error throw করে না, 'axios' error throw করে
 
-//A Promise is an object that represents an asynchronous operatio.
+//A Promise is an object that represents an asynchronous operation.
 // promise browser handle করে 
 // axios or fetch both behaves like promise. কোন কাজ করতে সময় লাগলে সেইটা OS(operating system) কে দিয়ে দেয়, নিজেরা অন্য কাজ handle করতে থাকে
 // fetch -----> OS -----> i'm done 
