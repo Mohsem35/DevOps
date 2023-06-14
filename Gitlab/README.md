@@ -27,6 +27,7 @@ Jobs are the most fundamental building block of a `.gitlab-ci.yml` file
 
 - We configure Pipeline for a specific project
 
+> **_NOTE:_**  Each pipeline is run on a fresh environment
 
 
 #### To work with any existing GitLab project for CI/CD:
@@ -78,3 +79,14 @@ Left sidebar project repository -> Build -> Pipeline Editor -> Visualize
 
 ![Screenshot from 2023-06-14 15-00-56](https://github.com/Mohsem35/DevOps/assets/58659448/2d8e7177-daff-40ff-9b21-cd8c97c9fbf4)
 
+#### Scripts:
+
+##### Inline commands
+- OS commands, like Linux comman
+
+> **_NOTE:_**  If there are too many Linux commands, **prepare a seperate bash-script file** where you will keep all the Linux commands and reference the bash-script file in 'script' section of yml file.
+
+```
+ - chmod +x <script_filename>.sh
+ - ./<script_filename>.sh
+```
