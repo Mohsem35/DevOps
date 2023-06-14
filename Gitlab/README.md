@@ -1,42 +1,51 @@
+### Introduction to Gitlab CICD
 CI - Continuous Integration
 
-CD - Continuous Deployment/Delivery
+CD - Continuous Deployment & Continuously Delivery
 
-Automatically and continuously Code changes -> Tests -> Build & Package -> Release
-
-
+![Screenshot from 2023-06-12 12-03-09](https://github.com/Mohsem35/DevOps/assets/58659448/f1925709-9596-412e-a9ce-d9a9a300ff27)
 
 
+#### Jobs:
 
-
-Jobs: Jobs are the most fundamental building block of a .gitlab-ci.yml file
-- jobs define what we do
-- must contain at least the script clause
+Jobs are the most fundamental building block of a `.gitlab-ci.yml` file
+- Jobs define what we do.
+- Must contain at least the `script` clause
 - `script` section specify the commands(any kinds of commands like linux commands etc.) to execute
 - we can define as many jobs as we want
 - `before_script` define commands that should run before 'script' commands
 - `after_script` define commands that run after each job, including failed jobs
 
-Job keywords: before_script and after_script
+#### Pipeline:
 
-Pipeline:
 - The top-level component of continuous integration, delivery and development.
 - A pipeline consists of jobs and stages
-- On every commit, GitLab triggers the pipeline automatically
-run_tests -> build_image -> push_image
+- **On every commit, GitLab triggers the pipeline automatically**
+  - run_tests -> build_image -> push_image
+
+ ![Screenshot from 2023-06-12 14-47-49](https://github.com/Mohsem35/DevOps/assets/58659448/f3fce85c-3c4a-454c-9aae-bbbdb2ae3374)
+
 - We configure Pipeline for a specific project
 
+
+
+#### To work with any existing GitLab project for CI/CD:
+
 1. Fork the project, that you want to work with
-2. Add a new file, in the root of the repository named 'gitlab-ci.yml'(Pipeline file)
+2. Add a new file, in the root of the repository named `gitlab-ci.yml(Pipeline file)`
 
 
-Pipeline Execution:
+#### Pipeline Execution:
 
-Settings -> CI/CD ->
+```
+Left sidebar project repository -> Build -> Pipelines
+```
+#### In order to change pipeline logic: 
 
-Build -> Pipeline
+```
+Left sidebar project repository -> Build -> Pipeline Editor
+```
 
-in order to change pipeline logic: Build -> Pipeline Editor
+![Screenshot from 2023-06-12 18-13-25](https://github.com/Mohsem35/DevOps/assets/58659448/d726b51b-8fa4-4728-9890-5202747fcac9)
 
 
-Much nicer view: Build -> Pipeline -> Click on the
