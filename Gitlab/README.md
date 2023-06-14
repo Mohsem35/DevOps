@@ -1,4 +1,4 @@
-### Introduction to Gitlab CICD
+ ### Introduction to Gitlab CICD
 CI - Continuous Integration
 
 CD - Continuous Deployment & Continuously Delivery
@@ -48,4 +48,13 @@ Left sidebar project repository -> Build -> Pipeline Editor
 
 ![Screenshot from 2023-06-12 18-13-25](https://github.com/Mohsem35/DevOps/assets/58659448/d726b51b-8fa4-4728-9890-5202747fcac9)
 
+#### Stages:
+
+- You can `group multiple jobs` into stages that run in a defined order.
+- Multiple jobs in the same stage are executed in **parallel.**
+- Only if al jobs in a stage succeed, the pipeline moves on to the next stage
+- If any job in a stage fails, the next stage in not executed and the pipeline ends
+
+
+  
 
