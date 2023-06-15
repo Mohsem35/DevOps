@@ -141,3 +141,19 @@ workflow:
 
 [Predefined variables reference](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) 
 
+#### Custom Variables:
+
+
+Project variables:
+1. Stored outside the git repository(not in the .gitlab-ci.yml)
+2. Ideal for tokens and passwords, which should not be included in the repository for security reasons!
+
+![Screenshot from 2023-06-15 18-31-00](https://github.com/Mohsem35/DevOps/assets/58659448/9218785a-23d5-4206-9ad7-d43c72fcbf76)
+
+
+> **_NOTE:_** Environment variable names should be in UPPER CASE format for standardization.
+![Screenshot from 2023-06-15 18-33-56](https://github.com/Mohsem35/DevOps/assets/58659448/6f0ea843-28d8-4003-9abf-a56bfb3999a0)
+![Screenshot from 2023-06-15 18-35-03](https://github.com/Mohsem35/DevOps/assets/58659448/315f9846-9a4e-4e18-886f-cce238085086)
+
+
+
