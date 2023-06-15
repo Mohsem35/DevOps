@@ -112,3 +112,20 @@ build_image:
 ```
 
 **except:** Define when a job does not run
+![Screenshot from 2023-06-15 13-45-52](https://github.com/Mohsem35/DevOps/assets/58659448/ffb683a7-7e64-4239-ba9b-b2d59daee1bc)
+
+#### Workflow rules:
+
+- A global keyword, which configures the whole pipelines behavior.
+- Have to declare at first of the  .yml file
+- `if`,`when` are 2 conditionals.
+- `$CI_COMMIT_BRANCH` = Environment variable
+
+```
+workflow:
+    rules:
+        - if: $CI_COMMIT_BRANCH != "main"
+          when: never
+        - when: always
+```
+
