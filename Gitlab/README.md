@@ -139,4 +139,5 @@ workflow:
         - when: always
 ```
 
+[Predefined variables reference](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) 
 
