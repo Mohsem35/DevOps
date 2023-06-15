@@ -1,4 +1,4 @@
- ### Introduction to Gitlab CICD
+### Introduction to Gitlab CICD
 CI - Continuous Integration
 
 CD - Continuous Deployment & Continuously Delivery
@@ -128,4 +128,8 @@ workflow:
           when: never
         - when: always
 ```
+
+> **_NOTE:_**  GitLab 'merge request' == GitHub 'pull request'
+
+
 
