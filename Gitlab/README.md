@@ -131,5 +131,12 @@ workflow:
 
 > **_NOTE:_**  GitLab 'merge request' == GitHub 'pull request'
 
+```
+workflow:
+    rules:
+        - if: $CI_COMMIT_BRANCH != "main" && $CI_PIPELINE_SOURCE != "merge_request_event"
+          when: never
+        - when: always
 
+```
 
