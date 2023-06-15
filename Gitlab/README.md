@@ -117,9 +117,9 @@ build_image:
 #### Workflow rules:
 
 - A global keyword, which configures the whole pipelines behavior.
-- Have to declare at first of the  .yml file
+- Have to declare at first section of the `.yml` file
 - `if`,`when` are 2 conditionals.
-- `$CI_COMMIT_BRANCH` = Environment variable
+- `$CI_COMMIT_BRANCH`, `$CI_PIPELINE_SOURCE` = Environment variables
 
 ```
 workflow:
@@ -137,6 +137,6 @@ workflow:
         - if: $CI_COMMIT_BRANCH != "main" && $CI_PIPELINE_SOURCE != "merge_request_event"
           when: never
         - when: always
-
 ```
+
 
