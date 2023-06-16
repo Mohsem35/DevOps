@@ -37,11 +37,11 @@ CIDR notation allows for more efficient allocation of IP addresses and more flex
 
 > **_NOTE:_**  Network Address যত বড়, Clan তত ছোট 
 
-Q. How many IP addres you can allocate with this?
+Q. How many IP addresses you can allocate with this?
 
 2^16 - 2
 
-Minus two, cause one for `network address/gateway` and another for `broadcast address`
+Minus two, cause one for `network address/gateway` and another for `broadcast address
 
 #### DHCP Server
 
@@ -50,5 +50,16 @@ DHCP server এর কাজ হল IP allocation করা ভিন্ন ভ�
 ![1 1KIknnLKXpXptCyVRf6KCQ](https://github.com/Mohsem35/DevOps/assets/58659448/2b58e72c-f1bc-43cf-983a-1f4d18a2c9cd)
 
 We use DHCP (Dynamic Host Configuration Protocol) to `automate the process of assigning IP addresses and configuring network parameters to devices on a network.` DHCP eliminates the need for manual IP address configuration, making it easier and more efficient to manage IP addresses in a network environment.
+
+<img width="757" alt="Screenshot 2023-06-16 at 6 46 27 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/7a3d1334-4f2a-41c6-a3ad-0128de5b0041">
+
+<img width="1087" alt="Screenshot 2023-06-16 at 7 11 20 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/031bf7e1-d4dc-483f-8ba6-0c10a669d19d">
+
+<img width="1300" alt="Screenshot 2023-06-16 at 8 40 48 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/2d90e1a2-f678-4ee0-a8f0-36936715eb60">
+
+<img width="1150" alt="Screenshot 2023-06-16 at 9 30 07 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/a5973295-4c6b-4004-a2d4-d06e508e6495">
+
+<img width="1290" alt="Screenshot 2023-06-16 at 9 57 05 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/cdf26b47-ca36-4969-817d-a164919836a9">
+
 
 
