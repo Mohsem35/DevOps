@@ -157,5 +157,12 @@ Project variables:
 ![Screenshot from 2023-06-15 18-33-56](https://github.com/Mohsem35/DevOps/assets/58659448/6f0ea843-28d8-4003-9abf-a56bfb3999a0)
 ![Screenshot from 2023-06-15 18-35-03](https://github.com/Mohsem35/DevOps/assets/58659448/315f9846-9a4e-4e18-886f-cce238085086)
 
+##### Define variable in Pipeline Editor:
 
+```
+run_tests:
+    stage: test
+    script:
+        - echo "Running unit tests for micro service $MICRO_SERVICE_NAME ..."
+```
 
