@@ -224,3 +224,41 @@ GitLab Runner is a program that you should install on a machine, that's seperate
 Q: Who manages GitLab Architecture?
 
 Ans: gitlab.com(Saas) or self-managed 
+
+#### Executors:
+
+You need Gitlab Runner to run jobs in a pipeline. But you need **another component for the actual execution**
+
+Alternative Executors
+1. Shell
+2. Docker(best option)
+3. Virtual Machine
+4. Kubernetes
+5. Docker Machine Executor 
+
+> **_NOTE:_**  GitLab's shared runner are using Docker Machine executor
+
+##### Docker Executor
+
+- Commands are executed inside a container
+- Jobs run on user provided Docker images
+- Each job runs in a seperate and isolated container
+- Once the job is done, containers get removed
+- All tools needed can be put in the Docker image
+- You only need to install Docker itself
+- Because of isolation, no version conflicts like npm6, npm7
+
+![Screenshot from 2023-06-18 15-12-04](https://github.com/Mohsem35/DevOps/assets/58659448/82768f8a-42fd-46bf-9bd0-ec8c519d2ca5)
+
+Q: How to configure the executor for the runner?
+
+Ans: When you register a runner, you must choose an executor. **1 executor per runner**
+
+#### GitLab WorkFlow:
+
+Runner **requests jobs** from GitLab instance -> Runner **compiles and sends** job's plyload to Executor -> Executor **clones/download artifacts** for GitLab instance and **executes job** -> Executor resturns **job output to Runner** -> Runner updates **job output to Gitlab instance**
+
+![Screenshot from 2023-06-18 15-33-45](https://github.com/Mohsem35/DevOps/assets/58659448/f05d4d66-63bc-4257-b71d-46c34ba3b8be)
+
+
+
