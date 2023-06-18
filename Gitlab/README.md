@@ -187,6 +187,10 @@ deploy_image:
 ```
 #### Declaring Variables in .gitlab-ci.yml File:
 
+- Variables saved in the file directly should store only non-sensitive data, cause the values will be visible in the repository
+- Declare variables as global
+- Then use the variables like programming
+
 ```
 variables:
     image_repository: docker.io/myapp
