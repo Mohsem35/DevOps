@@ -201,3 +201,23 @@ run_tests:
     before_script:
         - echo "ushing docker image $image_repository:image_tag to registry..."
 ```
+#### Gitlab Architecture:
+
+##### Gitlab Server
+- Main component
+- Pipeline configuration
+- Manage the pipeline execution
+- Stores the pipeline results
+- 
+##### Gitlab Runner
+
+GitLab Runner is a program that you should install on a machine, that's seperate from the one that hosts the GitLab instance.
+
+`Shared Runners:` The provided runners by GitLab are shared runners. Available to all projects in a GitLab instance(gitlab.com)
+
+- Jobs are mainly executed in RUNNERS
+- GitLab Runners are agents that run your CI/CD jobs
+- GitLab Server assigns these jobs to available Runners
+
+Q: Who manages GitLab Architecture?
+Ans: gitlab.com(Saas) or self-managed 
