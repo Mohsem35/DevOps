@@ -165,4 +165,35 @@ run_tests:
     script:
         - echo "Running unit tests for micro service $MICRO_SERVICE_NAME ..."
 ```
+#### File Type Variables:
 
+- Consists of a key, value and file
+- Value is saved to a temporary file.
+- The value of the variable is the path to the temporary file
+
+![Screenshot from 2023-06-18 12-32-55](https://github.com/Mohsem35/DevOps/assets/58659448/d6afe441-1137-4b07-b2e4-ce7d0e09de52)
+
+![Screenshot from 2023-06-18 12-55-33](https://github.com/Mohsem35/DevOps/assets/58659448/9f3df1f3-2399-41d5-bce6-5282b72df1ce)
+![Screenshot from 2023-06-18 12-56-36](https://github.com/Mohsem35/DevOps/assets/58659448/dd50f2ec-8d3e-4837-b0ae-8db0079b71b9)
+
+```
+deploy_image:
+    only:
+        - main
+    stage: deploy
+    script:
+        - echo "Deploying new docker image using the following configuration file - $PROPERTIES_FILE..."
+        - cat $PROPERTIES_FILE
+```
+#### Declaring Variables in .gitlab-ci.yml File:
+
+```
+variables:
+    image_repository: docker.io/myapp
+    image_tag: v1.0
+    
+run_tests:
+    stage: test
+    before_script:
+        - echo "ushing docker image $image_repository:image_tag to registry..."
+```
