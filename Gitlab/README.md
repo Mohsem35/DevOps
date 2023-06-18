@@ -218,6 +218,9 @@ GitLab Runner is a program that you should install on a machine, that's seperate
 - Jobs are mainly executed in RUNNERS
 - GitLab Runners are agents that run your CI/CD jobs
 - GitLab Server assigns these jobs to available Runners
+  
+![Screenshot from 2023-06-18 13-56-37](https://github.com/Mohsem35/DevOps/assets/58659448/31afcfea-32c7-4a8a-8e77-a2cfd6e991d9)
 
 Q: Who manages GitLab Architecture?
+
 Ans: gitlab.com(Saas) or self-managed 
