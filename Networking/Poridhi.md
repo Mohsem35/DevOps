@@ -94,7 +94,7 @@ Namespace থেকে বের হতে চাইলে
 exit
 ```
 
-##### 3. Set VETH port & IP addresses for both namespaces
+##### 3. Set Virtual Ethernet Port for both namespaces
 
 This will create two virtual interfaces, one for each namespace. Run the following command:
 ```
@@ -114,6 +114,16 @@ sudo ip link set reth netns red
 sudo ip link set geth netns green
 ```
 > **_NOTE:_** Automatically MAC address assigned হয়ে গেছে
+
+##### 4. Set IP Addresses for both namespaces
+
+```
+sudo ip netns exec <namespace_name> /bin/bash
+``` 
+```
+sudo ip netns exec red /bin/bash
+sudo ip add 
+``` 
 
 ```
 ip -n green addr add 10.20.100.3/29 dev veth0
