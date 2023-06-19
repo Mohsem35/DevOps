@@ -58,22 +58,43 @@ Using network namespaces, administrators can create isolated network environment
 
 ## Creating Two network namespaces and connect them with their virtual ethernet
 
-##### 1. Create a virtual machine on PC by using KVM.
+
+![1 AcZ5xYvn5OfJK1D-9lpZ5A](https://github.com/Mohsem35/DevOps/assets/58659448/441977d0-cd65-4b0a-aebd-f29d10ae49ee)
+
+Linux -> Namespace -> Network namespace
+
+##### 1. Create a virtual machine on PC by using KVM
 
 I have provisioned Ubuntu 20.04 LTS in my virtual machine.
 ```
 cat /etc/os-release
+sudo apt install net-tools
 ```
-##### 2. Create two namespaces.
+##### 2. Create two namespaces
 ```
 sudo ip netns add red
 sudo ip netns add green
 ip netns list
 ```
 
+Red namespace ঢুকতে চাই from Root namespace
 
+```
+sudo ip netns exec red /bin/bash
+``` 
+প্রতিটি namespace এর route table দেখতে চাই
+```
+route
+```
+Namespace থেকে বের হতে চাইলে 
+```
+exit
+```
 
-##### 3. Make a connectivity between two virtual ethernet.
+##### 3. Set VETH port & IP addresses for both namespaces
+
+3. Make a connectivity between two virtual ethernet
+
 - Set the virtual ethernet port for both namespaces.
 - Set the IP addresses on both virtual ethernet.
 - Enable / Lights up the virtual ethernet on both namespaces.
