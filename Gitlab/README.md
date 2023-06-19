@@ -225,6 +225,16 @@ Q: Who manages GitLab Architecture?
 
 Ans: gitlab.com(Saas) or self-managed 
 
+#### Override Docker Image
+
+- Best practice: use a specific version
+- Because latest is unpredictable
+
+```
+image: node:20-alpine
+```
+![Screenshot from 2023-06-19 12-44-47](https://github.com/Mohsem35/DevOps/assets/58659448/820d859b-c8de-436a-bbf8-e3e38efcd199)
+
 #### Executors:
 
 You need Gitlab Runner to run jobs in a pipeline. But you need **another component for the actual execution**
