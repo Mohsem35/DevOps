@@ -96,18 +96,24 @@ exit
 
 ##### 3. Set VETH port & IP addresses for both namespaces
 
+This will create two virtual interfaces, one for each namespace. Run the following command:
 ```
-sudo ip link add <এক_মাথার_নাম> type veth peer name <আরেক_মাথার_নাম>  
+sudo ip link add <interface_name> type veth peer name <another_interface_name>  
 ```
 ```
 sudo ip link add reth type veth peer name geth  
 ```
+
 Computer এর সাথে connect করাইতে চাই
+
+```
+sudo ip link set <interface_name> netns <namespace_name>
+```
 ```
 sudo ip link set reth netns red
 sudo ip link set geth netns green
 ```
-Automatically MAC address assigned হয়ে গেছে
+> **_NOTE:_** Automatically MAC address assigned হয়ে গেছে
 
 ```
 ip -n green addr add 10.20.100.3/29 dev veth0
