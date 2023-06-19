@@ -41,7 +41,7 @@ Q. How many IP addresses you can allocate with this?
 
 2^16 - 2
 
-Minus two, cause one for `network address/gateway` and another for `broadcast address
+Minus two, cause one for `network address/gateway` and another for `broadcast address`
 
 #### DHCP Server
 
@@ -50,6 +50,36 @@ DHCP server এর কাজ হল IP allocation করা ভিন্ন ভ�
 ![1 1KIknnLKXpXptCyVRf6KCQ](https://github.com/Mohsem35/DevOps/assets/58659448/2b58e72c-f1bc-43cf-983a-1f4d18a2c9cd)
 
 We use DHCP (Dynamic Host Configuration Protocol) to `automate the process of assigning IP addresses and configuring network parameters to devices on a network.` DHCP eliminates the need for manual IP address configuration, making it easier and more efficient to manage IP addresses in a network environment.
+
+#### Network Namespace
+In a Linux system, network namespaces provide `segregated instances of the network stack, interfaces, and routing tables and firewall rules.` Processes can function within their own independent network environment with network namespaces, ensuring isolation from processes in other namespaces.
+
+Using network namespaces, administrators can create isolated network environments for various programs or users, preventing interference or conflicts between them. It also facilitates the deployment of network virtualization and containerization technologies, where each container or virtual machine can operate in its own network namespace, assuring network isolation and security.
+
+### Creating Two network namespaces and connect them with their virtual ethernet
+
+##### 1. Create a virtual machine on PC by using KVM.
+
+I have provisioned Ubuntu 20.04 LTS in my virtual machine.
+```
+cat /etc/os-release
+```
+##### 2. Create two namespaces.
+```
+sudo ip netns add red
+sudo ip netns add green
+```
+
+
+
+##### 3. Make a connectivity between two virtual ethernet.
+- Set the virtual ethernet port for both namespaces.
+- Set the IP addresses on both virtual ethernet.
+- Enable / Lights up the virtual ethernet on both namespaces.
+- Check the IP reachibility.
+
+I have provisioned Almalinux-8 as a virtual machine.
+
 
 <img width="757" alt="Screenshot 2023-06-16 at 6 46 27 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/7a3d1334-4f2a-41c6-a3ad-0128de5b0041">
 
