@@ -72,6 +72,9 @@ sudo apt install net-tools
 ```
 ##### 2. Create two namespaces
 ```
+sudo ip netns add <namespace_name>
+```
+```
 sudo ip netns add red
 sudo ip netns add green
 ip netns list
@@ -80,7 +83,7 @@ ip netns list
 Red namespace ঢুকতে চাই from Root namespace
 
 ```
-sudo ip netns exec red /bin/bash
+sudo ip netns exec <namespace_name> /bin/bash
 ``` 
 প্রতিটি namespace এর route table দেখতে চাই
 ```
@@ -92,6 +95,24 @@ exit
 ```
 
 ##### 3. Set VETH port & IP addresses for both namespaces
+
+```
+sudo ip link add <এক_মাথার_নাম> type veth peer name <আরেক_মাথার_নাম>  
+```
+```
+sudo ip link add reth type veth peer name geth  
+```
+Computer এর সাথে connect করাইতে চাই
+```
+sudo ip link set reth netns red
+sudo ip link set geth netns green
+```
+Automatically MAC address assigned হয়ে গেছে
+
+```
+ip -n green addr add 10.20.100.3/29 dev veth0
+ip -n blue addr add 10.20.100.4/29 dev veth1
+```
 
 3. Make a connectivity between two virtual ethernet
 
