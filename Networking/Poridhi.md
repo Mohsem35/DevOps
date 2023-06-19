@@ -56,7 +56,7 @@ In a Linux system, network namespaces provide `segregated instances of the netwo
 
 Using network namespaces, administrators can create isolated network environments for various programs or users, preventing interference or conflicts between them. It also facilitates the deployment of network virtualization and containerization technologies, where each container or virtual machine can operate in its own network namespace, assuring network isolation and security.
 
-### Creating Two network namespaces and connect them with their virtual ethernet
+## Creating Two network namespaces and connect them with their virtual ethernet
 
 ##### 1. Create a virtual machine on PC by using KVM.
 
@@ -68,6 +68,7 @@ cat /etc/os-release
 ```
 sudo ip netns add red
 sudo ip netns add green
+ip netns list
 ```
 
 
