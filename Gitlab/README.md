@@ -229,6 +229,7 @@ Ans: gitlab.com(Saas) or self-managed
 
 - Best practice: use a specific version
 - Because latest is unpredictable
+- Image configuration works only for Docker Runners, will be ignored by other Runners.
 
 ```
 image: node:20-alpine
