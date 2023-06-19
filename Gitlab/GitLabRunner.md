@@ -1,5 +1,7 @@
 [Install GitLab Runner Linux](https://docs.gitlab.com/runner/install/)
 
+### Set up the GitLab-Runner service on a VM
+
 1. Simply download one of the binaries for your system:
 For CentOS or Red Hat Enterprise Linux:
 ```
