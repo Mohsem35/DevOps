@@ -185,7 +185,9 @@ ping 10.20.100.4 -c3
 ```
 <img width="624" alt="Screenshot 2023-06-20 at 1 03 38 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e7e1ff00-f525-4df1-8598-8e58844f9717">
 
+> **_NOTE:_** এই red namespace `ping 8.8.8.8` দিলে google কে reach করতে পারবে না। Ping দিলে চেক প্রথমে করবে 8.8.8.8 টা 10.20.100.0/29 এই Range এর মধ্যে পড়ে কি না, যেহেতু  না সেহেতু এইটা আমার network না।
 
+##### 7. Ping 8.8.8.8 from namespace 
 
 #### Feasible solution - Virtual Bridge
 
@@ -205,8 +207,27 @@ In virtualization technologies such as VMware, KVM (Kernel-based Virtual Machine
 
 ![ttl1](https://github.com/Mohsem35/DevOps/assets/58659448/deb503d1-c290-4cec-8e26-1873bb1d15e6)
 
+**A TTL cache table**, often referred to as a Time-to-Live cache table, is a `data structure used to store cached entries along with their expiration time or TTL values`. It is commonly used in systems that involve caching data to improve performance and reduce the load on the original data source.
+
+In a TTL cache table, each entry consists of a key-value pair and an associated TTL value, indicating the duration for which the entry remains valid. When an entry is added to the cache table, the current timestamp is recorded, and the TTL value is used to calculate the expiration time by adding it to the timestamp. This expiration time determines how long the entry will remain in the cache before it is considered stale or outdated.
+
+TTL cache table change হয়. Table এর fixed amout size থাকে, table full হয়ে গেলে আগে cache delete করে দেয় ।
+
+#### Facts
+
+আমি server এ বসে আছি।
+
+Egress - আমার server থেকে packet চলে যাচ্ছে
+
+Ingress - আমার server এর কাছে packet আসলে 
 
 <img width="757" alt="Screenshot 2023-06-16 at 6 46 27 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/7a3d1334-4f2a-41c6-a3ad-0128de5b0041">
+
+- প্রতিটা namespace তে একটা route table থাকে, তার মধ্যে `default route 0.0.0.0/0` দেওয়া। Route table বলে দেয় কোন interface দিয়ে packet যাওয়া আসা করবে।
+<img width="472" alt="Screenshot 2023-06-20 at 4 30 30 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ec7042b9-68ac-4c04-9780-172bd6ea0653">
+
+- Switch/Bridge একই জিনিষ, L2 device । Packet কে বের locally করবে অথবা gateway দিয়ে বের করবে
+
 
 <img width="1087" alt="Screenshot 2023-06-16 at 7 11 20 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/031bf7e1-d4dc-483f-8ba6-0c10a669d19d">
 
