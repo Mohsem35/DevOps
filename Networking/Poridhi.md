@@ -98,7 +98,7 @@ exit
 
 This will create two virtual interfaces, one for each namespace. Run the following command:
 ```
-sudo ip link add <interface_name> type veth peer name <another_interface_name>  
+sudo ip link add <cable_interface_name> type veth peer name <anothercable_interface_name>  
 ```
 ```
 sudo ip link add reth type veth peer name geth  
@@ -107,7 +107,7 @@ sudo ip link add reth type veth peer name geth
 Computer এর সাথে connect করাইতে চাই
 
 ```
-sudo ip link set <interface_name> netns <namespace_name>
+sudo ip link set <cable_interface_name> netns <namespace_name>
 ```
 ```
 sudo ip link set reth netns red
@@ -117,12 +117,24 @@ sudo ip link set geth netns green
 
 ##### 4. Set IP Addresses for both namespaces
 
+You can set IP address following 2 approaches.
+
 ```
 sudo ip netns exec <namespace_name> /bin/bash
-``` 
+sudo ip add <ip_address> dev <cable_interface_name>
+exit
+
 ```
+```
+# Red namespace
 sudo ip netns exec red /bin/bash
-sudo ip add 
+sudo ip add 10.20.100.3/29 dev reth
+exit
+
+# Green namespace
+sudo ip netns exec green /bin/bash
+sudo ip add 10.20.100.3/29 dev geth
+exit
 ``` 
 
 ```
