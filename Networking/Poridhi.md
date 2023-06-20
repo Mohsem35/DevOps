@@ -189,7 +189,21 @@ ping 10.20.100.4 -c3
 
 #### Feasible solution - Virtual Bridge
 
+A virtual bridge, also known as a virtual switch, is a software-based networking component that `enables communication among virtual network namespaces in a virtualized environment.` It operates at the data link layer (Layer 2) of the networking stack and provides connectivity similar to a physical Ethernet switch.
 
+In virtualization technologies such as VMware, KVM (Kernel-based Virtual Machine), or virtualization software like VirtualBox, a virtual bridge allows virtual machines to communicate with each other and with the external network. It acts as a central point for connecting virtual interfaces of different VMs or virtual network namespaces within the host system.
+
+
+
+#### TTL - Time to Live
+
+- Time to live (TTL) refers to the amount of time or “hops” that `a packet is set to exist inside a network before being discarded by a router`. TTL is a field found in the **headers** of various network protocols, such as IP (Internet Protocol). TTL is also used in other contexts including CDN caching and DNS caching.
+
+- In the context of IP packets, the TTL field is a value measured in seconds or hops. `Each time a router forwards a packet, it decrements the TTL value by one.` If the TTL reaches zero, the router discards the packet and sends an ICMP (Internet Control Message Protocol) "Time Exceeded" message back to the source host.
+
+- The primary purpose of TTL is to `prevent packets from circulating indefinitely in a network due to routing loops or other issues`. By setting a TTL value, the sender of the packet can ensure that it will eventually expire if it cannot reach its destination within a specified number of hops or time. This helps prevent congestion and infinite loops in network routing.
+
+![ttl1](https://github.com/Mohsem35/DevOps/assets/58659448/deb503d1-c290-4cec-8e26-1873bb1d15e6)
 
 
 <img width="757" alt="Screenshot 2023-06-16 at 6 46 27 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/7a3d1334-4f2a-41c6-a3ad-0128de5b0041">
