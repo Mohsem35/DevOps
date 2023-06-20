@@ -137,9 +137,11 @@ sudo ip add 10.20.100.3/29 dev geth
 exit
 ``` 
 
+Another approach(without exec mode):
+
 ```
-ip -n green addr add 10.20.100.3/29 dev veth0
-ip -n blue addr add 10.20.100.4/29 dev veth1
+ip -n red addr add 10.20.100.3/29 dev reth
+ip -n green addr add 10.20.100.4/29 dev geth
 ```
 
 3. Make a connectivity between two virtual ethernet
