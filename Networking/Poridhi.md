@@ -186,7 +186,10 @@ ping 10.20.100.4 -c3
 <img width="624" alt="Screenshot 2023-06-20 at 1 03 38 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e7e1ff00-f525-4df1-8598-8e58844f9717">
 
 
-I have provisioned Almalinux-8 as a virtual machine.
+
+#### Feasible solution - Virtual Bridge
+
+
 
 
 <img width="757" alt="Screenshot 2023-06-16 at 6 46 27 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/7a3d1334-4f2a-41c6-a3ad-0128de5b0041">
