@@ -144,6 +144,9 @@ sudo ip -n red addr add 10.20.100.3/29 dev reth
 sudo ip -n green addr add 10.20.100.4/29 dev geth
 ```
 
+> **_NOTE:_** IP address ইচ্ছামত assigned করা যাবে, কিন্তু same network এর under এ থাকতে হবে ।
+> Cable এর মাথা NIC card ই হচ্ছে interface.
+
 3. Make a connectivity between two virtual ethernet
 
 - Set the virtual ethernet port for both namespaces.
