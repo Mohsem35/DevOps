@@ -110,7 +110,10 @@ Computer এর সাথে connect করাইতে চাই
 sudo ip link set <cable_interface_name> netns <namespace_name>
 ```
 ```
+# Red namespace
 sudo ip link set reth netns red
+
+# Green namespcae
 sudo ip link set geth netns green
 ```
 > **_NOTE:_** Automatically MAC address assigned হয়ে গেছে
@@ -147,11 +150,32 @@ sudo ip -n green addr add 10.20.100.4/29 dev geth
 > **_NOTE:_** IP address ইচ্ছামত assigned করা যাবে, কিন্তু same network এর under এ থাকতে হবে ।
 > Cable এর মাথা NIC card ই হচ্ছে interface.
 
-3. Make a connectivity between two virtual ethernet
+##### 5. Enable / Lights up the virtual ethernet on both namespaces
 
-- Set the virtual ethernet port for both namespaces.
-- Set the IP addresses on both virtual ethernet.
-- Enable / Lights up the virtual ethernet on both namespaces.
+```
+sudo ip netns exec <namespace_name> /bin/bash
+ip link set <cable_interface_name> up
+```
+```
+# Red namespace
+sudo ip netns exec red /bin/bash
+ip link set reth up
+exit
+
+# Green namespace
+sudo ip netns exec green /bin/bash
+ip link set geth up
+exit
+```
+
+Another approach:
+```
+sudo ip -n red link set dev reth up
+sudo ip -n green link set dev geth up
+```
+
+
+
 - Check the IP reachibility.
 
 I have provisioned Almalinux-8 as a virtual machine.
