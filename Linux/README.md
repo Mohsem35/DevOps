@@ -39,3 +39,8 @@ RAID 1: Also known as **mirroring**, RAID 1 duplicates data across multiple driv
 RAID 5: RAID 5 uses block-level striping with **distributed parity**. Data and parity information are spread across multiple drives in the array, providing both performance and redundancy. If a drive fails, the parity information can be used to reconstruct the data. RAID 5 requires a minimum of three drives.
 
 RAID 6: RAID 6 is similar to RAID 5 but uses **double distributed parity**. It can withstand the failure of two drives simultaneously, providing better fault tolerance compared to RAID 5. RAID 6 requires a minimum of four drives.
+
+
+Both SAN and network-attached storage (NAS) are methods of managing storage centrally and sharing that storage with multiple hosts (servers). However, NAS is Ethernet-based, while SAN can use Ethernet and Fibre Channel.
+
+iSCSI
