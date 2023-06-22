@@ -44,12 +44,35 @@ shutdown_timeout = 0
   session_timeout = 1800
 ```
 ```
-gitlab-runner register  --url http://gitlab.celloscope.net  --token glrt-cyf-auiNGWxr-4V-bawp
-gitlab-runner register  --url https://gitlab.celloscope.net  --token glrt-cyf-auiNGWxr-4V-bawp
-sudo gitlab-runner restart
-sudo gitlab-runner stop
-sudo gitlab-runner start
-sudo gitlab-runner run
+sudo gitlab-runner register
+```
+```
+Enter the GitLab instance URL (for example, https://gitlab.com/):
+https://gitlab.com/
+Enter the registration token:
+GR1348941r-aucWxbUAxUF6HbzYgZ
+Enter a description for the runner:
+[maly-db]: creating first runner 
+Enter tags for the runner (comma-separated):
+ubuntu20, local
+Enter optional maintenance note for the runner:
+Registering runner... succeeded                     runner=GR1348941r-aucWxb
+Enter an executor: docker-windows, shell, ssh, virtualbox, docker+machine, instance, custom, docker, kubernetes, parallels, docker-autoscaler:
+shell
+Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+ 
+Configuration (with the authentication token) was saved in "/etc/gitlab-runner/config.toml" 
+
 ```
 
+```
+sudo gitlab-runner restart
+sudo gitlab-runner run
+sudo gitlab-runner status
+```
+
+```
+Runtime platform                                    arch=amd64 os=linux pid=9330 revision=85586bd1 version=16.0.2
+gitlab-runner: Service is running
+```
 
