@@ -214,4 +214,23 @@ build_image:
 ```
 > **_NOTE:_** Here, image tag will work cause here executor is docker
 
+### Specific Runner for multiple projects 
+
+- Unlock this Runner for other projects. For that you have to **untick** the `Lock to current projects` option
+- You can unlock and assign Runner to other projects as well
+
+![Screenshot from 2023-06-22 16-25-29](https://github.com/Mohsem35/DevOps/assets/58659448/e9c1fa84-3375-43c4-89ce-e48cc0b664b7)
+
+#### Gitlab Groups
+
+You can use groups to manage one or more related projects at the same time.
+
+[Create GitLab Group](https://gitlab.com/groups/new)
+
+- All the projects will reside under this group. All your microservice projects will be in a group
+- Manage the access permission of whole projects within a group
+
+#### Group Runner
+
+Exixting group -> Settings -> CI/CD -> Group runners  -> Set up runners as previous
 
