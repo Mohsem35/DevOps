@@ -96,6 +96,7 @@ Output at CLI
 concurrent = 1
 check_interval = 0
 shutdown_timeout = 0
+![rsz_screenshot_from_2023-06-22_15-59-20](https://github.com/Mohsem35/DevOps/assets/58659448/273f3df3-8fcb-421c-8d7e-1d48e4b73050)
 
 [session_server]
   session_timeout = 1800
@@ -108,7 +109,8 @@ shutdown_timeout = 0
   token = "PKYR8xzvqcx9H3-usDrT"
   token_obtained_at = 2023-06-22T06:33:18Z
   token_expires_at = 0001-01-01T00:00:00Z
-  executor = "shell"
+  executor = "shell"![rsz_screenshot_from_2023-06-22_15-35-30](https://github.com/Mohsem35/DevOps/assets/58659448/0d422940-df57-4b7d-b2fa-f87aa70e628e)
+
   [runners.cache]
     MaxUploadedArchiveSize = 0
 ~                               
@@ -117,7 +119,12 @@ Output from GUI
 
 ![rsz_1247846216-3f83ea0f-2604-47fc-98d5-97ccb2d26b5c](https://github.com/Mohsem35/DevOps/assets/58659448/a6ade329-3c4b-4511-b29e-748ef95c772b)
 
-By default, shared runners will be used
+##### 5.Edit the Runner(optional)
+
+![rsz_screenshot_from_2023-06-22_15-59-20](https://github.com/Mohsem35/DevOps/assets/58659448/73b6d12f-b9c9-444f-83bc-7f1ab31419d4)
+
+![rsz_screenshot_from_2023-06-22_16-02-57](https://github.com/Mohsem35/DevOps/assets/58659448/5b15111c-2973-4817-a31c-3d4b1d633a2d)
+
 
 ### Run jobs in specific Runner
 
@@ -180,4 +187,31 @@ sudo usermod -aG docker $USER
 - Register the runner
 ```
 sudo gitlab-runner register
+```
+- Select executor `Docker`
+```
+Enter an executor: custom, docker, ssh, docker-autoscaler, instance, kubernetes, docker-windows, parallels, shell, virtualbox, docker+machine:
+docker
+
+Enter the default Docker image (for example, ruby:2.7):
+alpine:3.18.2
+```
+- Start the Runner
+```
+sudo gitlab-runner start
+sudo gitlab-runner run
+```
+- Specify tag for Docker executor
+```
+build_image:
+    image: node:17-alpine3.18
+    tags:
+        - docker 
+    stage: build
+    script:
+        - echo "Building the docker image..."
+        - echo "Tagging the docker image..."
+```
+> **_NOTE:_** Here, image tag will work cause here executor is docker
+
 
