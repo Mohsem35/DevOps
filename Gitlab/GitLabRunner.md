@@ -30,6 +30,9 @@ sudo systemctl status gitlab-runner.service
 
 Ensure you have `/usr/local/bin/` in `$PATH` for root or you might get a `command not found` error. Alternately, you can install `gitlab-runner` in a different location, like `/usr/bin/.`
 
+### Register Runner
+
+##### 1. Create a file named config.toml
 
 ```
 sudo vim /etc/gitlab-runner/config.toml
@@ -43,9 +46,18 @@ shutdown_timeout = 0
 [session_server]
   session_timeout = 1800
 ```
+
+##### 2. Run the following command from Runner instance
+
 ```
 sudo gitlab-runner register
 ```
+
+Copy the token number from UI and paste in CLI
+
+![rsz_screenshot_from_2023-06-22_15-35-30](https://github.com/Mohsem35/DevOps/assets/58659448/a5f06572-cd40-4631-8b07-c46cc9a1c147)
+
+
 ```
 Enter the GitLab instance URL (for example, https://gitlab.com/):
 https://gitlab.com/
@@ -65,14 +77,107 @@ Configuration (with the authentication token) was saved in "/etc/gitlab-runner/c
 
 ```
 
+##### 3. Start the Runner
+
 ```
 sudo gitlab-runner restart
 sudo gitlab-runner run
 sudo gitlab-runner status
 ```
 
+##### 4. Check the config file at Runner machine
+
 ```
-Runtime platform                                    arch=amd64 os=linux pid=9330 revision=85586bd1 version=16.0.2
-gitlab-runner: Service is running
+sudo vim /etc/gitlab-runner/config.toml
 ```
+Output at CLI
+
+```
+concurrent = 1
+check_interval = 0
+shutdown_timeout = 0
+
+[session_server]
+  session_timeout = 1800
+[Maly_Mohsem_Ahmed_DevOps_BracIT.pdf](https://github.com/Mohsem35/DevOps/files/11830482/Maly_Mohsem_Ahmed_DevOps_BracIT.pdf)
+
+[[runners]]
+  name = "testing purpose"
+  url = "https://gitlab.com/"
+  id = 24564344
+  token = "PKYR8xzvqcx9H3-usDrT"
+  token_obtained_at = 2023-06-22T06:33:18Z
+  token_expires_at = 0001-01-01T00:00:00Z
+  executor = "shell"
+  [runners.cache]
+    MaxUploadedArchiveSize = 0
+~                               
+```
+Output from GUI
+
+![rsz_1247846216-3f83ea0f-2604-47fc-98d5-97ccb2d26b5c](https://github.com/Mohsem35/DevOps/assets/58659448/a6ade329-3c4b-4511-b29e-748ef95c772b)
+
+By default, shared runners will be used
+
+### Run jobs in specific Runner
+
+By default, shared runners will be used if we don't declare tag name in yml file 
+
+##### 1. Run the Runner from instnace
+
+```
+sudo gitlab-runner run
+```
+##### 2. Set specific Runner tag in jobs 
+
+`mynodeapp-cicd -> Build -> Pipeline Editor -> Declare "tags" in yml file -> Run the Pipeline`
+
+```
+run_tests:
+    tags:
+        - ubuntu20      #runner_tag_name 
+    stage: test
+    before_script:
+        - echo "Preparing test data..."
+    script:
+        - echo "Running unit tests for micro service $MICRO_SERVICE_NAME ..."
+    after_script:
+        - echo "Cleaning up temporary files..."
+```
+Output:
+
+```
+Runtime platform                                    arch=amd64 os=linux pid=9462 revision=85586bd1 version=16.0.2
+Starting multi-runner from /etc/gitlab-runner/config.toml...  builds=0
+Running in system-mode.                            
+                                                   
+Configuration loaded                                builds=0
+listen_address not defined, metrics & debug endpoints disabled  builds=0
+[session_server].listen_address not defined, session endpoints disabled  builds=0
+Initializing executor providers                     builds=0
+WARNING: Checking for jobs... failed                runner=PKYR8xzv status=POST https://gitlab.com/api/v4/jobs/request: 409 Conflict
+Checking for jobs... received                       job=4519752626 repo_url=https://gitlab.com/mohsem35/mynodeapp-cicd-project.git runner=PKYR8xzv
+Job succeeded                                       duration_s=3.0235465 job=4519752626 project=46785502 runner=PKYR8xzv
+Appending trace to coordinator...ok                 code=202 job=4519752626 job-log=0-1336 job-status=running runner=PKYR8xzv sent-log=0-1335 status=202 Accepted update-interval=1m0s
+Appending trace to coordinator...ok                 code=202 job=4519752626 job-log=0-1699 job-status=running runner=PKYR8xzv sent-log=1336-1698 status=202 Accepted update-interval=1m0s
+Updating job...                                     bytesize=1699 checksum=crc32:a0c8fbd3 job=4519752626 runner=PKYR8xzv
+Submitting job to coordinator...accepted, but not yet completed  bytesize=1699 checksum=crc32:a0c8fbd3 code=202 job=4519752626 job-status= runner=PKYR8xzv update-interval=1s
+Updating job...                                     bytesize=1699 checksum=crc32:a0c8fbd3 job=4519752626 runner=PKYR8xzv
+Submitting job to coordinator...ok                  bytesize=1699 checksum=crc32:a0c8fbd3 code=200 job=4519752626 job-status= runner=PKYR8xzv update-interval=0s
+```
+> **_NOTE:_** যেহেতু Runner, local machine এ চলতেছে(ubuntu), তাই Runner এ সব রকমের dependency install করা থাকতে হবে like npm,node etc
+
+
+![rsz_1screenshot_from_2023-06-22_13-42-56](https://github.com/Mohsem35/DevOps/assets/58659448/e79f6484-e516-4918-9715-a126da0c6dc9)
+
+### Register Runner on Docker executor 
+
+- Insatll Docker in local machine first
+- Add user to Docker group
+```
+sudo usermod -aG docker $USER
+```
+- Register the runner
+```
+sudo gitlab-runner register
 
