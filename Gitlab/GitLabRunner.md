@@ -29,3 +29,27 @@ sudo systemctl status gitlab-runner.service
 ```
 
 Ensure you have `/usr/local/bin/` in `$PATH` for root or you might get a `command not found` error. Alternately, you can install `gitlab-runner` in a different location, like `/usr/bin/.`
+
+
+```
+sudo vim /etc/gitlab-runner/config.toml
+```
+```
+# output
+concurrent = 1
+check_interval = 0
+shutdown_timeout = 0
+
+[session_server]
+  session_timeout = 1800
+```
+```
+gitlab-runner register  --url http://gitlab.celloscope.net  --token glrt-cyf-auiNGWxr-4V-bawp
+gitlab-runner register  --url https://gitlab.celloscope.net  --token glrt-cyf-auiNGWxr-4V-bawp
+sudo gitlab-runner restart
+sudo gitlab-runner stop
+sudo gitlab-runner start
+sudo gitlab-runner run
+```
+
+
