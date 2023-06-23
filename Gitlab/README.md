@@ -1,12 +1,12 @@
-### Introduction to Gitlab CICD
+## Introduction to Gitlab CICD
 CI - Continuous Integration
 
 CD - Continuous Deployment & Continuously Delivery
 
-![Screenshot from 2023-06-12 12-03-09](https://github.com/Mohsem35/DevOps/assets/58659448/f1925709-9596-412e-a9ce-d9a9a300ff27)
 
+![sxie0vm15pd316ea0g6v](https://github.com/Mohsem35/DevOps/assets/58659448/a7ec2869-8d1d-45a3-a7e8-1a52d9476bb7)
 
-#### Jobs:
+### Jobs:
 
 Jobs are the most fundamental building block of a `.gitlab-ci.yml` file
 - Jobs define what we do.
@@ -16,14 +16,14 @@ Jobs are the most fundamental building block of a `.gitlab-ci.yml` file
 - `before_script` define commands that should run before 'script' commands
 - `after_script` define commands that run after each job, including failed jobs
 
-#### Pipeline:
+### Pipeline:
 
 - The top-level component of continuous integration, delivery and development.
 - A pipeline consists of jobs and stages
 - **On every commit, GitLab triggers the pipeline automatically**
   - run_tests -> build_image -> push_image
-
- ![Screenshot from 2023-06-12 14-47-49](https://github.com/Mohsem35/DevOps/assets/58659448/f3fce85c-3c4a-454c-9aae-bbbdb2ae3374)
+  
+![rsz_245695476-f3fce85c-3c4a-454c-9aae-bbbdb2ae3374](https://github.com/Mohsem35/DevOps/assets/58659448/94b81457-92e7-41f6-aec6-ced6b36fd193)
 
 - We configure Pipeline for a specific project.
 - By default, Pipeline is triggered automatically for all branches.
@@ -37,27 +37,27 @@ Jobs are the most fundamental building block of a `.gitlab-ci.yml` file
 2. Add a new file, in the root of the repository named `gitlab-ci.yml(Pipeline file)`
 
 
-#### Pipeline Execution:
+#### How to execute Pipeline:
 
 ```
 Left sidebar project repository -> Build -> Pipelines
 ```
-#### In order to change pipeline logic: 
+#### In order to change Pipeline logic: 
 
 ```
 Left sidebar project repository -> Build -> Pipeline Editor
 ```
 
-![Screenshot from 2023-06-12 18-13-25](https://github.com/Mohsem35/DevOps/assets/58659448/d726b51b-8fa4-4728-9890-5202747fcac9)
+![rsz_245697333-d726b51b-8fa4-4728-9890-5202747fcac9](https://github.com/Mohsem35/DevOps/assets/58659448/166b1149-093f-405f-8b0a-ce4105b14501)
 
-#### Stages:
+### Stages:
 
 - You can `group multiple jobs` into stages that run in a defined order.
 - Multiple jobs in the same stage are executed in **parallel.**
 - Only if al jobs in a stage succeed, the pipeline moves on to the next stage
 - If any job in a stage fails, the next stage in not executed and the pipeline ends
 
-#### Needs:
+### Needs:
 
 
 - Execute jobs in a certain order within a stage. If it fails, it should skip the other dependents jobs.
@@ -98,7 +98,9 @@ This pipeline logic jobs should only run for **main** branch and the other jobs 
 ```
 Left sidebar project repository -> Code -> Branches -> New branch
 ```
-![Screenshot from 2023-06-14 16-43-45](https://github.com/Mohsem35/DevOps/assets/58659448/720b474b-b011-4da8-97fd-5a333e06e1df)
+
+![rsz_245765717-720b474b-b011-4da8-97fd-5a333e06e1df](https://github.com/Mohsem35/DevOps/assets/58659448/336c22e5-83a8-4f72-808f-5ecebdcef0e3)
+
 
 The following `build image` job will be executed only main branch. 
 ```
@@ -112,7 +114,9 @@ build_image:
 ```
 
 **except:** Define when a job does not run
-![Screenshot from 2023-06-15 13-45-52](https://github.com/Mohsem35/DevOps/assets/58659448/ffb683a7-7e64-4239-ba9b-b2d59daee1bc)
+
+![rsz_246033120-ffb683a7-7e64-4239-ba9b-b2d59daee1bc(1)](https://github.com/Mohsem35/DevOps/assets/58659448/e4997fc6-dd97-44dd-a486-14171731dc7b)
+
 
 #### Workflow rules:
 
