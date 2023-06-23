@@ -27,18 +27,18 @@ A network is what transports traffic between hosts.
 ### Repeater
 Data crossing a wire decays as it travels.
 
-<img width="858" alt="Screenshot 2023-06-05 at 11 21 02 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9c4e21cd-7096-4fe1-ba2d-4b79d893e212">
+<img width="644" alt="rsz_1243427032-9c4e21cd-7096-4fe1-ba2d-4b79d893e212" src="https://github.com/Mohsem35/DevOps/assets/58659448/2724f45e-0fca-4ec0-840e-fbd38ead3ba8">
 
 
 ### Hub
 Hubs are simply multi-port **Repeaters**
 
-<img width="879" alt="Screenshot 2023-06-05 at 11 23 36 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d88ec4a5-be63-461b-b86e-44111676ae6c">
+<img width="644" alt="Screenshot 2023-06-05 at 11 23 36 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d88ec4a5-be63-461b-b86e-44111676ae6c">
 
 ### Bridge
 Bridges sit between Hub-connected hosts.
 
-<img width="869" alt="Screenshot 2023-06-05 at 11 34 57 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d024a0a2-d80c-4e4a-9f5a-5f46dc7b2da4">
+<img width="644" alt="Screenshot 2023-06-05 at 11 34 57 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d024a0a2-d80c-4e4a-9f5a-5f46dc7b2da4">
 
 
 ### Switch
@@ -50,7 +50,7 @@ Switches faciliate communocation **within** a network.
 **Network:**  Grouping of hosts, which require similar connectivity.
 - Hosts on a Network share the same IP address space.
 
-<img width="852" alt="Screenshot 2023-06-05 at 11 43 47 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e8689b90-cd03-4588-be59-b4b3682ee30e">
+<img width="644" alt="Screenshot 2023-06-05 at 11 43 47 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e8689b90-cd03-4588-be59-b4b3682ee30e">
 
 
 ### Router
@@ -66,7 +66,7 @@ Routers faciliate communocation **between** networks.
 
 **Gateway:** Each host's way out of their local Network
 
-<img width="1062" alt="Screenshot 2023-06-05 at 11 57 04 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/25651da2-8f1f-42bc-9cc8-eaf94e4305cc">
+<img width="644" alt="Screenshot 2023-06-05 at 11 57 04 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/25651da2-8f1f-42bc-9cc8-eaf94e4305cc">
 
 
 ### Other Network Devices
@@ -84,7 +84,7 @@ All of them perform Routing And/Or Switching.
 
 Hosts must follow a set of rules. The rules for networking are divided into seven layers. Each layer servers a specific function.
 
-![The-Physical-Layer-in-OSI-Model-Explained-thumbnail](https://github.com/Mohsem35/DevOps/assets/58659448/ab0dc990-ca8d-4206-8051-4bee3c1e4f24)
+![rsz_243759660-ab0dc990-ca8d-4206-8051-4bee3c1e4f24](https://github.com/Mohsem35/DevOps/assets/58659448/8f53714f-9b64-4a59-a188-b6f84eea0414)
 
 ### Layer 1 - Physical - Transporting Bits
 
