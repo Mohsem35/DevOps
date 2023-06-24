@@ -68,7 +68,31 @@ ip route add default via 192.168.2.1
 ![rsz_1screenshot_from_2023-06-23_11-05-53](https://github.com/Mohsem35/DevOps/assets/58659448/5370099b-34ba-4693-bf54-7bbe32225f99)
 
 
+### Access Network C from Network A
 
+- Add Routing table entry in Host A
+```
+ip route add 192.168.2.0/24 via 192.168.1.6
+```
+- Host B is acting as a Router here
+![rsz_screenshot_from_2023-06-23_11-15-11](https://github.com/Mohsem35/DevOps/assets/58659448/f3d56854-81e5-4ca7-a58e-ec6b11c6fd36)
 
+- Add a similar Routing table entry in Host C
+```
+ip route add 192.168.1.0/24 via 192.168.2.6
+```
+- By default in Linux, packets are not forwarded from one interface to another
+- Set Linux host as a router
+
+for Packet Forward:
+```
+cat /proc/sys/net/ipv4/ip_forward                #set this value to 1, if it is 0 then packet will not forward
+echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+Keep the changes persistent:
+```
+sudo vim /etc/sysctl.conf
+net.ipv4.ip_forward = 1
+```
 
 
