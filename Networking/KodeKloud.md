@@ -96,3 +96,16 @@ net.ipv4.ip_forward = 1
 ```
 
 
+### Name Resolution - Trnaslating Hostname to IP address
+```
+sudo vim /etc/hosts
+```
+```
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.4.5 db
+192.168.4.6 www.name.com
+```
+```
+ping db
+
