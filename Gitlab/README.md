@@ -1,10 +1,12 @@
-## Introduction to Gitlab CICD
+## Introduction to CI/CD and GitLab
 CI - Continuous Integration
 
 CD - Continuous Deployment & Continuously Delivery
 
 
 ![sxie0vm15pd316ea0g6v](https://github.com/Mohsem35/DevOps/assets/58659448/a7ec2869-8d1d-45a3-a7e8-1a52d9476bb7)
+
+## Core Concepts of GitLab CI/CD
 
 ### Jobs:
 
@@ -64,7 +66,8 @@ Left sidebar project repository -> Build -> Pipeline Editor
 - Job keyword to **define dependency relationships bwtween the jobs**.
 - Even though they belong to same stage, `push image` job is dependent on `build_image` job. If build image job fails, then push image will be skipped.
   
-![Screenshot from 2023-06-14 14-56-55](https://github.com/Mohsem35/DevOps/assets/58659448/e0a9edd6-ca9e-4a7f-b28e-deaa3f8f0166)
+![rsz_245735895-e0a9edd6-ca9e-4a7f-b28e-deaa3f8f0166](https://github.com/Mohsem35/DevOps/assets/58659448/988c7ac9-d6ba-4ca9-9487-7ef45888f54b)
+
   
 ```
 push_image:
@@ -273,7 +276,7 @@ Ans: When you register a runner, you must choose an executor. **1 executor per r
 
 Runner **requests jobs** from GitLab instance -> Runner **compiles and sends** job's plyload to Executor -> Executor **clones/download artifacts** for GitLab instance and **executes job** -> Executor resturns **job output to Runner** -> Runner updates **job output to Gitlab instance**
 
-![Screenshot from 2023-06-18 15-33-45](https://github.com/Mohsem35/DevOps/assets/58659448/f05d4d66-63bc-4257-b71d-46c34ba3b8be)
+![rsz_1246654807-f05d4d66-63bc-4257-b71d-46c34ba3b8be](https://github.com/Mohsem35/DevOps/assets/58659448/31db0c11-df82-4983-991c-9941e7d0ea14)
 
 
 
