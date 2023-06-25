@@ -25,7 +25,7 @@ Here are some commonly used namespaces in Linux:
 
 #### CIDR - Classless Inter Domain Routing
 
-CIDR is a method used to `allocate and manage IP addresses more efficiently in computer networks`. CIDR replaces the older class-based addressing scheme, which divided IP addresses into fixed network classes (Class A, Class B, and Class C).
+CIDR is a method used to `allocate and manage IP addresses more efficiently in computer networks`. CIDR rehttps://dev.to/tanvirrahman/exploring-linux-kernel-space-user-space-namespaces-and-network-chaining-unveiled-4874places the older class-based addressing scheme, which divided IP addresses into fixed network classes (Class A, Class B, and Class C).https://dev.to/tanvirrahman/exploring-linux-kernel-space-user-space-namespaces-and-network-chaining-unveiled-4874
 
 CIDR introduced a flexible and hierarchical addressing system that allows for variable-length subnet masking. It represents IP addresses using a combination of the IP address itself and a suffix that specifies the number of significant bits in the network mask. The suffix is written in the form of "/X", where X is the number of bits in the network mask.
 
@@ -58,8 +58,6 @@ Using network namespaces, administrators can create isolated network environment
 
 ## Creating Two network namespaces and connect them with their virtual ethernet
 
-
-![1 AcZ5xYvn5OfJK1D-9lpZ5A](https://github.com/Mohsem35/DevOps/assets/58659448/441977d0-cd65-4b0a-aebd-f29d10ae49ee)
 
 Linux -> Namespace -> Network namespace
 
@@ -193,7 +191,44 @@ ping 10.20.100.4 -c3
 
 A virtual bridge, also known as a virtual switch, is a software-based networking component that `enables communication among virtual network namespaces in a virtualized environment.` It operates at the data link layer (Layer 2) of the networking stack and provides connectivity similar to a physical Ethernet switch.
 
-In virtualization technologies such as VMware, KVM (Kernel-based Virtual Machine), or virtualization software like VirtualBox, a virtual bridge allows virtual machines to communicate with each other and with the external network. It acts as a central point for connecting virtual interfaces of different VMs or virtual network namespaces within the host system.
+In virtualization technologies such as VMware, KVM (Kernel-based Virtual Machine), or virtualization software like VirtualBox, a virtual bridge allows virtual machines to communicate with each other and with the external network. It `acts as a central point for connecting virtual interfaces` of different VMs or virtual network namespaces within the host system.
+
+![1 AcZ5xYvn5OfJK1D-9lpZ5A](https://github.com/Mohsem35/DevOps/assets/58659448/441977d0-cd65-4b0a-aebd-f29d10ae49ee)
+
+![Untitled-2023-06-25-1320(1)](https://github.com/Mohsem35/DevOps/assets/58659448/0bd54376-29a5-4a0c-af50-6e6a3084ecb7)
+
+
+```
+sudo ip link add <bridge_name> type bridge
+sudo ip link set <bridge_name> up
+sudo ip addr add 100.100.200.100/24 dev <bridge_name>
+```
+
+```
+# Red Namespace
+sudo ip netns add red
+sudo ip link add veth1 type veth peer name veth3
+sudo ip link set veth1 netns red
+sudo ip netns exec red ip addr add 100.100.200.5/24 dev veth1
+sudo ip netns exec red ip link set veth1 up
+sudo ip link set veth3 master vbridge
+sudo ip link set veth3 up
+
+# Green Namespace
+sudo ip netns add green
+sudo ip link add veth2 type veth peer name veth4
+sudo ip link set veth2 netns green
+sudo ip netns exec green ip addr add 100.100.200.6/24 dev veth2
+sudo ip netns exec green ip link set veth2 up
+sudo ip link set veth4 master vbridge
+sudo ip link set veth4 up
+```
+
+##### Check the IP reachibility:
+
+![Screenshot from 2023-06-25 14-47-42](https://github.com/Mohsem35/DevOps/assets/58659448/30470df8-8f9d-449c-ad8d-45a05b1fdf38)
+
+
 
 
 
@@ -217,7 +252,7 @@ TTL cache table change হয়. Table এর fixed amout size থাকে, table
 
 আমি server এ বসে আছি।
 
-Egress - আমার server থেকে packet চলে যাচ্ছে
+Egress - আমার server থেকে packet চলে যাচ্ছেhttps://dev.to/tanvirrahman/exploring-linux-kernel-space-user-space-namespaces-and-network-chaining-unveiled-4874n  
 
 Ingress - আমার server এর কাছে packet আসলে 
 
