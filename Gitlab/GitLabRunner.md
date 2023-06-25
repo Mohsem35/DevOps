@@ -232,5 +232,5 @@ You can use groups to manage one or more related projects at the same time.
 
 #### Group Runner
 
-Exixting group -> Settings -> CI/CD -> Group runners  -> Set up runners as previous
+Existing group -> Settings -> CI/CD -> Group runners  -> Set up runners as previous
 
