@@ -29,3 +29,58 @@ npm test        #for testing
 ```
 
 ![Screenshot from 2023-06-25 18-38-19](https://github.com/Mohsem35/DevOps/assets/58659448/e4174cd5-e089-49b1-9e03-0c937d479d9c)
+
+### Run Unit Tests
+
+```
+stages:
+  - test
+
+run_unit_tests:
+  image: node:20-alpine3.17
+  stage: test
+  tags:
+    - ec2
+    - docker
+    - remote
+  before_script:
+    - cd app
+    - npm install
+  script:
+    - npm test
+```
+
+Generate Test Report of Jest
+
+#### Job Artifact
+
+Jobs can output an archive of files and directories. This output is called a _Job Artifact_
+
+Different reports like 
+- test reports
+- code quality reports
+- security reports
+can be collected 
+
+artifacts:reports
+
+```
+  artifacts:
+    when: always
+    paths:
+      - app/junit.xml
+    reports:
+      junit: app/junit.xml
+```
+##### JUnit
+
+- Collects JUnit report XML file
+- These are uploaded to GitLab as an artifact
+
+Visualization come from Test Reports
+
+![rsz_screenshot_from_2023-06-26_14-40-12](https://github.com/Mohsem35/DevOps/assets/58659448/cd7f03b5-0295-45ed-800c-954810a7d05b)
+
+![rsz_screenshot_from_2023-06-26_14-42-59](https://github.com/Mohsem35/DevOps/assets/58659448/76d34667-6b58-421d-ad76-496b2455e488)
+
+Download able test reports which should be browse able, so we used `paths` in 'artifacts` section
