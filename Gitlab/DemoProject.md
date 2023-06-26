@@ -72,7 +72,7 @@ artifacts:reports
     reports:
       junit: app/junit.xml
 ```
-##### JUnit
+##### JUnit 
 
 - Collects JUnit report XML file
 - These are uploaded to GitLab as an artifact
@@ -84,3 +84,25 @@ Visualization come from Test Reports
 ![rsz_screenshot_from_2023-06-26_14-42-59](https://github.com/Mohsem35/DevOps/assets/58659448/76d34667-6b58-421d-ad76-496b2455e488)
 
 Download able test reports which should be browse able, so we used `paths` in 'artifacts` section
+
+
+### Build & Push Docker Image
+
+- Every GitLab project can have its **own space to store its Docker images**
+- GitLab strives to become a complete DevOps platform
+- Platform on which you build your complete DevOps workflows
+
+GitLab Container Registry
+- By default, the Registry is visible to everyone with access to the project
+
+  
+![rsz_screenshot_from_2023-06-26_18-25-34](https://github.com/Mohsem35/DevOps/assets/58659448/aad89bc5-379c-435b-b7be-480b95d797e7)
+
+
+![rsz_screenshot_from_2023-06-26_18-31-51](https://github.com/Mohsem35/DevOps/assets/58659448/a8079f8f-511a-495d-8707-6f4e51a2cb6f)
+
+```
+  script:
+    - docker build -t registry.gitlab.com/mohsem35/mynodeapp-cicd:1.0 . 
+```
+
