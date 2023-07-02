@@ -25,8 +25,9 @@ These physical volumes can be hard disk drives **(HDDs)**, solid-state drives **
 `Logical Volume (LV):` A **logical partition** that resides within a volume group. Logical volumes are similar to traditional disk partitions but 
 offer more flexibility. They can be resized, moved, and even span across multiple physical volumes.
 
+![rsz_1247137860-07ef6124-eef7-4ded-936b-7717f281cb77](https://github.com/Mohsem35/DevOps/assets/58659448/ccacd9c4-bdaf-4d0e-a032-a7cf5a4a6e70)
 
-![lvm-diagram-linux-training-academy](https://github.com/Mohsem35/DevOps/assets/58659448/07ef6124-eef7-4ded-936b-7717f281cb77)
+
 
 #### RAID - Redundant Array of Independent Disks
 
@@ -44,6 +45,8 @@ RAID 6: RAID 6 is similar to RAID 5 but uses **double distributed parity**. It c
 Both SAN and network-attached storage (NAS) are methods of managing storage centrally and sharing that storage with multiple hosts (servers). However, NAS is Ethernet-based, while SAN can use Ethernet and Fibre Channel.
 
 Q. What is iSCSI?
+
+### Bash Scripting
 
 ![rsz_ezgif-4-7fb9fabb6c](https://github.com/Mohsem35/DevOps/assets/58659448/7d20cc3b-ec80-42db-8f5b-31ece79f6d32)
 
@@ -64,5 +67,45 @@ Q. What is iSCSI?
 ![logo](https://github.com/Mohsem35/DevOps/assets/58659448/d04fe698-3753-4e0e-9660-00b3a4f6f2a5)
 
 
+##### File conditions in scripting:
+```
+-d = checks if file is a directory
+-f = checks if file is an ordinary file
+-r = checks if file is readable
+-w = checks if file is writeable
+-x = checks if file is executeable
+-e = checks if file exists
+-s = checks if file has size greater than 0
+
+```
+
+##### Number conditions:
+```
+-eq = value of two operands are equal or not
+-ge = comparison between two operands
+-lt = less than
+-gt = greater than
+-ne = not equal
+```
+##### String Conditions:
+```
+== equal
+!= not equal
+-z = checks if a string is empty (has zero length).
+-n = checks if a string is not empty (has a length greater than zero)
+```
+
+
+#### Read user input:
+
+```
+#!/bin/bash
+
+read -p "please enter password: " user_pwd
+echo "thanks for your password $user_pwd"
+```
+
+$*=represents all arguments as a single string
+$#=total number of arguments provided
 
 
