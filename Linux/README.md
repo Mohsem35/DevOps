@@ -43,4 +43,26 @@ RAID 6: RAID 6 is similar to RAID 5 but uses **double distributed parity**. It c
 
 Both SAN and network-attached storage (NAS) are methods of managing storage centrally and sharing that storage with multiple hosts (servers). However, NAS is Ethernet-based, while SAN can use Ethernet and Fibre Channel.
 
-iSCSI
+Q. What is iSCSI?
+
+![rsz_ezgif-4-7fb9fabb6c](https://github.com/Mohsem35/DevOps/assets/58659448/7d20cc3b-ec80-42db-8f5b-31ece79f6d32)
+
+
+
+- Shell Scripts have a `.sh` file extension
+- Shell = Program, what we type in terminal that interprets and executes commands. Translates commands to OS Kernel
+- **Sh** (Bourne shell) - /bin/sh
+- **Bash** (bourne again shell) - Improved version of sh
+- Bash is a programming language and shell program
+- In OS, there could be multiple shell program. We need to tell OS which shell program to use by **shebang** (#=sharp,!=bang)
+```
+#!/bin/sh
+#!/bin/bash - is the location of bash program
+#!/bin/zsh
+```
+
+![logo](https://github.com/Mohsem35/DevOps/assets/58659448/d04fe698-3753-4e0e-9660-00b3a4f6f2a5)
+
+
+
+
