@@ -92,7 +92,7 @@ Download able test reports which should be browse able, so we used `paths` in 'a
 - GitLab strives to become a complete DevOps platform
 - Platform on which you build your complete DevOps workflows
 
-GitLab Container Registry
+GitLab **Container Registry**
 - By default, the Registry is visible to everyone with access to the project
 
   
@@ -102,7 +102,29 @@ GitLab Container Registry
 ![rsz_screenshot_from_2023-06-26_18-31-51](https://github.com/Mohsem35/DevOps/assets/58659448/a8079f8f-511a-495d-8707-6f4e51a2cb6f)
 
 ```
+build_image:
+  stage: build
+  image: docker
+  services:
+    - docker:dind
+  tags:
+    - shell
+    - docker
+    - linux
   script:
-    - docker build -t registry.gitlab.com/mohsem35/mynodeapp-cicd:1.0 . 
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD registry.gitlab.com
+    - docker build -t registry.gitlab.com/mohsem35/mynodeapp-cicd .           # builds an image from a dockerfile, added image version 1.0 and dot(.) for dockerfile location 
+    - docker push registry.gitlab.com/mohsem35/mynodeapp-cicd
 ```
+- Now check, if the image is pushed to GitLab container registry. You will ses a file in `container registry` directory
 
+![rsz_1screenshot_from_2023-07-03_13-10-24](https://github.com/Mohsem35/DevOps/assets/58659448/d90f1190-c89f-4eed-9b47-d92c90ac3f4e)
+
+
+![rsz_screenshot_from_2023-07-03_13-10-09](https://github.com/Mohsem35/DevOps/assets/58659448/9365bf8f-6e58-4bd9-9cfc-2074f8bd7cb8)
+
+- Container registy can have multiple image repositories
+- Each image repository can store multiple image versions (tags).
+```
+Docker image repo is registry.gitlab.com/mohsem35/mynodeapp-cicd
+```
