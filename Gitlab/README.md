@@ -155,6 +155,11 @@ Project variables:
 1. Stored outside the git repository(not in the .gitlab-ci.yml)
 2. Ideal for tokens and passwords, which should not be included in the repository for security reasons!
 
+
+Protected variables: variables are only abailable when the pipeline runs on a protected branch
+
+Masked variables; Variables containing secrets should always be masked. With this, you avoid the risk of exposing the value of the variable,
+
 ##### How to define Environment Variables:
 
 ![Screenshot from 2023-06-15 18-31-00](https://github.com/Mohsem35/DevOps/assets/58659448/9218785a-23d5-4206-9ad7-d43c72fcbf76)
