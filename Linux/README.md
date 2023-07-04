@@ -1,21 +1,58 @@
 ### Linux Commands to Remember
 
-To add a content to a file with cat(redirect) . Run cat > /path/to/<filename> command
+- To add a content to a file with cat(redirect) . Run cat > /path/to/<filename> command
 ```
 cat > Africa/Egypt/Cairo/City.txt
  Cairo
 `Type Ctrl + d from keyboard`
 ```
 
-Most of the commands internal or external come bundled with man pages which provides information about the command in detail (with examples, usecases and with command options)
-Syntax: man <command>
+- Most of the commands internal or external come bundled with man pages which provides information about the command in detail (with examples, usecases and with command options)
+
+**`Syntax: man <command>`**
 ```
 man date
 ```
-To check the home directory for a particular user say bob
+- To check the home directory for a particular user say bob
 ```
 grep bob /etc/passwd | cut -d ":" -f6
 ```
+
+- To change the shell for bob from **`Bash`** to **`Bourne Shell`**
+```
+chsh -s /bin/sh bob
+```
+
+- Create a new environment variable called **`PROJECT=MERCURY`** and make it persistent by adding the variable to the **`~/.profile`** file
+```
+echo export PROJECT=MERCURY >> ~/.profile
+```
+- Set an alias called **`up`** for the command **`uptime`** and make it persistent by adding to **`~/.profile`** file.
+```
+echo alias up=uptime >> ~/.profile
+```
+
+- Update Bob's prompt so that it displays the date as per the format below: Example: **`[Wed Apr 22]bob@caleston-lp10:~$`** Make sure the change is made persistent. 
+```
+PS1='[\d]\u@\h:\w\$'
+or
+echo 'PS1=[\d]\u@\h:\w$' >> ~/.profile
+```
+![bash-prompt3](https://github.com/Mohsem35/DevOps/assets/58659448/172a13dd-3fb1-4e70-95d9-0e9442b40f86)
+
+- To check if the location of the command can be identified. Use the which command
+**`Syntax: which <command>`**
+```
+$ which obs-studio
+```
+
+- Speaking about the environment variables, when a user issues an external command into the shell, the shell uses path variable to search for these external commands
+- To see the directories defined in path variable. Use the command **`echo $PATH`**.
+```
+$ echo $PATH
+```
+
+
 
 
 Name of some Linux filesystems - Ext4, XFS, Btrfs, JFS, NTFS
