@@ -1,3 +1,23 @@
+### Linux Commands to Remember
+
+To add a content to a file with cat(redirect) . Run cat > /path/to/<filename> command
+```
+cat > Africa/Egypt/Cairo/City.txt
+ Cairo
+`Type Ctrl + d from keyboard`
+```
+
+Most of the commands internal or external come bundled with man pages which provides information about the command in detail (with examples, usecases and with command options)
+Syntax: man <command>
+```
+man date
+```
+To check the home directory for a particular user say bob
+```
+grep bob /etc/passwd | cut -d ":" -f6
+```
+
+
 Name of some Linux filesystems - Ext4, XFS, Btrfs, JFS, NTFS
 
 ![ezgif com-webp-to-jpg](https://github.com/Mohsem35/DevOps/assets/58659448/5dabcb77-0fbe-4e60-a652-f8685fb42fdb)
@@ -53,6 +73,13 @@ What is a shell?
 - Linux shell is a program that allows text based interaction between the user and the operating system, this interaction is carried out by typing commands into the interface and receving the response in the same way.
 - The Linux shell is a powerful tool with which you can navigate between different locations within the system, however when you login to the shell the very first directory you were take into is your home directory.
 
+There are different types of shells in linux, some of the popular ones are below
+- Bourne Shell (sh)
+- C Shell (csh or tsh)
+- Korn Shell (ksh)
+- Z Shell (zsh)
+- Bourne again shell (Bash)
+
 ![rsz_ezgif-4-7fb9fabb6c](https://github.com/Mohsem35/DevOps/assets/58659448/7d20cc3b-ec80-42db-8f5b-31ece79f6d32)
 
 
@@ -101,7 +128,7 @@ What is a shell?
 ```
 
 
-#### Read user input:
+##### Read user input:
 
 ```
 #!/bin/bash
@@ -111,32 +138,33 @@ echo "thanks for your password $user_pwd"
 ```
 
 $* = represents all arguments as a single string
+
 $# = total number of arguments provided
 
 #### Bash environment variables
 
-To print SHELL environment variable
+To print SHELL environment variable/To check which shell being used
 ```
 echo $SHELL
 ```
 
 To see a list of all environment variables. Run env from the terminal
 ```
-$ env
+env
 ```
 
 To set an environment variable we can use the export command. To make the value carry forward to any other process.
 ```
-$ export OFFICE=caleston
+export OFFICE=caleston
 ```
-To persistently set an environment variable over subsequent login or a reboot add them to the ~/.profile or ~/.pam_environment in the users home directory.
+To persistently set an environment variable over subsequent login or a reboot add them to the **`~/.profile`** or **`~/.pam_environment`** in the users home directory.
 ```
-$ echo "export OFFICE=caleston" >> ~/.profile (or)
-$ echo "export OFFICE=caleston" >> ~/.pam_environment
+echo "export OFFICE=caleston" >> ~/.profile (or)
+echo "export OFFICE=caleston" >> ~/.pam_environment
 ```
 To check the value of a environment variable called LOGNAME
 ```
-$ echo $LOGNAME
+echo $LOGNAME
 ```
 
 
