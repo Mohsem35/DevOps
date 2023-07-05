@@ -1,21 +1,18 @@
 ## Linux Commands to Remember
 
-- To add a content to a file with cat(redirect) .
+- To add a content to a file with cat(redirect) 
 
-Run **`cat > /path/to/<filename>`** command:
 ```
 cat > Africa/Egypt/Cairo/City.txt
  Cairo
 `Type Ctrl + d from keyboard`
 ```
 
-- Most of the commands internal or external come bundled with man pages which provides information about the command in detail (with examples, usecases and with command options)
-
-**`Syntax: man <command>`**
+- Most of the commands internal or external come bundled with man pages which provides information about the **`command in detail`** (with examples, usecases and with command options)
 ```
-man date
+man <command>
 ```
-- To check the home directory for a particular user say bob
+- To **`check the home directory`** for a particular user say bob
 ```
 grep bob /etc/passwd | cut -d ":" -f6
 ```
@@ -25,11 +22,11 @@ grep bob /etc/passwd | cut -d ":" -f6
 chsh -s /bin/sh bob
 ```
 
-- Create a new environment variable called **`PROJECT=MERCURY`** and make it persistent by adding the variable to the **`~/.profile`** file
+- **`Create a new environment variable`** called PROJECT=MERCURY and make it persistent by adding the variable to the ~/.profile file
 ```
 echo export PROJECT=MERCURY >> ~/.profile
 ```
-- Set an alias called **`up`** for the command **`uptime`** and make it persistent by adding to **`~/.profile`** file.
+- **`Set an alias`** called up for the command uptime and make it persistent by adding to ~/.profile file.
 ```
 echo alias up=uptime >> ~/.profile
 ```
@@ -40,7 +37,11 @@ PS1='[\d]\u@\h:\w\$'
 or
 echo 'PS1=[\d]\u@\h:\w$' >> ~/.profile
 ```
-![bash-prompt3](https://github.com/Mohsem35/DevOps/assets/58659448/172a13dd-3fb1-4e70-95d9-0e9442b40f86)
+- let us know identify the **`linux kernel versions`**
+```
+uname -r
+uname -a
+```
 
 - To check if the location of the command can be identified. Use the which command
 **`Syntax: which <command>`**
@@ -48,13 +49,11 @@ echo 'PS1=[\d]\u@\h:\w$' >> ~/.profile
 $ which obs-studio
 ```
 
-- Speaking about the environment variables, when a user issues an external command into the shell, the shell uses path variable to search for these external commands
-- To see the directories defined in path variable. Use the command **`echo $PATH`**.
+- Speaking about the environment variables, **`when a user issues an external command into the shell, the shell uses path variable to search for these external commands.`** To see the directories defined in path variable.
+
 ```
 $ echo $PATH
 ```
-
-
 
 
 Name of some Linux filesystems - Ext4, XFS, Btrfs, JFS, NTFS
@@ -62,11 +61,36 @@ Name of some Linux filesystems - Ext4, XFS, Btrfs, JFS, NTFS
 ## Linux Kernel
 
 
-If you have worked with any operating system, you have run into the term kernel.
+**If you have worked with any operating system, you have run into the term kernel.**
+
 - The Linux kernel is monolithic, this means that the kernel carrries out CPU scheduling, memory management and several operations by itselfs.
 - The Linux Kernel is also modular, which means it can extends its capabilities through the use of dynamically loaded kernel modules
 
+**The Kernel is responsible for 4 major tasks**
+
+1. Memory Management
+2. Process Management
+3. Device Drivers
+4. System calls and Security
+
 ![linux-kernel](https://github.com/Mohsem35/DevOps/assets/58659448/3b18cd1b-5c3f-4700-8c11-46cca8a2041d)
+
+
+#### Kernel and User Space
+
+One of the important functions of the linux kernel is the `Memory Management` . We will now see how memory is seperated within the linux kernel
+
+Memory is divded into two areas
+
+1. Kernel Space
+2. User Space
+
+
+![memory-management](https://github.com/Mohsem35/DevOps/assets/58659448/f279755a-6cff-4ea5-b498-b0ac49fc2201)
+
+All user programs function by manipulating data that is stored in memory and on disk. User programs get access to data by making special request to the kernel called **`System Calls`**
+
+![user-space](https://github.com/Mohsem35/DevOps/assets/58659448/cc7a82ec-37d8-448b-ac46-d2383a352db8)
 
 
 ![ezgif com-webp-to-jpg](https://github.com/Mohsem35/DevOps/assets/58659448/5dabcb77-0fbe-4e60-a652-f8685fb42fdb)
