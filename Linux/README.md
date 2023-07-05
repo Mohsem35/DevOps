@@ -1,6 +1,8 @@
-### Linux Commands to Remember
+## Linux Commands to Remember
 
-- To add a content to a file with cat(redirect) . Run cat > /path/to/<filename> command
+- To add a content to a file with cat(redirect) .
+
+Run **`cat > /path/to/<filename>`** command:
 ```
 cat > Africa/Egypt/Cairo/City.txt
  Cairo
@@ -56,6 +58,16 @@ $ echo $PATH
 
 
 Name of some Linux filesystems - Ext4, XFS, Btrfs, JFS, NTFS
+
+## Linux Kernel
+
+
+If you have worked with any operating system, you have run into the term kernel.
+- The Linux kernel is monolithic, this means that the kernel carrries out CPU scheduling, memory management and several operations by itselfs.
+- The Linux Kernel is also modular, which means it can extends its capabilities through the use of dynamically loaded kernel modules
+
+![linux-kernel](https://github.com/Mohsem35/DevOps/assets/58659448/3b18cd1b-5c3f-4700-8c11-46cca8a2041d)
+
 
 ![ezgif com-webp-to-jpg](https://github.com/Mohsem35/DevOps/assets/58659448/5dabcb77-0fbe-4e60-a652-f8685fb42fdb)
 
