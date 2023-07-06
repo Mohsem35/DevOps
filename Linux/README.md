@@ -56,6 +56,23 @@ $ echo $PATH
 ```
 
 
+- To list all PCI (Peripheral Component Interconnect) devices that are configured in the system. Examples of PCI devices are **`Ethernet Cards`**, **`RAID Controllers`**, **`Video Cards`** and **`wireless Adaptors`** that directly attached to PCI slots in the motherboard of the computer.
+```
+lspci
+```
+
+- To extract **`detail information about entire hardware`** information of the machine
+
+```
+lshw
+```
+
+- To list information about **`Block Devices`**
+```
+lsblk
+```
+
+
 Name of some Linux filesystems - Ext4, XFS, Btrfs, JFS, NTFS
 
 ## Linux Kernel
