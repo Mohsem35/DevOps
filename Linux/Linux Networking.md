@@ -30,11 +30,15 @@ and routing decisions and are in any case beyond the scope of these introductory
 
 ### Chains
 
-- Tables consist of chains, which are lists of rules which are followed in order. The default table, **`filter`**, contains three built-in chains: **`INPUT`**, 
-**`OUTPUT`**, and **`FORWARD`** which are activated at different points of the packet filtering process.
-- The **`nat`** table includes **`PREROUTING`**, **`POSTROUTING`**, and **`OUTPUT`** chains.
+- Tables consist of chains, which are **`lists of rules`** which are followed in order.
+- The default table, **`filter`**, contains three built-in chains which are activated at different points of the packet filtering process.
+   - **`INPUT`** chain is the rule that controls incoming packets. Here you can block or allow new connections. You can do this based on port, protocol, and source IP address.
+   - **`FORWARD`** chain filters incoming packets that are being forwarded to a different end location
+   - **`OUTPUT`** packets generated locally. It is important to note that if you ping an external host then the input chain will be used to return the data back to you.
+- The **`nat`** table includes four built-ins  chains.
+   - **`PREROUTING`** used for altering a packet as soon as it’s received.
+   - **`OUTPUT`** used for altering locally-generated packets.
+   - **`POSTROUTING`** used for altering packets as they are about to go out.
 
-   - INPUT packages destined for local sockets.
-   - FORWARD packets routed through the system.
-   - OUTPUT packets generated locally.
+
 
