@@ -205,7 +205,7 @@ exit
 
 ```
 brctl show
-sudo ip link add vxlan-demo type vxlan id 100 remote 172.16.6.18 dstport 4789 dev eth0
+sudo ip link add vxlan-demo type vxlan id 100 remote 172.16.6.18 dstport 4789 dev ens18
 ip a | grep vxlan
 sudo ip link set vxlan-demo up
 btctl show
@@ -222,4 +222,6 @@ ping 172.18.0.12 -c 2
 
 container ID -  6a6064ffc2af
 ```
-``` 
+```
+<img width="455" alt="Screenshot 2023-07-13 at 10 36 47 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/341f2a5c-944d-4368-b79b-30eea5a21b0e">
+
