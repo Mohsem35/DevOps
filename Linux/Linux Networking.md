@@ -41,4 +41,32 @@ and routing decisions and are in any case beyond the scope of these introductory
    - **`POSTROUTING`** used for altering packets as they are about to go out.
 
 
+## Create a multi-container host networking using VxLAN overlay networks
+
+Let's start...
+
+`Step 0:` For this demo, anyone can deploy two VM on any hypervisor or virtualization technology. Make sure they are on the same network thus hosts can communicate each other.
+
+`Step 1:` Install docker client and create separate subnet using docker network utility
+
+For Host-01:
+
+```
+# update the repository and install docker
+sudo apt update
+sudo apt install -y docker.io
+```
+```
+# Create a separate docker bridge network
+sudo docker network create --subnet 172.18.0.0/16 vxlan-net
+```
+The **`docker network create`** command creates a new Docker network, and the **`--subnet`** option specifies the subnet range for the network. In this case, the subnet range is **`172.18.0.0/16`**, which means it can accommodate IP addresses from 172.18.0.1 to 172.18.255.254. Here, docker network named as **`vxlan-net`**
+
+```
+# List all networks in docker
+sudo docker network ls
+```
+<img width="298" alt="Screenshot 2023-07-13 at 6 31 06 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/542e5290-0f2b-46af-a9be-bd59f233e2a5">
+
+
 
