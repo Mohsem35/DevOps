@@ -19,7 +19,41 @@ The term iptables is also commonly used to refer to this kernel-level firewall.
 
 - To list the iptables rules
 ```
-sudo iptables -L
+sudo iptables -L --line-numbers
+```
+##### Parameters
+- `t` for table
+- `j` for action
+- `check` option is used for checking the existence of a rule
+-  `A` adding rule
+
+ ### iptable commmands examples
+
+- Adding a rule to the **`INPUT chain`** in the **`filter table`** of iptables, instructing it to **`drop (discard) all incoming packets`**
+
+```
+iptables -t filter --append INPUT -j DROP
+```
+- Checking whether there is a rule in the **`INPUT`** chain of the **`filter`** table that matches packets with a source IP address of **`192.168.1.123`** and **`drops`** them অর্থাৎ 192.168.1.123 IP থেকে কোন packet আসলে drop করে দিবে এইরকম কোন rule, filter টেবিলে দেয়া আছে কিনা check করতেছি  
+
+```
+iptables -t filter --check INPUT -s 192.168.1.123 -j DROP
+```
+
+- Adding a rule to the **`INPUT chain`** in the **`filter table`** of iptables, instructing it to **`drop (discard)`** all incoming packets of **`UDP`** protocol
+
+```
+iptables -t filter -A INPUT -p udp -j DROP
+```
+- Adding a rule to the **`FORWARD chain`** in the **`filter table`** of iptables, instructing it to **`drop (discard)`** all incoming packets.
+
+```
+iptables -t filter -A FORWARD -j DROP
+```
+- Deleting the rule with **`index 10`** from the **`INPUT chain`** of the **`filter table`** in iptables.
+
+```
+sudo iptables -D INPUT 10
 ```
 
 ### Tables
@@ -34,7 +68,7 @@ iptables contains five tables:
 In most common use cases, you will only use two of these: filter and nat. The other tables are aimed at complex configurations involving multiple routers 
 and routing decisions and are in any case beyond the scope of these introductory remarks.
 
-c
+### Chains
 
 - Tables consist of chains, which are **`lists of rules`** which are followed in order.
 - The default table, **`filter`**, contains three built-in chains which are activated at different points of the packet filtering process.
