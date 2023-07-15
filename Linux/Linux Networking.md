@@ -3,6 +3,12 @@
 iptables is a **`command-line firewall utility`** that uses **`policy chains to allow or block traffic`**. When a connection tries to establish itself on your system, 
 iptables looks for a rule in its list to match it to. If it doesn’t find one, it resorts to the default action.
 
+iptable তে 3 টা part/level/beghavior থাকে
+
+1. Table
+2. Chain
+3. Rule
+
 iptables is used to inspect, modify, forward, redirect, and/or drop IP packets. The code for **`filtering IP packets`** is already built into the kernel 
 and is organized into a collection of **`tables`**, each with a specific purpose. The tables are made up of a set of predefined **`chains`**, and the chains contain 
 **`rules`** which are traversed in order
@@ -20,15 +26,15 @@ sudo iptables -L
 iptables contains five tables:
 
 1. `raw` is used only for configuring packets so that they are exempt from connection tracking.
-2. **`filter`** is the default table, and is where all the actions typically associated with a firewall take place.
-4. **`nat`** is used for network address translation (e.g. port forwarding).
-5. `mangle` is used for specialized packet alterations.
-6. `security` is used for Mandatory Access Control networking rules (e.g. SELinux -- see this article for more details).
+2. **`filter`** is the default table, and is where all the actions typically associated with a firewall take place. Request হয় allow করবে, নাহয় deny করবে 
+4. **`NAT`** is used for network address translation (e.g. port forwarding). Packet এর source/destination modify করা লাগবে কিনা. Suppose আমার public IP তে কোন packet আসছে, এখন এইটা কোন private IP তে নিতে হবে **`decide`** করবে NAT
+6. `mangle` is used for specialized packet alterations. Packet এর header modify করতে পারবে 
+7. `security` is used for Mandatory Access Control networking rules (e.g. SELinux -- see this article for more details).
 
 In most common use cases, you will only use two of these: filter and nat. The other tables are aimed at complex configurations involving multiple routers 
 and routing decisions and are in any case beyond the scope of these introductory remarks.
 
-### Chains
+c
 
 - Tables consist of chains, which are **`lists of rules`** which are followed in order.
 - The default table, **`filter`**, contains three built-in chains which are activated at different points of the packet filtering process.
@@ -39,6 +45,14 @@ and routing decisions and are in any case beyond the scope of these introductory
    - **`PREROUTING`** used for altering a packet as soon as it’s received.
    - **`OUTPUT`** used for altering locally-generated packets.
    - **`POSTROUTING`** used for altering packets as they are about to go out.
+
+### Rules
+
+কি ধরেনের কাজ হবে rules অনুযায়ী
+
+Each rule has two components: 
+1. **`Matching`** component: Matches are conditions that determine whether a rule should be applied to a packet
+2. **`Target`** component: Targets are the final destination for a packet within a chain. They can be built-in targets, such as **`ACCEPT`**, **`DROP`**, or **`REJECT`**
 
 
 ## Create a multi-container host networking using VxLAN overlay networks
