@@ -96,7 +96,6 @@ Let's start...
 #### Prerequisite 
 For this demo, anyone can deploy two VM on any hypervisor or virtualization technology. Make sure they are on the same network thus hosts can communicate each other.
 
-`Step 1:` Install docker client and create separate subnet using docker network utility
 
 Host-01 IP: 172.16.6.18
 
@@ -104,8 +103,7 @@ Host-02 IP: 172.16.6.57
 
 #### For Host-01(172.16.6.18):
 
-##### Step 1: Update the repository and install docker client
-
+##### Step 1: Update the repository and install _docker client_
 ```
 sudo apt update
 sudo apt install -y docker.io
@@ -187,7 +185,7 @@ brctl show
 ```
 <img width="476" alt="Screenshot 2023-07-13 at 7 26 59 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/b7d44d0f-934e-4778-8847-8a22690f06f5">
 
-##### Step 9: Create a VxLAN
+##### Step 9: Create a _VXLAN_
 
 ```
 sudo ip link add vxlan-demo type vxlan id 100 remote 172.16.6.57 dstport 4789 dev eth0
@@ -209,7 +207,7 @@ ip a | grep vxlan
 
 <img width="621" alt="Screenshot 2023-07-13 at 8 01 25 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/0d903b5a-39fb-41bc-865b-d955d5e0b718">
 
-##### Step 10: Make the VXLAN interface up
+##### Step 10: Make the _VXLAN interface up_
 
 ```
 sudo ip link set vxlan-demo up
@@ -233,7 +231,7 @@ route -n
 <img width="533" alt="Screenshot 2023-07-13 at 8 10 56 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ef656344-7281-416d-bf0c-de14bf4d7144">
 
 
-#### For Host-01(172.16.6.18):
+#### For Host-02(172.16.6.18):
 
 ```
 sudo apt update
