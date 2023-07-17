@@ -256,7 +256,7 @@ exit
 sudo ip link add vxlan-demo type vxlan id 100 remote 172.16.6.18 dstport 4789 dev ens18
 ip a | grep vxlan
 sudo ip link set vxlan-demo up
-btctl show
+brctl show
 sudo brctl addif <bridge_name> vxlan-demo
 route -n
 sudo docker exec -it <container_id> bash
