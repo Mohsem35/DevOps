@@ -50,42 +50,43 @@ stages:
   - test
   - deploy
 ```
+In this example, there are three stages defined: build, test, and deploy. Jobs associated with the **`build`** stage will be **`executed first`**, followed by jobs in the test stage, and finally, jobs in the deploy stage.
+
 - You can **`group multiple jobs`** into stages that run in a defined order.
 - Multiple jobs in the same stage are executed in **`parallel`**
 - Only if all jobs in a stage **`succeed`**, the pipeline moves on to the **`next stage`**
 - If any job in a stage fails, the next stage in not executed and the pipeline ends
+
+
 
 ![pipelines](https://github.com/Mohsem35/DevOps/assets/58659448/541b6bbb-3038-42ea-b386-0ed16cc23339)
 
 
 ### Needs:
 
+The needs keyword is used to define **`dependencies`** between jobs.  It allows you to specify that a particular job depends on the **`successful completion`** of one or more previous jobs before it can start.
 
-- Execute jobs in a certain order within a stage. If it fails, it should skip the other dependents jobs.
-- Job keyword to **define dependency relationships bwtween the jobs**.
-- Even though they belong to same stage, `push image` job is dependent on `build_image` job. If build image job fails, then push image will be skipped.
-  
-![rsz_245735895-e0a9edd6-ca9e-4a7f-b28e-deaa3f8f0166](https://github.com/Mohsem35/DevOps/assets/58659448/988c7ac9-d6ba-4ca9-9487-7ef45888f54b)
-
-  
+- Execute jobs in a certain order within a stage. If it **`fails`**, it should **`skip`** the other dependents jobs.
+- Even though they belong to same stage, **`push image`** job is dependent on **`build_image`** job. If build image job fails, then push image will be skipped.
 ```
 push_image:
     stage: build
     needs:
         - build_image 
 ```
-#### Checking the dependent jobs:
-
-```
-Left sidebar project repository -> Build -> Pipeline Editor -> Visualize
-```
-
 ![Screenshot from 2023-06-14 15-00-56](https://github.com/Mohsem35/DevOps/assets/58659448/2d8e7177-daff-40ff-9b21-cd8c97c9fbf4)
 
-#### Scripts:
+
+#### Checking the dependent jobs:
+
+_Left sidebar `project repository` -> Build -> Pipeline Editor -> Visualize_
+
+
+
+### Scripts:
 
 ##### Inline commands
-- OS commands, like Linux comman
+- Any kind of OS(Linux) commands
 
 > **_NOTE:_**  If there are too many Linux commands, **prepare a seperate bash-script file** where you will keep all the Linux commands and reference the bash-script file in 'script' section of yml file.
 
