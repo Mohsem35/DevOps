@@ -10,10 +10,10 @@ CD - Continuous Deployment & Continuously Delivery
 
 ### Jobs:
 
-A job in the **`.gitlab-ci.yml`** file represents a **`specific task or set of tasks`** that you want to execute as part of your CI/CD pipeline. Jobs are the most fundamental building block of a .gitlab-ci.yml file.
+A job in the **`.gitlab-ci.yml`** file represents a **`specific task or set of tasks`** that you want to execute as part of your CI/CD pipeline. Jobs are the most fundamental building block of a _.gitlab-ci.yml_ file.
 
 
-- Must contain at least the **`script`** clause. script section specify the commands(any kinds of commands like linux commands etc.) to execute
+- Must contain at least the **`script`** clause. _script_ section specify the commands(any kinds of commands like linux commands etc.) to execute
 - We can define as many jobs as we want
 - Jobs can have a variety of attributes and directives, including: **`script`**, **`tags`**, **`artifacts`**, **`stages`**, **`dependencies`**, **`before_script`**, **`after_script`**
 
@@ -42,10 +42,21 @@ _Left sidebar `project repository` -> Build -> Pipeline Editor_
 
 ### Stages:
 
-- You can `group multiple jobs` into stages that run in a defined order.
-- Multiple jobs in the same stage are executed in **parallel.**
-- Only if al jobs in a stage succeed, the pipeline moves on to the next stage
+Stages allow you to **`divide`** your pipeline into **`logical sections`**, each representing a specific phase of your software development process. Stages are defined as a list of names at the top level of the _.gitlab-ci.yml_ file.
+
+```
+stages:
+  - build
+  - test
+  - deploy
+```
+- You can **`group multiple jobs`** into stages that run in a defined order.
+- Multiple jobs in the same stage are executed in **`parallel`**
+- Only if all jobs in a stage **`succeed`**, the pipeline moves on to the **`next stage`**
 - If any job in a stage fails, the next stage in not executed and the pipeline ends
+
+![pipelines](https://github.com/Mohsem35/DevOps/assets/58659448/541b6bbb-3038-42ea-b386-0ed16cc23339)
+
 
 ### Needs:
 
