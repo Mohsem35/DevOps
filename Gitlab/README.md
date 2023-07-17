@@ -86,7 +86,16 @@ _Left sidebar `project repository` -> Build -> Pipeline Editor -> Visualize_
 ### Scripts:
 
 ##### Inline commands
-- Any kind of OS(Linux) commands
+- Any valid shell commands or scripts that are necessary for the job
+- For example, you might use it to **`compile code`**, **`run tests`**, **`package artifacts`**, or perform any other necessary tasks
+```
+build_job:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+    - echo "Running builds..."
+```
 
 > **_NOTE:_**  If there are too many Linux commands, **prepare a seperate bash-script file** where you will keep all the Linux commands and reference the bash-script file in 'script' section of yml file.
 
@@ -95,31 +104,35 @@ _Left sidebar `project repository` -> Build -> Pipeline Editor -> Visualize_
  - ./<script_filename>.sh
 ```
 
-#### Only:
+### Only:
 
-This pipeline logic jobs should only run for **main** branch and the other jobs should run on **feature** branch 
-```
+The only keyword allows you to **`control`** the execution of jobs and ensure they run only in **`specific scenarios`** that meet the defined conditions.
+
+- This pipeline logic jobs should only run for **`main branch`** and the other jobs should run on feature branch
+
+  
 Left sidebar project repository -> Code -> Branches -> New branch
 ```
-
-![rsz_245765717-720b474b-b011-4da8-97fd-5a333e06e1df](https://github.com/Mohsem35/DevOps/assets/58659448/336c22e5-83a8-4f72-808f-5ecebdcef0e3)
-
-
-The following `build image` job will be executed only main branch. 
+only:
+  - main
+  - develop
 ```
-build_image:
-    only: 
-        - main
-    stage: build
-    script:
-        - echo "Building the docker image..."
-        - echo "Tagging the docker image..."
 ```
+only:
+  variables:
+    - $ENVIRONMENT == "production"
+```
+![rsz_248272921-336c22e5-83a8-4f72-808f-5ecebdcef0e3](https://github.com/Mohsem35/DevOps/assets/58659448/8fc8a934-b5c1-4f59-940c-a9ed86c53a38)
 
-**except:** Define when a job does not run
 
-![rsz_246033120-ffb683a7-7e64-4239-ba9b-b2d59daee1bc(1)](https://github.com/Mohsem35/DevOps/assets/58659448/e4997fc6-dd97-44dd-a486-14171731dc7b)
+### Except: 
 
+The except keyword is used to specify conditions under which a job should **`not`** be executed.
+
+```
+except:
+  - feature/*
+```
 
 #### Workflow rules:
 
