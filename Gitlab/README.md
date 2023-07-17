@@ -3,34 +3,33 @@ CI - Continuous Integration
 
 CD - Continuous Deployment & Continuously Delivery
 
+![rsz_248164286-a7ec2869-8d1d-45a3-a7e8-1a52d9476bb7](https://github.com/Mohsem35/DevOps/assets/58659448/a75f2645-1c83-451e-9037-e746fa82981d)
 
-![sxie0vm15pd316ea0g6v](https://github.com/Mohsem35/DevOps/assets/58659448/a7ec2869-8d1d-45a3-a7e8-1a52d9476bb7)
 
 ## Core Concepts of GitLab CI/CD
 
 ### Jobs:
 
-Jobs are the most fundamental building block of a `.gitlab-ci.yml` file
-- Jobs define what we do.
-- Must contain at least the `script` clause
-- `script` section specify the commands(any kinds of commands like linux commands etc.) to execute
-- we can define as many jobs as we want
-- `before_script` define commands that should run before 'script' commands
-- `after_script` define commands that run after each job, including failed jobs
+A job in the **`.gitlab-ci.yml`** file represents a **`specific task or set of tasks`** that you want to execute as part of your CI/CD pipeline. Jobs are the most fundamental building block of a .gitlab-ci.yml file.
+
+
+- Must contain at least the **`script`** clause. script section specify the commands(any kinds of commands like linux commands etc.) to execute
+- We can define as many jobs as we want
+- Jobs can have a variety of attributes and directives, including: **`script`**, **`tags`**, **`artifacts`**, **`stages`**, **`dependencies`**, **`before_script`**, **`after_script`**
 
 ### Pipeline:
 
-- The top-level component of continuous integration, delivery and development.
-- A pipeline consists of jobs and stages
-- **On every commit, GitLab triggers the pipeline automatically**
-  - run_tests -> build_image -> push_image
-  
-![rsz_245695476-f3fce85c-3c4a-454c-9aae-bbbdb2ae3374](https://github.com/Mohsem35/DevOps/assets/58659448/94b81457-92e7-41f6-aec6-ced6b36fd193)
+A pipeline represents the **`entire sequence`** of stages, jobs, and steps defined in the configuration file. It defines the end-to-end workflow for building, testing, and deploying your code
 
+- The top-level component of continuous integration, delivery and development.
+- A pipeline consists of **`jobs`**, **`stages`**, **`steps`**, **`artifacts`**
+- On every **`commit`**, GitLab triggers the **`pipeline automatically`**
 - We configure Pipeline for a specific project.
 - By default, Pipeline is triggered automatically for all branches.
 
-> **_NOTE:_**  Each pipeline is run on a fresh environment
+![rsz_1_bx1gnz1uzfkokmrhq395mg](https://github.com/Mohsem35/DevOps/assets/58659448/7400be1f-5612-4dea-aedf-3350b54ac015)
+
+> **_NOTE:_**  Each pipeline runs on a fresh environment
 
 
 #### To work with any existing GitLab project for CI/CD:
