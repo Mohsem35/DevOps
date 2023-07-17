@@ -21,6 +21,7 @@ A job in the **`.gitlab-ci.yml`** file represents a **`specific task or set of t
 
 A pipeline represents the **`entire sequence`** of stages, jobs, and steps defined in the configuration file. It defines the end-to-end workflow for building, testing, and deploying your code
 
+- Pipeline logic becomes part of application code as **`IaC(Infrastructure as code)`**
 - The top-level component of continuous integration, delivery and development.
 - A pipeline consists of **`jobs`**, **`stages`**, **`steps`**, **`artifacts`**
 - On every **`commit`**, GitLab triggers the **`pipeline automatically`**
@@ -31,25 +32,13 @@ A pipeline represents the **`entire sequence`** of stages, jobs, and steps defin
 
 > **_NOTE:_**  Each pipeline runs on a fresh environment
 
+#### List of succeed/failed pipelines:
 
-#### To work with any existing GitLab project for CI/CD:
+_Left sidebar of `project repository` -> Build -> Pipelines_
 
-1. Fork the project, that you want to work with
-2. Add a new file, in the root of the repository named `gitlab-ci.yml(Pipeline file)`
-
-
-#### How to execute Pipeline:
-
-```
-Left sidebar project repository -> Build -> Pipelines
-```
 #### In order to change Pipeline logic: 
 
-```
-Left sidebar project repository -> Build -> Pipeline Editor
-```
-
-![rsz_245697333-d726b51b-8fa4-4728-9890-5202747fcac9](https://github.com/Mohsem35/DevOps/assets/58659448/166b1149-093f-405f-8b0a-ce4105b14501)
+_Left sidebar `project repository` -> Build -> Pipeline Editor_
 
 ### Stages:
 
@@ -284,3 +273,7 @@ Runner **requests jobs** from GitLab instance -> Runner **compiles and sends** j
 
 
 
+#### To work with any existing GitLab project for CI/CD:
+
+1. Fork the project, that you want to work with
+2. Add a new file, in the root of the repository named `gitlab-ci.yml(Pipeline file)`
