@@ -44,7 +44,7 @@ sudo ovs-vsctl add-br ovs-br1
 - **`add-br`**: This subcommand instructs ovs-vsctl to **`add a new bridge`**
 - **`ovs-br0`**: This is the **`name given to the new bridge`** being created.
 
-#### Then create the internal port/interfaces to the ovs-bridge:
+#### Step-01.01 Then create the internal port/interfaces to the _ovs-bridge_
 
 ```
 # add port/interfaces to bridges
@@ -56,3 +56,20 @@ sudo ovs-vsctl add-port ovs-br1 veth1 -- set interface veth1 type=internal
 - **`ovs-br0`**: This is the **`name of the bridge`** to which you want to add the port.
 - **`veth0`**: This is the **`name of the internal port`** being added to the bridge.
 - **`set interface veth0 type=internal`**: This part of the command sets the properties of the port _veth0_. Here, it specifies that the **`interface type is internal`**, which means it is a virtual interface within the host and can be used for internal communication.
+
+
+#### Step-01.02 Check the status of bridges
+```
+sudo ovs-vsctl show
+```
+<img width="309" alt="Screenshot 2023-07-19 at 12 10 20 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ea627b2e-a6d5-4499-a735-d6b9ec47a200">
+
+
+#### Step-01.03 Now it's time to set the IP of the bridges and up the inteface
+
+```
+# set the ip to the created port/interfaces
+sudo ip address add 192.168.1.1/24 dev veth0 
+sudo ip address add 192.168.2.1/24 dev veth1 
+ip a
+```
