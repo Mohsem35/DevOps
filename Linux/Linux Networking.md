@@ -89,7 +89,7 @@ Each rule has two components:
 2. **`Target`** component: Targets are the final destination for a packet within a chain. They can be built-in targets, such as **`ACCEPT`**, **`DROP`**, or **`REJECT`**
 
 
-## Create a multi-container host networking using VxLAN overlay networks
+## Create a multi-container host networking using VXLAN overlay networks
 
 Let's start...
 
