@@ -113,11 +113,8 @@ VXLAN is a network virtualization technology that allows the creation of **`virt
 
 ### VTEP (VXLAN Tunnel End Point)
 
-VXLAN traffic is **`encapsulated`** before it is sent over the network. This creates stateless **`tunnels`** across the network, from the source switch to the destination switch. The encapsulation and decapsulation are handled by a component called a VTEP (VxLAN Tunnel End Point). A VTEP has an IP address in the underlay network. It also has one or more VNI’s associated with it. When frames from one of these VNI’s arrives at the Ingress VTEP, the VTEP encapsulates it with UDP and IP headers. The encapsulated packet is sent over the IP network to the Egress VTEP. When it arrives, the VTEP removes the IP and UDP headers, and delivers the frame as normal.
+VXLAN traffic is **`encapsulated`** before it is sent over the network. This creates stateless **`tunnels`** across the network, from the **`source`** switch to the **`destination switch`**. The encapsulation and decapsulation are handled by a component called a VTEP (VxLAN Tunnel End Point). A VTEP has an **`IP address`** in the underlay network. It also has one or more VNI’s associated with it. When frames from one of these VNI’s arrives at the Ingress VTEP, the VTEP encapsulates it with UDP and IP headers. The encapsulated packet is sent over the IP network to the Egress VTEP. When it arrives, the VTEP removes the IP and UDP headers, and delivers the frame as normal.
 
-VTEP stands for VXLAN Tunnel Endpoint. It is a network device or software component that implements the VXLAN protocol and provides the necessary encapsulation and decapsulation of Ethernet frames into VXLAN packets.
-
-The VTEP plays a crucial role in VXLAN-based network virtualization by extending Layer 2 connectivity over a Layer 3 infrastructure. It enables the creation of virtual networks that span multiple physical switches, data centers, or even geographically dispersed locations.
 
 ## Create a multi-container host networking using VXLAN overlay networks
 
