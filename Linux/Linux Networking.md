@@ -89,6 +89,36 @@ Each rule has two components:
 2. **`Target`** component: Targets are the final destination for a packet within a chain. They can be built-in targets, such as **`ACCEPT`**, **`DROP`**, or **`REJECT`**
 
 
+### Underlay and Overlay Network
+
+![www queryhome](https://github.com/Mohsem35/DevOps/assets/58659448/1ad3a852-191c-4931-9761-af795f289b57)
+
+Underlay Network is **`physical infrastructure`** above which overlay network is built. It is the underlying network responsible for delivery of packets across networks. Underlay networks can be Layer 2 or Layer 3 networks. **`Layer 2`** underlay networks today are typically based on Ethernet, with segmentation accomplished via VLANs. The Internet is an example of a Layer 3 underlay network.
+
+An Overlay Network is a **`virtual network`** that is built on top of underlying network infrastructure (Underlay Network). Actually, “Underlay” provides a “service” to the overlay. Overlay networks implement network virtualization concepts. A virtualized network consists of **`overlay nodes`** (e.g., routers), where Layer 2 and Layer 3 tunneling encapsulation (VXLAN, GRE, and IPSec) serves as the transport overlay protocol.
+
+
+## VXLAN (Virtual Extensible LAN)
+
+VXLAN is a network virtualization technology that allows the creation of **`virtual Layer 2 networks over an underlying Layer 3 infrastructure`**. It was designed to address the scalability limitations of traditional VLANs (Virtual Local Area Networks) in large-scale data center environments.
+
+- It runs over the existing networking infrastructure and provides a means to **`stretch`** a Layer 2 network.
+- Each VXLAN segment is identified through a 24-bit segment ID termed the **`VNI`**
+- Only VMs within the **`same VXLAN segment`** can communicate with each other.
+
+### VNI (VXLAN Network Identifier)
+
+- Unlike VLAN, VxLAN does not have ID limitation. It uses a **`24-bit header`**, which gives us about 16 million VNI’s to use. 
+- A VNI is the **`identifier`** for the LAN segment, similar to a VLAN ID. With an address space this large, an ID can be assigned to a customer, and it can remain unique across the entire network.
+
+### VTEP (VXLAN Tunnel End Point)
+
+VXLAN traffic is **`encapsulated`** before it is sent over the network. This creates stateless **`tunnels`** across the network, from the source switch to the destination switch. The encapsulation and decapsulation are handled by a component called a VTEP (VxLAN Tunnel End Point). A VTEP has an IP address in the underlay network. It also has one or more VNI’s associated with it. When frames from one of these VNI’s arrives at the Ingress VTEP, the VTEP encapsulates it with UDP and IP headers. The encapsulated packet is sent over the IP network to the Egress VTEP. When it arrives, the VTEP removes the IP and UDP headers, and delivers the frame as normal.
+
+VTEP stands for VXLAN Tunnel Endpoint. It is a network device or software component that implements the VXLAN protocol and provides the necessary encapsulation and decapsulation of Ethernet frames into VXLAN packets.
+
+The VTEP plays a crucial role in VXLAN-based network virtualization by extending Layer 2 connectivity over a Layer 3 infrastructure. It enables the creation of virtual networks that span multiple physical switches, data centers, or even geographically dispersed locations.
+
 ## Create a multi-container host networking using VXLAN overlay networks
 
 Let's start...
