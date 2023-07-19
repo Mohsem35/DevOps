@@ -144,3 +144,39 @@ sudo docker exec docker2 ip a
 
 > **_NOTE:_**  See that, docker1 and docker2 didn't get any IP
 
+#### _Step-02.03 add ip address to the container using `ovs-docker` utility_ 
+
+```
+sudo ovs-docker add-port ovs-br0 eth0 docker1 --ipaddress=192.168.1.11/24 --gateway=192.168.1.1
+sudo docker exec docker1 ip a
+```
+<img width="669" alt="Screenshot 2023-07-19 at 11 47 18 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/8c9754bf-81cb-4259-b732-d3b85604c32f">
+
+- **`ovs-br0`**: This specifies the name of the OVS bridge to which the physical interface "eth0" will be attached.
+- **`eth0`**: This is the name of the physical network interface on the host machine that you want to add to the container.
+- **`--ipaddress=192.168.1.11/24`**: This flag sets the IP address and subnet mask of the container's interface to 192.168.1.11 with a subnet mask of 255.255.255.0 (/24).
+- **`--gateway=192.168.1.1`**: This flag sets the default gateway for the container's network interface to 192.168.1.1.
+
+```
+sudo ovs-docker add-port ovs-br1 eth0 docker2 --ipaddress=192.168.2.11/24 --gateway=192.168.2.1
+sudo docker exec docker2 ip a
+```
+<img width="652" alt="Screenshot 2023-07-19 at 11 55 54 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/18355766-5575-43e1-87cd-f74bbf23e047">
+
+
+#### _Step-02.04 Ping the gateway to check if container connected to ovs-bridges_
+```
+sudo docker exec docker1 ping 192.168.1.1
+sudo docker exec docker2 ping 192.168.2.1
+```
+<img width="504" alt="Screenshot 2023-07-19 at 11 59 02 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9f7d188e-f70d-473d-bb98-17f23917f3aa">
+
+#### Step 3 
+Now we are going to establish the **`VXLAN TUNNELING between the two VM`**. Most importantly the vxlan ID or VNI and udp port 4789 is important. Also we have to configure the remote IP which is opposite VM IP.
+
+```
+# One thing to check; as vxlan communicate using udp port 4789, check the current status
+netstat -ntulp
+```
+Step-03.01 Ping the gateway to check if container connected to ovs-bridges
+
