@@ -34,7 +34,7 @@ sudo apt update
 sudo apt -y install net-tools docker.io openvswitch-switch
 ```
 
-#### Step-01 Create two bridges using Open vSwitch _ovs-vsctl_ utility
+#### _Step-01 Create two bridges using Open vSwitch ovs-vsctl utility_
 
 ```
 sudo ovs-vsctl add-br ovs-br0
@@ -44,7 +44,7 @@ sudo ovs-vsctl add-br ovs-br1
 - **`add-br`**: This subcommand instructs ovs-vsctl to **`add a new bridge`**
 - **`ovs-br0`**: This is the **`name given to the new bridge`** being created.
 
-#### Step-01.01 Then create the internal port/interfaces to the _ovs-bridge_
+#### _Step-01.01 Then create the internal port/interfaces to the ovs-bridge_
 
 ```
 # add port/interfaces to bridges
@@ -52,24 +52,37 @@ sudo ovs-vsctl add-port ovs-br0 veth0 -- set interface veth0 type=internal
 sudo ovs-vsctl add-port ovs-br1 veth1 -- set interface veth1 type=internal
 ```
 
-- **`add-port`**: This subcommand instructs ovs-vsctl to **`add new port`** to ovs-br0 bridge.
-- **`ovs-br0`**: This is the **`name of the bridge`** to which you want to add the port.
+- **`add-port`**: This subcommand instructs ovs-vsctl to **`add new port`** to _ovs-br0_ bridge.
 - **`veth0`**: This is the **`name of the internal port`** being added to the bridge.
 - **`set interface veth0 type=internal`**: This part of the command sets the properties of the port _veth0_. Here, it specifies that the **`interface type is internal`**, which means it is a virtual interface within the host and can be used for internal communication.
 
 
-#### Step-01.02 Check the status of bridges
+#### _Step-01.02 Check the status of bridges_
 ```
 sudo ovs-vsctl show
 ```
 <img width="309" alt="Screenshot 2023-07-19 at 12 10 20 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ea627b2e-a6d5-4499-a735-d6b9ec47a200">
 
 
-#### Step-01.03 Now it's time to set the IP of the bridges and up the inteface
+#### _Step-01.03 Now, set IP to the created port/interfaces of the bridges_
 
 ```
-# set the ip to the created port/interfaces
 sudo ip address add 192.168.1.1/24 dev veth0 
 sudo ip address add 192.168.2.1/24 dev veth1 
 ip a
 ```
+
+#### _Step-01.04 Up the bridge port/interfaces and check status_ 
+
+```
+sudo ip link set dev veth0 up mtu 1450
+sudo ip link set dev veth1 up mtu 1450
+ip a
+```
+
+- **`ip link`**: **`Manipulate`** network interfaces
+- **`set dev veth0 up`**: Set the network interface **`veth0`** up, meaning it will be **`activated`** and ready to use
+- **`mtu 1450`**: This part sets the **`Maximum Transmission Unit`** (MTU) of the interface to **`1450 bytes`**. The MTU is the maximum size of a single data packet that can be transmitted over the interface.
+
+<img width="743" alt="Screenshot 2023-07-19 at 10 33 45 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/3b9ce56f-7845-4770-a1f0-bdb6fdb25ed5">
+
