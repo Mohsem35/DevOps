@@ -196,14 +196,16 @@ run_tests:
 ```
 #### File Type Variables:
 
-- Consists of a key, value and file
-- Value is saved to a temporary file.
+- Consists of a **`key`**, **`value`** and file
+- Value is saved to a **`temporary file`**.
 - The value of the variable is the path to the temporary file
 
-![Screenshot from 2023-06-18 12-32-55](https://github.com/Mohsem35/DevOps/assets/58659448/d6afe441-1137-4b07-b2e4-ce7d0e09de52)
+![rsz_1246647594-d6afe441-1137-4b07-b2e4-ce7d0e09de52](https://github.com/Mohsem35/DevOps/assets/58659448/80ca74fb-7232-4bd4-b450-d7d0ad833152)
+
 
 ![Screenshot from 2023-06-18 12-55-33](https://github.com/Mohsem35/DevOps/assets/58659448/9f3df1f3-2399-41d5-bce6-5282b72df1ce)
 ![Screenshot from 2023-06-18 12-56-36](https://github.com/Mohsem35/DevOps/assets/58659448/dd50f2ec-8d3e-4837-b0ae-8db0079b71b9)
+
 
 ```
 deploy_image:
@@ -214,10 +216,10 @@ deploy_image:
         - echo "Deploying new docker image using the following configuration file - $PROPERTIES_FILE..."
         - cat $PROPERTIES_FILE
 ```
-#### Declaring Variables in .gitlab-ci.yml File:
+### Declaring Variables in .gitlab-ci.yml File:
 
-- Variables saved in the file directly should store only non-sensitive data, cause the values will be visible in the repository
-- Declare variables as global
+- Variables saved in the file directly should store only **`non-sensitive data`**, cause the values will be visible in the repository
+- Declare variables as **`global`**
 - Then use the variables like programming
 
 ```
@@ -230,35 +232,34 @@ run_tests:
     before_script:
         - echo "ushing docker image $image_repository:image_tag to registry..."
 ```
-#### Gitlab Architecture:
+### Gitlab Architecture:
 
-##### Gitlab Server
+#### Gitlab Server
 - Main component
 - Pipeline configuration
 - Manage the pipeline execution
 - Stores the pipeline results
-- 
-##### Gitlab Runner
+  
+#### Gitlab Runner
 
 GitLab Runner is a program that you should install on a machine, that's seperate from the one that hosts the GitLab instance.
 
-`Shared Runners:` The provided runners by GitLab are shared runners. Available to all projects in a GitLab instance(gitlab.com)
+**`Shared Runners:`** The provided runners by GitLab are shared runners. Available to all projects in a GitLab instance(_gitlab.com_)
 
-- Jobs are mainly executed in RUNNERS
-- GitLab Runners are agents that run your CI/CD jobs
+- Jobs are mainly **`executed`** in RUNNERS
+- GitLab Runners are **`agents`** that run your CI/CD jobs
 - GitLab Server assigns these jobs to available Runners
   
 ![Screenshot from 2023-06-18 13-56-37](https://github.com/Mohsem35/DevOps/assets/58659448/31afcfea-32c7-4a8a-8e77-a2cfd6e991d9)
 
 Q: Who manages GitLab Architecture?
 
-Ans: gitlab.com(Saas) or self-managed 
+Ans: _gitlab.com(Saas)_ or self-managed 
 
 #### Override Docker Image
 
-- Best practice: use a specific version
-- Because latest is unpredictable
-- Image configuration works only for Docker Runners, will be ignored by other Runners.
+- Best practice: use a **`specific version`**, because latest is unpredictable
+- **`Image`** configuration works only for **`Docker Runners`**, will be ignored by other Runners.
 
 ```
 image: node:20-alpine
@@ -294,11 +295,11 @@ Q: How to configure the executor for the runner?
 
 Ans: When you register a runner, you must choose an executor. **1 executor per runner**
 
-#### GitLab WorkFlow:
+### GitLab WorkFlow:
 
 Runner **requests jobs** from GitLab instance -> Runner **compiles and sends** job's plyload to Executor -> Executor **clones/download artifacts** for GitLab instance and **executes job** -> Executor resturns **job output to Runner** -> Runner updates **job output to Gitlab instance**
 
-![rsz_1246654807-f05d4d66-63bc-4257-b71d-46c34ba3b8be](https://github.com/Mohsem35/DevOps/assets/58659448/31db0c11-df82-4983-991c-9941e7d0ea14)
+![rsz_1248531016-31db0c11-df82-4983-991c-9941e7d0ea14](https://github.com/Mohsem35/DevOps/assets/58659448/832cc885-41f0-42c7-84fd-563a310b0d61)
 
 
 
