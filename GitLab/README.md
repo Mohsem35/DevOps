@@ -134,12 +134,15 @@ except:
   - feature/*
 ```
 
-#### Workflow rules:
+### Workflow rules:
 
-- A global keyword, which configures the whole pipelines behavior.
-- Have to declare at first section of the `.yml` file
-- `if`,`when` are 2 conditionals.
-- `$CI_COMMIT_BRANCH`, `$CI_PIPELINE_SOURCE` = Environment variables
+In GitLab, workflow rules are used to define the **`conditions`**(like if-else in programming) under which a job or a set of jobs should be executed in a CI/CD pipeline. They are defined within the _.gitlab-ci.yml_ file, which is the configuration file for GitLab CI/CD pipelines.
+
+Workflow rules provide a **`flexible way to control`** when jobs should run based on various conditions such as the branch name, tags, variables, changes to specific files, and more. They allow you to define fine-grained control over the execution of your CI/CD pipeline based on specific events and conditions
+
+- Have to declare at first section of the _.gitlab-ci.yml_ file
+- **`if`**,**`when`** are 2 conditionals
+- _$CI_COMMIT_BRANCH_, _$CI_PIPELINE_SOURCE_ = Environment variables
 
 ```
 workflow:
@@ -161,17 +164,18 @@ workflow:
 
 [Predefined variables reference](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) 
 
-#### Custom Variables:
+### Custom Variables:
+
+#### Project variables:
+1. Stored outside of the git repository(not in the _.gitlab-ci.yml_)
+2. Ideal for **`tokens`** and **`passwords`**, which should not be included in the repository for security reasons!
 
 
-Project variables:
-1. Stored outside the git repository(not in the .gitlab-ci.yml)
-2. Ideal for tokens and passwords, which should not be included in the repository for security reasons!
+#### Protected variables: 
+variables are only available when the pipeline runs on a protected branch
 
-
-Protected variables: variables are only abailable when the pipeline runs on a protected branch
-
-Masked variables; Variables containing secrets should always be masked. With this, you avoid the risk of exposing the value of the variable,
+#### Masked variables:
+Variables containing secrets should always be masked. With this, you avoid the risk of exposing the value of the variable,
 
 ##### How to define Environment Variables:
 
