@@ -34,7 +34,9 @@ sudo apt update
 sudo apt -y install net-tools docker.io openvswitch-switch
 ```
 
-#### _Step-01 Create two bridges using Open vSwitch ovs-vsctl utility_
+#### Step-01 
+
+Create two bridges using Open vSwitch **`ovs-vsctl`** utility
 
 ```
 sudo ovs-vsctl add-br ovs-br0
@@ -84,5 +86,61 @@ ip a
 - **`set dev veth0 up`**: Set the network interface **`veth0`** up, meaning it will be **`activated`** and ready to use
 - **`mtu 1450`**: This part sets the **`Maximum Transmission Unit`** (MTU) of the interface to **`1450 bytes`**. The MTU is the maximum size of a single data packet that can be transmitted over the interface.
 
-<img width="743" alt="Screenshot 2023-07-19 at 10 33 45 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/3b9ce56f-7845-4770-a1f0-bdb6fdb25ed5">
+![rsz_1screenshot_2023-07-19_at_103345_pm](https://github.com/Mohsem35/DevOps/assets/58659448/af10ac8e-cb8a-42c6-a83a-2b92bbf87c6c)
+
+
+#### Step-02 
+
+It's time to set docker **`container`** with **`None network`**. Also as container will not get any internet connection for now, we will need some tools to analysis so I have wriiten a **`Dockerfile`** for this. Build the image first then run the container.
+
+#### _Step-02.01 Create a docker image from the Dockerfile_ 
+
+```
+mkdir dockerfiles
+vim /home/ubuntu/dockerfiles/Dockerfile
+```
+```
+# Dockerfile content
+FROM ubuntu
+
+RUN apt update
+RUN apt install -y net-tools
+RUN apt install -y iproute2
+RUN apt install -y iputils-ping
+
+CMD ["sleep", "7200"]
+```
+
+```
+cd <Dockerfile_directory> 
+sudo docker build . -t ubuntu-docker
+```
+
+The command you provided is used to build a **`Docker image`** based on the **`Dockerfile`** located in the **`current directory (".")`**. The image will be **`tagged`** with the name "ubuntu-docker".
+```
+sudo docker image ls
+```
+<img width="430" alt="Screenshot 2023-07-19 at 11 28 54 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/15a7db57-782e-40cf-bef3-8ada1ae66e1e">
+
+#### _Step-02.02 Create containers from the created ubuntu-docker image; Containers not connected to any network_
+
+```
+sudo docker run -d --net=none --name docker1 ubuntu-docker
+sudo docker run -d --net=none --name docker2 ubuntu-docker
+```
+- **`-d`**: This flag stands for **`detached mode`**, which means the container will run in the background
+- **`--net=none`**: This flag specifies that the **`container should not be connected to any network`**
+- **`--name docker1`**: This flag gives a **`custom name`** to the container
+- **`ubuntu-docker`**: This is the **`name of the Docker image`** from which the container will be created.
+
+
+#### _Step-02.02 Check container status and ip_ 
+```
+sudo docker ps
+sudo docker exec docker1 ip a
+sudo docker exec docker2 ip a
+```
+<img width="598" alt="Screenshot 2023-07-19 at 11 37 35 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/eb4f9dcb-2d41-4206-b856-aabc5e882ddd">
+
+> **_NOTE:_**  See that, docker1 and docker2 didn't get any IP
 
