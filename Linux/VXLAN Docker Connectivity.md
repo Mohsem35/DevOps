@@ -178,5 +178,45 @@ Now we are going to establish the **`VXLAN TUNNELING between the two VM`**. Most
 # One thing to check; as vxlan communicate using udp port 4789, check the current status
 netstat -ntulp
 ```
-Step-03.01 Ping the gateway to check if container connected to ovs-bridges
+#### _Step-03.01 Create the vxlan tunnel using ovs vxlan feature for both bridges to another hosts bridges_
 
+Make sure **`remote IP`** and **`key`** options as they are important
+
+```
+sudo ovs-vsctl add-port ovs-br0 vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=10.0.1.169 options:key=1000
+sudo ovs-vsctl add-port ovs-br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.0.1.169 options:key=2000
+```
+The command is used to add a **`VXLAN port named vxlan0`** to the **`Open vSwitch bridge ovs-br0`** with specific options
+
+- **`ovs-vsctl`**: This is the Open vSwitch command-line utility used to manage Open vSwitch bridges, ports, and other components.
+- **`add-port`**: This is the ovs-vsctl subcommand used to add a new port to an Open vSwitch bridge.
+- **`ovs-br0`**: This is the name of the bridge to which you want to add the **`vxlan0`** port.
+- **`type=vxlan`**: This sets the type of the interface to VXLAN. VXLAN is a tunneling protocol used to extend Layer 2 (Ethernet) traffic over an IP network.
+- **`options:remote_ip=10.0.1.169`**: This sets the remote IP address for the VXLAN tunnel
+- **`options:key=1000`**: This sets the VXLAN network identifier (VNI) or **`VXLAN Network Identifier (VNI)`**. It's used to segregate VXLAN traffic from different virtual networks
+
+#### _Step-03.02 Check the port again, it should be listening_
+
+```
+netstat -ntulp | grep 4789
+```
+<img width="547" alt="Screenshot 2023-07-21 at 5 55 36 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/8793961a-810d-4b40-a231-3c403b3adc6e">
+
+
+```
+sudo ovs-vsctl show
+ip a
+```
+<img width="498" alt="Screenshot 2023-07-21 at 5 56 43 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c86aa3e-e428-47b0-ad12-fa58176bbb44">
+
+
+
+```
+sudo ovs-docker del-port ovs-br0 eth0 docker2
+```
+
+Remove all unused containers, volumes, networks and images
+
+```
+sudo docker system prune -a --volumes
+```
