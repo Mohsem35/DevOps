@@ -338,7 +338,26 @@ sudo docker exec docker2 ping 192.168.2.12
 sudo docker exec docker2 ping 192.168.1.11
 sudo docker exec docker2 ping 192.168.1.12
 ```
+```
+# FROM docker3
+# will get ping 
+sudo docker exec docker3 ping 192.168.1.12
+sudo docker exec docker3 ping 192.168.1.11
 
+# will be failed
+sudo docker exec docker3 ping 192.168.2.11
+sudo docker exec docker3 ping 192.168.2.12
+
+# FROM docker4
+# will get ping 
+sudo docker exec docker4 ping 192.168.2.11
+sudo docker exec docker4 ping 192.168.2.12
+
+# will be failed
+sudo docker exec docker4 ping 192.168.1.11
+sudo docker exec docker4 ping 192.168.1.12
+
+```
 
 ```
 sudo ovs-docker del-port ovs-br0 eth0 docker2
