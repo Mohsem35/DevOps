@@ -317,7 +317,9 @@ netstat -ntulp | grep 4789
 sudo ovs-vsctl show
 ip a
 ```
+### Now test the connectivity and see the magic!
 
+```
 # FROM docker1
 # will get ping 
 sudo docker exec docker1 ping 192.168.1.12
@@ -335,7 +337,7 @@ sudo docker exec docker2 ping 192.168.2.12
 # will be failed
 sudo docker exec docker2 ping 192.168.1.11
 sudo docker exec docker2 ping 192.168.1.12
-
+```
 
 
 ```
