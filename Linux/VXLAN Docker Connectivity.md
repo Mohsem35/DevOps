@@ -24,8 +24,10 @@ OpenvSwitch provides a flexible and scalable networking solution for virtualized
 Let's start...
 
 Host Machine 01 - 172.16.6.18
+
 Host Machine 02 - 172.16.6.57
 
+#### For Host-01 (172.16.6.18) 
 #### Step-00 
 At first, please make sure host machines can communicate with each other. It can be done by **`ping utility`**. It's important because it means that our **`UNDERLAY`** network is working properly. Then _update packeages_ and install essential packeges **`net-tools`**, **`docker`** and **`openvswitch`** for this demo on both VM.
 
@@ -97,7 +99,7 @@ It's time to set docker **`container`** with **`None network`**. Also as contain
 
 ```
 mkdir dockerfiles
-vim /home/ubuntu/dockerfiles/Dockerfile
+sudo vim /home/ubuntu/dockerfiles/Dockerfile
 ```
 ```
 # Dockerfile content
@@ -108,7 +110,7 @@ RUN apt install -y net-tools
 RUN apt install -y iproute2
 RUN apt install -y iputils-ping
 
-CMD ["sleep", "7200"]
+CMD ["sleep", "72000"]
 ```
 
 ```
@@ -208,6 +210,131 @@ sudo ovs-vsctl show
 ip a
 ```
 <img width="498" alt="Screenshot 2023-07-21 at 5 56 43 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c86aa3e-e428-47b0-ad12-fa58176bbb44">
+
+
+
+
+#### For Host-02(172.16.6.57)
+
+#### Step - 01
+```
+sudo apt update
+sudo apt -y install net-tools docker.io openvswitch-switch
+```
+```
+# Create two bridge using ovs
+sudo ovs-vsctl add-br ovs-br0
+sudo ovs-vsctl add-br ovs-br1
+```
+```
+# add port/interfaces to bridges
+sudo ovs-vsctl add-port ovs-br0 veth0 -- set interface veth0 type=internal
+sudo ovs-vsctl add-port ovs-br1 veth1 -- set interface veth1 type=internal
+```
+```
+# check the status of bridges
+sudo ovs-vsctl show
+```
+```
+# set the ip to the created port/interfaces
+sudo ip address add 192.168.1.1/24 dev veth0 
+sudo ip address add 192.168.2.1/24 dev veth1 
+ip a
+```
+```
+# up the interfaces and check status
+sudo ip link set dev veth0 up
+sudo ip link set dev veth1 up
+ip a
+```
+
+#### Step - 02
+
+```
+mkdir dockerfiles
+sudo vim /home/ubuntu/dockerfiles/Dockerfile
+```
+```
+# Dockerfile content
+FROM ubuntu
+
+RUN apt update
+RUN apt install -y net-tools
+RUN apt install -y iproute2
+RUN apt install -y iputils-ping
+
+CMD ["sleep", "72000"]
+```
+
+```
+cd <Dockerfile_directory> 
+sudo docker build . -t ubuntu-docker
+```
+
+```
+# create containers from the created image; Containers not connected to any network
+sudo docker run -d --net=none --name docker3 ubuntu-docker
+sudo docker run -d --net=none --name docker4 ubuntu-docker
+```
+```
+# check container status and ip 
+sudo docker ps
+sudo docker exec docker3 ip a
+sudo docker exec docker4 ip a
+```
+```
+# add ip address to the container using ovs-docker utility 
+sudo ovs-docker add-port ovs-br0 eth0 docker3 --ipaddress=192.168.1.11/24 --gateway=192.168.1.1
+sudo docker exec docker3 ip a
+```
+
+```
+sudo ovs-docker add-port ovs-br1 eth0 docker4 --ipaddress=192.168.2.11/24 --gateway=192.168.2.1
+sudo docker exec docker4 ip a
+```
+```
+# ping the gateway to check if container connected to ovs-bridges
+sudo docker exec docker3 ping 192.168.1.1
+sudo docker exec docker4 ping 192.168.2.1
+```
+
+#### Step-03
+```
+# one thing to check; as vxlan communicate using udp port 4789, check the current status
+netstat -ntulp
+```
+```
+# Create the vxlan tunnel using ovs vxlan feature for both bridges to another hosts bridges
+# make sure remote IP and key options; they are important
+sudo ovs-vsctl add-port ovs-br0 vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=10.0.1.43 options:key=1000
+sudo ovs-vsctl add-port ovs-br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.0.1.43 options:key=2000
+```
+```
+# check the port again; it should be listening
+netstat -ntulp | grep 4789
+```
+```
+sudo ovs-vsctl show
+ip a
+```
+
+# FROM docker1
+# will get ping 
+sudo docker exec docker1 ping 192.168.1.12
+sudo docker exec docker1 ping 192.168.1.11
+
+# will be failed
+sudo docker exec docker1 ping 192.168.2.11
+sudo docker exec docker1 ping 192.168.2.12
+
+# FROM docker2
+# will get ping 
+sudo docker exec docker2 ping 192.168.2.11
+sudo docker exec docker2 ping 192.168.2.12
+
+# will be failed
+sudo docker exec docker2 ping 192.168.1.11
+sudo docker exec docker2 ping 192.168.1.12
 
 
 
