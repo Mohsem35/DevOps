@@ -185,8 +185,8 @@ netstat -ntulp
 Make sure **`remote IP`** and **`key`** options as they are important
 
 ```
-sudo ovs-vsctl add-port ovs-br0 vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=10.0.1.169 options:key=1000
-sudo ovs-vsctl add-port ovs-br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.0.1.169 options:key=2000
+sudo ovs-vsctl add-port ovs-br0 vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=172.16.6.57 options:key=1000
+sudo ovs-vsctl add-port ovs-br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=172.16.6.57 options:key=2000
 ```
 The command is used to add a **`VXLAN port named vxlan0`** to the **`Open vSwitch bridge ovs-br0`** with specific options
 
@@ -306,8 +306,8 @@ netstat -ntulp
 ```
 # Create the vxlan tunnel using ovs vxlan feature for both bridges to another hosts bridges
 # make sure remote IP and key options; they are important
-sudo ovs-vsctl add-port ovs-br0 vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=10.0.1.43 options:key=1000
-sudo ovs-vsctl add-port ovs-br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.0.1.43 options:key=2000
+sudo ovs-vsctl add-port ovs-br0 vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=172.16.6.18 options:key=1000
+sudo ovs-vsctl add-port ovs-br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=172.16.6.18 options:key=2000
 ```
 ```
 # check the port again; it should be listening
@@ -322,40 +322,40 @@ ip a
 ```
 # FROM docker1
 # will get ping 
-sudo docker exec docker1 ping 192.168.1.12
+(not)sudo docker exec docker1 ping 192.168.1.12
 sudo docker exec docker1 ping 192.168.1.11
 
 # will be failed
-sudo docker exec docker1 ping 192.168.2.11
-sudo docker exec docker1 ping 192.168.2.12
+(not)sudo docker exec docker1 ping 192.168.2.11
+(not)sudo docker exec docker1 ping 192.168.2.12
 
 # FROM docker2
 # will get ping 
 sudo docker exec docker2 ping 192.168.2.11
-sudo docker exec docker2 ping 192.168.2.12
+(not)sudo docker exec docker2 ping 192.168.2.12
 
 # will be failed
-sudo docker exec docker2 ping 192.168.1.11
-sudo docker exec docker2 ping 192.168.1.12
+(not)sudo docker exec docker2 ping 192.168.1.11
+(not)sudo docker exec docker2 ping 192.168.1.12
 ```
 ```
 # FROM docker3
 # will get ping 
-sudo docker exec docker3 ping 192.168.1.12
+(not)sudo docker exec docker3 ping 192.168.1.12
 sudo docker exec docker3 ping 192.168.1.11
 
 # will be failed
-sudo docker exec docker3 ping 192.168.2.11
-sudo docker exec docker3 ping 192.168.2.12
+(not)sudo docker exec docker3 ping 192.168.2.11
+(not)sudo docker exec docker3 ping 192.168.2.12
 
 # FROM docker4
 # will get ping 
 sudo docker exec docker4 ping 192.168.2.11
-sudo docker exec docker4 ping 192.168.2.12
+(not)sudo docker exec docker4 ping 192.168.2.12
 
 # will be failed
-sudo docker exec docker4 ping 192.168.1.11
-sudo docker exec docker4 ping 192.168.1.12
+(not)sudo docker exec docker4 ping 192.168.1.11
+(not)sudo docker exec docker4 ping 192.168.1.12
 
 ```
 
