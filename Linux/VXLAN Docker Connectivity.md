@@ -1,8 +1,21 @@
 ![vxlan-demo](https://github.com/Mohsem35/DevOps/assets/58659448/39a7e998-9034-4004-ba44-2843db682910)
 
 #### Prerequisite
-For this demo, as I am going to keep everything simple and only focus on _vxlan_ feature, anyone can deploy two VM on any hypervisor or virtualization technology. 
-Make sure they are on the **`same network`** thus hosts can communicate each other.
+- For this demo, as I am going to keep everything simple and only focus on _vxlan_ feature, anyone can deploy two VM on any hypervisor or virtualization technology.
+- Make sure they are on the **`same network`** thus hosts can communicate each other.
+- For communication purpose Uncomplicated Firewall **`(UFW/Firewalld)`** should be **`turned off`** on both VM. Otherwise, they can't ping with each other.
+
+```
+# check ufw status
+sudo systemctl status ufw
+```
+```
+# stop and disbale ufw
+sudo systemctl stop ufw
+sudo systemctl disable ufw
+sudo systemctl status ufw
+```
+
 
 #### What are we going to cover in this hands-on demo?
 
