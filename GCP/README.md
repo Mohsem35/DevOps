@@ -126,3 +126,10 @@ When you **`connect a VPC network to another network`**, such as an on-premises 
 - VM instances in a VPC network containing subnet ranges with privately used public IP addresses are not able to connect to external resources which use those same public IP addresses.
 - Take extra care when advertising privately used public IP addresses to another network (such as an on-premises network), especially when the other network can advertise those public IP addresses to the internet.
 
+
+#### Firewall rules
+Both **`hierarchical firewall policies`** and **`VPC firewall rules`** apply to _packets sent to and from VM instances_ (and resources that depend on VMs, such as Google Kubernetes Engine nodes). Both types of firewalls control traffic even if it is between VMs in the same VPC network.
+
+
+To monitor which firewall rule allowed or denied a particular connection, see **`Firewall Rules Logging`**
+
