@@ -58,7 +58,44 @@ A VPC network does the following:
 VPC networks have the following properties:
 
 - _VPC networks_, including their associated _routes and firewall rules_, are **`global resources`**. They are not associated with any particular region or zone.
-- Subnets are **`regional resources`**
+- _Subnets_ are **`regional resources`**
 - Each subnet defines a range of IPv4 addresses
 - _Traffic to and from instances_ can be controlled with network **`firewall rules`**. Rules are implemented on the VMs themselves, so traffic can only be controlled and logged as it leaves or arrives at a VM.
 - Resources within a VPC network can communicate with one another by using internal IPv4 addresses
+- Instances with internal IPv4 or IPv6 addresses can communicate with **`Google APIs and services`**.
+- _Network administration_ can be secured by using **`Identity and Access Management (IAM)`** roles.
+- An **`organization`** can use **`Shared VPC`** to keep a VPC network in a common host project. Authorized IAM principals from other projects in the same organization can create resources that use subnets of the Shared VPC network.
+- VPC networks can be _connected to other VPC networks_ in different projects or organizations by using **`VPC Network Peering`**
+- VPC networks can be securely connected in _hybrid environments_ by using **`Cloud VPN`** or **`Cloud Interconnect`**
+- VPC networks support **`GRE`** traffic, including traffic on Cloud VPN and Cloud Interconnect. VPC networks do **`not`** support GRE for Cloud NAT or for forwarding rules for **`load balancing`** and **`protocol forwarding`**. Support for GRE allows you to terminate GRE traffic on a VM from the internet (external IP address) and Cloud VPN or Cloud Interconnect (internal IP address). The decapsulated traffic can then be forwarded to a reachable destination. GRE enables you to use services such as Secure Access Service Edge (SASE) and SD-WAN.
+- VPC networks support IPv4 and IPv6 **`unicast`** addresses. VPC networks **`do not support`** broadcast or multicast addresses within the network.
+
+### VPC Organization policy constraints
+
+Each new project starts with a **`default VPC network with auto mode`** . You can **`disable`** the creation of default networks by **`creating an organization policy`** with the `compute.skipDefaultNetworkCreation` constraint. Projects that inherit this policy won't have a default network.
+
+
+### VPC Subnet creation mode
+Google Cloud offers **`two types`** of VPC networks, determined by their subnet creation mode:
+
+1. When an **`auto mode VPC network`** is created, one subnet from each region is automatically created within it. These automatically created subnets use a set of **`predefined IPv4 ranges`** that fit within the `10.128.0.0/9 CIDR block`. As new Google Cloud regions become available, new subnets in those regions are automatically added to auto mode VPC networks by using an IP range from that block. In addition to the automatically created subnets, you can **`add more subnets manually`** to auto mode VPC networks in regions that you choose by using IP ranges **`outside`** of `10.128.0.0/9`. The **`default network`** is an auto mode VPC network with pre-populated IPv4 firewall rules
+
+3. When a **`custom mode VPC network`** is created, no subnets are automatically created. This type of network provides you with complete control over its subnets and IP ranges. You decide which subnets to create in regions that you choose by using IP ranges that you specify.
+
+**`You can switch`** a VPC network from **`auto mode to custom mode`**. This is a one-way conversion; but custom mode to auto mode VPC networks **`cannot be changed`**. 
+
+
+#### Considerations for auto mode VPC networks
+
+#### Auto Mode:
+- Having subnets automatically created in each region is useful.
+- The predefined IP ranges(10.128.0.0/9 CIDR block) of the subnets do not overlap with IP ranges that you would use for different purposes
+
+#### Custom Mode:
+
+- Custom mode VPC networks are more flexible and are better **`suited to production`**
+- You need **`complete control`** over the subnets created in your VPC network, including regions and IP address ranges used
+- You plan to **`connect VPC network to another network`**
+  - Because the subnets of _every auto mode VPC network use the same predefined range of IP addresses_, you can't connect auto mode VPC networks to one another by using VPC Network Peering or Cloud VPN
+  - Because the auto mode 10.128.0.0/9 CIDR range is part of the commonly-used RFC 1918 address space, _networks outside of Google Cloud might currently or in the future use an overlapping CIDR range_
+- You want to **`create subnets with IPv6 ranges`**. _Auto mode VPC networks do not support dual-stack subnets_
