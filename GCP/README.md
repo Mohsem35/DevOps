@@ -18,10 +18,13 @@ Q. একটা region এ database আছে, আরেকটা region এ ক
 1. **`compute cluster`**: এখানে শুধু computer server থাকে
 2. **`storage cluster`**: SSD/HDD
 
-এরা যদি আলাদা region এ থাকে, তবে latency হবে। তাই, same region তে application এর সবকিছু থাকলেই ভাল
+এরা যদি আলাদা region এ থাকে, তবে latency হবে। তাই, same region, AZ তে application এর সবকিছু থাকলেই ভাল
 
 - VPC বানানোর পরে **`multiple segment`** বানাতে হয়। multiple segment কে **`subnet`** বলে
 - প্রতিটা data center কে বলা হয় **`AZ(availabilty zone)`**
 - প্রতিটা data center আবার **`physical wire`** দিয়ে নিজেরা connected 
 - Multiple AZ(availabilty zone)/Data Center নিয়ে **`region`** গঠিত হয়
-- 
+
+![Untitled-2023-07-28-1054](https://github.com/Mohsem35/DevOps/assets/58659448/ae38ced6-3316-4f78-b69c-3ed6008ed19f)
+
+- একটা EC2, একি AZ(avialability zone) এর EBS কে connect করার try করবে।
