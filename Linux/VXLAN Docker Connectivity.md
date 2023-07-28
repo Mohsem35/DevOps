@@ -2,7 +2,7 @@
 
 #### Prerequisite
 - For this demo, as I am going to keep everything simple and only focus on _vxlan_ feature, anyone can deploy two VM on any hypervisor or virtualization technology.
-- Make sure they are on the **`same network`** thus hosts can communicate each other.
+- Make sure they are on the **`same network`** thus hosts can communicate with each other.
 - For communication purpose Uncomplicated Firewall **`(UFW/Firewalld)`** should be **`turned off`** on both VM. Otherwise, they can't ping with each other.
 
 ```
@@ -32,6 +32,8 @@ sudo systemctl status ufw
 
 OpenvSwitch is an open-source, **`multilayer virtual switch`** designed for software-defined networking **`(SDN)`** and virtualization environments. It provides a flexible and programmable network switch that allows network administrators to create and manage virtual networks. OpenvSwitch is typically used in **`cloud computing platforms`**, data centers, and network virtualization scenarios.
 
+- Open vSwitch একটা টুল যেইটা **`software-defined networking`** বানাতে help করে। বাজার থেকে কিনা switch, router `hardware defined network`
+
 OpenvSwitch provides a flexible and scalable networking solution for virtualized environments, making it easier to **`manage and orchestrate network resources`**. Its open-source nature allows for community contributions, enhancements, and customization based on specific deployment requirements
 
 Let's start...
@@ -39,6 +41,11 @@ Let's start...
 Host Machine 01 - 172.16.6.18
 
 Host Machine 02 - 172.16.6.57
+
+- 4 টা bridge কে same network এর under এ নিয়ে আসতে পারব
+- 2 VM এর configuration same, Just **`same VNI`** এর under এ নিয়ে আসতে হবে
+- VXLAN is a kind of **`encapsulation`**. Packet encapsulation করার জন্য GRE(Generic Routing Encapsulation) লাগে। Generic Routing Encapsulation (GRE) is a protocol that encapsulates packets in order to route other protocols over IP networks.
+- main packet এর উপড়ে আরেকটা packet বসিয়ে encapsulate করা হয়। বাহিরের packet এর কাজ হচ্ছে main packet কে just অন্য node এ নিয়ে যাওয়া। যাইতে হবে কোন node এ info টা বাহিরের packet এ দেওয়া থাকে । তারপর বাহিরের packet নিজেই vanish হয়ে যাবে
 
 #### For Host-01 (172.16.6.18) 
 #### Step-00 
