@@ -99,3 +99,30 @@ Google Cloud offers **`two types`** of VPC networks, determined by their subnet 
   - Because the subnets of _every auto mode VPC network use the same predefined range of IP addresses_, you can't connect auto mode VPC networks to one another by using VPC Network Peering or Cloud VPN
   - Because the auto mode 10.128.0.0/9 CIDR range is part of the commonly-used RFC 1918 address space, _networks outside of Google Cloud might currently or in the future use an overlapping CIDR range_
 - You want to **`create subnets with IPv6 ranges`**. _Auto mode VPC networks do not support dual-stack subnets_
+
+### Routes and firewall rules
+
+#### Dynamic routing mode
+Each VPC network has an associated _dynamic routing mode_ that controls the behavior of all of its **`Cloud Routers`**. Cloud Routers manage BGP sessions for **`Google Cloud connectivity products`**
+
+#### Route advertisements and internal IP addresses
+The following IP addresses are advertised within a VPC network:
+
+- **`Regional internal IPv4 addresses`**
+  - Used for primary and secondary IPv4 subnet address ranges
+
+- **`Regional internal and external IPv6 addresses`**
+  - Used for internal and external IPv6 subnet address ranges
+
+- **`Global internal IPv4 addresses`**
+  - Used for Private Service Connect endpoints for Google APIs
+
+If you connect VPC networks using **`VPC Network Peering`**, subnet ranges using private IPv4 addresses are always **`exchanged`**. You can control whether subnet ranges using privately used public IPv4 addresses are exchanged. Global internal IPv4 addresses are never exchanged using peering.
+
+When you **`connect a VPC network to another network`**, such as an on-premises network, using a Google Cloud connectivity product like Cloud VPN, Cloud Interconnect, or Router appliance:
+
+- You can advertise the VPC network's internal IP addresses to another network (such as an on-premises network).
+- Though connectivity between a VPC network and another network (such as an on-premises network) can use private routing provided by a Google Cloud connectivity product, the other network's IP addresses might also be publicly routable. Keep this in mind if an on-premises network uses publicly routable IP addresses.
+- VM instances in a VPC network containing subnet ranges with privately used public IP addresses are not able to connect to external resources which use those same public IP addresses.
+- Take extra care when advertising privately used public IP addresses to another network (such as an on-premises network), especially when the other network can advertise those public IP addresses to the internet.
+
