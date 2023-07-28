@@ -13,3 +13,15 @@ Q. Cloud এ যেকোন resource deploy করতে হলে, 1st requirm
 Q. VPC টা কোথায় deploy করব? - customer কোন location এ আছে
 
 Q. একটা region এ database আছে, আরেকটা region এ কিভাবে data replicate করব? - possible না 
+
+যেকোন cloud এর ২ টা part থাকে
+1. **`compute cluster`**: এখানে শুধু computer server থাকে
+2. **`storage cluster`**: SSD/HDD
+
+এরা যদি আলাদা region এ থাকে, তবে latency হবে। তাই, same region তে application এর সবকিছু থাকলেই ভাল
+
+- VPC বানানোর পরে **`multiple segment`** বানাতে হয়। multiple segment কে **`subnet`** বলে
+- প্রতিটা data center কে বলা হয় **`AZ(availabilty zone)`**
+- প্রতিটা data center আবার **`physical wire`** দিয়ে নিজেরা connected 
+- Multiple AZ(availabilty zone)/Data Center নিয়ে **`region`** গঠিত হয়
+- 
