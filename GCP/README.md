@@ -180,4 +180,21 @@ Google Cloud Router **`enables dynamic route`** updates `between` your **`Comput
 
 - Cloud Router একটা **`maneged service`**
 
-#### VM Launch করব
+#### VM/Server Launch করব
+
+Google Cloud welcome page -> Click `+` button 'Create a VM' -> Select `Name`, `Region`, `Zone` -> Advanced options -> Networking -> Networking interfaces -> Edit network interface -> Select `Network`, `Subnetwork` -> `None` for External IPv4 addresses option -> Create VM
+
+<img width="750" alt="Screenshot 2023-07-29 at 10 09 52 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/408bf5b5-6c48-485d-bb8d-6711510eb9eb">
+
+<img width="750" alt="Screenshot 2023-07-29 at 10 12 27 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e5d5f2f4-c816-47b2-ad8d-2fb05db2d19f">
+
+- Server এ যেখানে application টা চলবে, শুধুমাত্র সেখানে public IP থাকবে সাথে এবং কেবলমাত্র একটা port open করা থাকবে **`(443)`**। HTTPS প্যাকেট ঢুকে ডাটাবেসের সাথে কথা বলবে।
+
+
+#### VM/Server এ ঢুকার চেষ্টা করব
+
+Click on the **`SSH`**
+
+<img width="750" alt="Screenshot 2023-07-29 at 10 19 45 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/f92e04d6-2a4b-42f9-86ca-0f6ccd923e47">
+
+
