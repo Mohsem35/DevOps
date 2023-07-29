@@ -4,15 +4,21 @@
 1. VXLAN
 2. Opne vSwitch
 
+![Untitled-2023-07-29-1955](https://github.com/Mohsem35/DevOps/assets/58659448/89c32513-57ee-449d-8370-db4702deb5f0)
+
+- একটা network আরেকটা network এর সাথে connect করতে BGP লাগে
 - On premise pc এর সাথে cloud এর কনেক্ট হবে **`BGP(border gatweway protocol)`** এর মাধ্যমে
 - Overlay network দিয়ে multiple container কে কিভাবে add করা যায় শিখানো হয়েছে
 - VPC region boubder হয়। VPC, **`multi-region`** তে span করা যায় **`না`**। অর্থাৎ, VPC কেবল একটা region তে deploy করা যায়, multi-region তে deploy করা যায় না
+
 
 Q. Cloud এ যেকোন resource deploy করতে হলে, 1st requirment কি? - VPC বানাতে হবে
 
 Q. VPC টা কোথায় deploy করব? - customer কোন location এ আছে
 
 Q. একটা region এ database আছে, আরেকটা region এ কিভাবে data replicate করব? - possible না 
+
+
 
 যেকোন cloud এর ২ টা part থাকে
 1. **`compute cluster`**: এখানে শুধু computer server থাকে
@@ -126,10 +132,52 @@ When you **`connect a VPC network to another network`**, such as an on-premises 
 - VM instances in a VPC network containing subnet ranges with privately used public IP addresses are not able to connect to external resources which use those same public IP addresses.
 - Take extra care when advertising privately used public IP addresses to another network (such as an on-premises network), especially when the other network can advertise those public IP addresses to the internet.
 
-
 #### Firewall rules
 Both **`hierarchical firewall policies`** and **`VPC firewall rules`** apply to _packets sent to and from VM instances_ (and resources that depend on VMs, such as Google Kubernetes Engine nodes). Both types of firewalls control traffic even if it is between VMs in the same VPC network.
 
 
 To monitor which firewall rule allowed or denied a particular connection, see **`Firewall Rules Logging`**
 
+#### Private Google Access কি?
+
+Private Google Access enabled allows VM instances that only have internal IP addresses (no external IP addresses) to reach the external IP addresses of Google APIs and services.
+
+আমার VPS এর কোন server instance(VM) থেকে Google এর সার্ভিস গুলো use করতে চাইলে, আমরা internet দিয়ে না গিয়ে **`Private Google Access`** দিয়ে Google এর সার্ভিস গুলো reach করতে পারি। 
+
+## Practice
+
+#### How to create GCP VPC with subnet by ClickOps
+
+GCP left-sidebar -> VPC network -> VPC networks -> Click `+` button CREATE VPC NETWORK -> Give a VPC name -> Select `custom` in 'Subnet creation mode' section -> Give a subnet `Name` in 'New subnet' section -> Select `region` in 'New subnet' section -> Give `IPv4 range` in 'New subnet' section -> Create
+
+- একটা VPC এর under এ multiple subnet থাকতে পারে
+- একটা subnet এর একই সার্ভারে web, database থাকা bad practice। কারণ, তখন এরা নিজেদের মধ্যে resource নিয়ে মারামারি করবে। যদি ২ টা ভিন্ন সার্ভারে web আর database থাকে তাহলে আর কোন প্রব্লেম নাই
+- **`mtu-1460`** মানে প্রতিটা প্যাকেটের সাইজ 1460 এর বেশি হবে না
+
+#### Check করি Route তৈরি হইছে কিনা
+
+GCP left-sidebar -> VPC network -> Routes -> 'Route Management' tab 
+
+Q. Destination IP যদি same থাকে, packet কোন interface দিয়ে বের হবে? যেই interface **`priority`** বেশি set করা 
+
+
+#### New Route তৈরি করব for specific IP/VM/VPN
+
+GCP left-sidebar -> VPC network -> Routes -> Click `+` button 'CREATE ROUTE' -> Give `Name` -> Select `Network` -> Choose `Destination IPv4 range` -> Choose your **`Next hop`**
+
+<img width="750" alt="Screenshot 2023-07-29 at 9 26 15 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/2999046d-9315-4938-8aad-7c035317acac">
+
+
+#### Cloud Routers(Hybrid Connectivity) কি?
+
+- **`Multi-cloud networking`** করতে হলে like AWS to Azure তে যাইতে চাইলে **`VPN tunnel/Cloud Routes`** লাগে
+- Same cloud এ networking করতে চাইলে লাগে **`Peering Connection`**. AWS to AWS
+
+Q. VPC এর মধ্যে router আছে, কিন্তু সেইটা আমরা দেখতে পাই না। কারণ সেইটা পুরাটাই **`abstract`** করা। এই router এর সাথে cloud router এর **`differnece`** কোথায়?
+Ans: যদি আমার VPC থেকে আরেকটা cloud এ packet পাঠাতে চাই, তাহলে এই **`hybrid cloud router`** use করতে হব
+
+Google Cloud Router **`enables dynamic route`** updates `between` your **`Compute Engine VPN and your non-Google network`**. Cloud Router eliminates the need to configure static routes and automatically discovers network topology changes.
+
+- Cloud Router একটা **`maneged service`**
+
+#### VM Launch করব
