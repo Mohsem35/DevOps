@@ -117,6 +117,7 @@ VXLAN traffic is **`encapsulated`** before it is sent over the network. This cre
 
 
 ## Create a multi-container host networking using VXLAN overlay networks
+![vxlan-diagram](https://github.com/Mohsem35/DevOps/assets/58659448/dae8bed2-9aac-4d63-93ba-fd6ccedd09c7)
 
 Let's start...
 
