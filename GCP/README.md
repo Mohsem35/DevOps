@@ -135,6 +135,7 @@ When you **`connect a VPC network to another network`**, such as an on-premises 
 #### Firewall rules
 Both **`hierarchical firewall policies`** and **`VPC firewall rules`** apply to _packets sent to and from VM instances_ (and resources that depend on VMs, such as Google Kubernetes Engine nodes). Both types of firewalls control traffic even if it is between VMs in the same VPC network.
 
+- VPC Firewall rules সবসময় VPC network এর ভিতরে apply হয়, individually apply করা যায় network tag দিয়ে
 
 To monitor which firewall rule allowed or denied a particular connection, see **`Firewall Rules Logging`**
 
@@ -143,6 +144,23 @@ To monitor which firewall rule allowed or denied a particular connection, see **
 Private Google Access enabled allows VM instances that only have internal IP addresses (no external IP addresses) to reach the external IP addresses of Google APIs and services.
 
 আমার VPS এর কোন server instance(VM) থেকে Google এর সার্ভিস গুলো use করতে চাইলে, আমরা internet দিয়ে না গিয়ে **`Private Google Access`** দিয়ে Google এর সার্ভিস গুলো reach করতে পারি। 
+
+#### IAP(Identity Aware Proxy)
+
+![Untitled-2023-07-31-0004](https://github.com/Mohsem35/DevOps/assets/58659448/f28b4474-4264-42b4-981f-446f95c2764b)
+
+GCP এর একপ্রকার **`proxy system`** । আপনি কোন **`identity`** থেকে সার্ভার/VM তে access করতে চাচ্ছেন সেই identity সম্পর্কে IAM জানে। Authentication তা Google নিজে maintain করতেছে । 
+
+- Google cloud যখন IPA থেকে আমার VM তে connect করার চেষ্টা করবে, তখন `35.235.240.0/20` এই রেঞ্জ থেকে randomly একটা ip নিবে 
+
+#### NAT Gateway কি জিনিষ?
+
+SNAT: আমার নেটওয়ার্ক থেকে যে Source IP বের হয়ে যাচ্ছে, তার IP address change করতেছে 
+
+DNAT: Packet in করার জন্য DNAT use হয়
+
+- SNAT কেই **`Cloud NAT/NAT Gateway`** বলে
+
 
 ## Practice
 
@@ -173,7 +191,8 @@ GCP left-sidebar -> VPC network -> Routes -> Click `+` button 'CREATE ROUTE' -> 
 - **`Multi-cloud networking`** করতে হলে like AWS to Azure তে যাইতে চাইলে **`VPN tunnel/Cloud Routes`** লাগে
 - Same cloud এ networking করতে চাইলে লাগে **`Peering Connection`**. AWS to AWS
 
-Q. VPC এর মধ্যে router আছে, কিন্তু সেইটা আমরা দেখতে পাই না। কারণ সেইটা পুরাটাই **`abstract`** করা। এই router এর সাথে cloud router এর **`differnece`** কোথায়?
+Q. VPC এর মধ্যে router আছে, কিন্তু সেইটা আমরা দেখতে পাই না। কারণ সেইটা পুরাটাই **`abstract`** করা। **`route table`** যেহেতু আছে, তার মানে router ও আছে। এই router এর সাথে cloud router এর **`differnece`** কোথায়?
+
 Ans: যদি আমার VPC থেকে আরেকটা cloud এ packet পাঠাতে চাই, তাহলে এই **`hybrid cloud router`** use করতে হব
 
 Google Cloud Router **`enables dynamic route`** updates `between` your **`Compute Engine VPN and your non-Google network`**. Cloud Router eliminates the need to configure static routes and automatically discovers network topology changes.
@@ -193,8 +212,17 @@ Google Cloud welcome page -> Click `+` button 'Create a VM' -> Select `Name`, `R
 
 #### VM/Server এ ঢুকার চেষ্টা করব
 
-Click on the **`SSH`**
+Click on the **`SSH`** কিন্তু ঢুকবে না, কারণ **`public IP`** set করা হয় নাই
 
 <img width="750" alt="Screenshot 2023-07-29 at 10 19 45 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/f92e04d6-2a4b-42f9-86ca-0f6ccd923e47">
 
 
+#### ভিন্ন ভিন্ন VPC গুলো কিভাবে নিজেদের মধ্যে communicate করে
+
+##### C নামে একটা VPC create করি
+
+create a VPC with `name(private-subnet-c)`, `region(us-east-1)`,`ip range(10.10.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC
+
+##### B নামে আরেকটা VPC create করি
+
+create a VPC with `name(public-subnet-b)`, `region(us-east-1)`,`ip range(10.11.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC
