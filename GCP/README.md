@@ -151,15 +151,32 @@ Private Google Access enabled allows VM instances that only have internal IP add
 
 GCP এর একপ্রকার **`proxy system`** । আপনি কোন **`identity`** থেকে সার্ভার/VM তে access করতে চাচ্ছেন সেই identity সম্পর্কে IAM জানে। Authentication তা Google নিজে maintain করতেছে । 
 
-- Google cloud যখন IPA থেকে আমার VM তে connect করার চেষ্টা করবে, তখন `35.235.240.0/20` এই রেঞ্জ থেকে randomly একটা ip নিবে 
+- Google cloud যখন IPA থেকে আমার VM তে connect করার চেষ্টা করবে, তখন `35.235.240.0/20` এই রেঞ্জ থেকে randomly একটা ip নিবে
+
+Network services
+#### Cloud NAT(Network services)
+Cloud NAT lets your Compute Engine instances and Kubernetes Engine container pods communicate with the internet using a shared, public IP address. Cloud NAT uses a **`Cloud NAT gateway`** to connect **`your subnets to a Cloud Router`**, a virtual router that connects to the internet.
 
 #### NAT Gateway কি জিনিষ?
 
-SNAT: আমার নেটওয়ার্ক থেকে যে Source IP বের হয়ে যাচ্ছে, তার IP address change করতেছে 
+![Untitled-2023-07-31-0004](https://github.com/Mohsem35/DevOps/assets/58659448/ae7269e7-d6db-4b73-8c85-031a0a93c26e)
 
-DNAT: Packet in করার জন্য DNAT use হয়
 
+SNAT: আমার নেটওয়ার্ক থেকে যখন কোন private IP বের হচ্ছে, SNAT তখন সেই IP address change করতেছে এবং public IP দিয়ে বের করতেছে
+
+DNAT: Public IP থেকে কোন Packet আসলে, সেই packet টাকে private IP তে send kore। মানে **`packet in`** করার জন্য DNAT ব্যবহার করা হবে
+
+![Untitled-2023-07-31-0004](https://github.com/Mohsem35/DevOps/assets/58659448/f72ef796-e31a-42f4-b32e-beaaf94635bd)
+
+
+- **`DNAT`** এ সবসময় একটা public IP এর সাথে একটা **`private IP bind`** করা থাকে। **`one to one`**
+- **`Natting`** কখনোই **`one to multiple হয় না`**। it's not like load balancing
+- Cloud এ **`public IP`** সবসময় **`Gateway`** তেই থাকে
 - SNAT কেই **`Cloud NAT/NAT Gateway`** বলে
+- **`Port(L4)`** আমাদের দরকার **`specific process`** এর সাথে কথা বলার জন্য। L3 level এর কাজ hocche, just host machine পর্যন্ত reach করা
+
+
+![Untitled-2023-07-31-0004](https://github.com/Mohsem35/DevOps/assets/58659448/6a5828b3-ec08-4fc1-b262-bfaa583b7456)
 
 
 ## Practice
@@ -216,13 +233,73 @@ Click on the **`SSH`** কিন্তু ঢুকবে না, কারণ *
 
 <img width="750" alt="Screenshot 2023-07-29 at 10 19 45 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/f92e04d6-2a4b-42f9-86ca-0f6ccd923e47">
 
+#### Create Cloud NAT Gateway
+
+- NAT Gateway সবসময় **`cloud router`** এর সাথে **`attach`** হয়
+- তাই এখানে `CREATE NEW ROUTER` make করতে হয় while createing Cloud NAT Gateway
+
+
+search `cloud nat` in search box ->  Click `+` button `CREATE CLOUD NAT GATEWAY` -> Gateway name `c-nat` -> Choose `Network c` in Select Cloud Router section -> choose region -> `CREATE NEW ROUTER` in cloud Router section -> CREATE ROUTER -> ADVANCED CONFIGURATIONS -> Just check options if you undersatnd -> CREATE NAT
+
+<img width="750" alt="Screenshot 2023-07-31 at 10 17 29 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bcad99e5-cb77-432e-b777-676b34b0e6ca">
 
 #### ভিন্ন ভিন্ন VPC গুলো কিভাবে নিজেদের মধ্যে communicate করে
 
 ##### C নামে একটা VPC create করি
 
-create a VPC with `name(private-subnet-c)`, `region(us-east-1)`,`ip range(10.10.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC
+create a VPC with `name(private-subnet-c)`, `region(us-east-1)`,`ip range(10.10.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC\
+
+##### C VPC তে একটা VM create করি
+
+create a VM instance 
+- with network c
+- External network `none`
 
 ##### B নামে আরেকটা VPC create করি
 
 create a VPC with `name(public-subnet-b)`, `region(us-east-1)`,`ip range(10.11.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC
+
+##### B VPC তে একটা VM create করি
+
+create a VM instance 
+- with network b
+- External network not `none`
+
+<img width="750" alt="Screenshot 2023-07-31 at 10 39 10 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/f30bed90-8c52-4476-8125-542355595fd0">
+
+<img width="750" alt="Screenshot 2023-07-31 at 10 40 49 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/757a1881-6d25-46c9-8c34-d6e5cbbb4233">
+
+- এখানে **`b VM`** public ip পাইছে, কিন্তু c VM public IP পায় নাই
+- আমার pc terminal থেকে ping পাচ্ছে
+ 
+<img width="422" alt="Screenshot 2023-07-31 at 10 43 09 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d849ede6-a1dc-41e3-912e-8125d47a4003">
+
+- b VM তে ঢুকতে গেলে **`IAP access ON`** করে দিয়ে আসতে hobe
+- তারপর b VM এর পাশে যে **`ssh`** button টা click korle **`b VM তে ঢুকতে পারব`**
+- কিছু প্যাকেজ install করব b VM তে
+  ```
+  sudo apt install tcpdump
+  sudo apt install net-tools
+  ip addr
+  ```
+<img width="565" alt="Screenshot 2023-07-31 at 11 17 49 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/30026191-28ec-4dcc-a1ac-df447f8a3c62">
+  
+  ```
+  sudo tcpdump -i ens4 dst dst port 
+  ```
+<img width="750" alt="Screenshot 2023-07-31 at 11 20 34 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/643dcdc1-e817-4200-9c53-d25989a63a42">
+
+- চেক করলে দেখা যাবে, IAP থেকে packet গুলো আসতাছে
+
+
+##### IAP(Identitiy Access Management) ঠিক করতে হবে
+
+search `iap` in search box -> `ENABLE API` in IAP -> GO TO IDENTITY-AWARE PROXY -> click on `CONFIGURE CONCENT SCREEN` -> select `external` -> Create -> App information App name `hi` ->  User support email -> Developer contact information -> Save and Continue.
+
+
+
+<img width="750" alt="Screenshot 2023-07-31 at 10 46 21 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c26ca9c5-8336-4c1d-bf2b-c15bc1fb45ba">
+
+
+<img width="750" alt="Screenshot 2023-07-31 at 10 56 54 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c4500d7-c120-4e2f-8b6a-5ee5df15fa5b">
+
