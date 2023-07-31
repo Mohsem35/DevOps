@@ -1,4 +1,4 @@
-## Cloud Concepts
+ ## Cloud Concepts
 
 2 টা core components দিয়ে cloud বানানো possible
 1. VXLAN
@@ -282,17 +282,115 @@ create a VM instance
   sudo apt install net-tools
   ip addr
   ```
-<img width="565" alt="Screenshot 2023-07-31 at 11 17 49 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/30026191-28ec-4dcc-a1ac-df447f8a3c62">
   
+<img width="565" alt="Screenshot 2023-07-31 at 11 17 49 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/30026191-28ec-4dcc-a1ac-df447f8a3c62">
+
   ```
   sudo tcpdump -i ens4 dst dst port 
   ```
 <img width="750" alt="Screenshot 2023-07-31 at 11 20 34 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/643dcdc1-e817-4200-9c53-d25989a63a42">
 
 - চেক করলে দেখা যাবে, IAP থেকে packet গুলো আসতাছে
+- এখন একটা সার্ভার open করতে হবে। **`netcat`** দিয়ে open করব। `b VM` তে netcat package টা install করব এবং নিচের command চালাব
+  ```
+  sudo apt-get install netcat
+  sudo nc -l -p 8080
+  ```
+  - netcat 8080 port এ listen করতেছে
+- এখন আমাদের **`firewall rule`** declare করতে হবে **`b VPC`** এর জন্য, যাতে আমরা **`telnet`** করতে পারি **`b VM`** কে
+- b VM থেকে packet inspect করব 8080 port তে tcpdump দিয়ে
+  ```
+  sudo tcpdump - i ens4 dst post 8080
+  ```
+<img width="600" alt="Screenshot 2023-07-31 at 3 31 08 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c442d77c-7c2f-4c8f-b1ca-a88f77ac8428">
+
+- এখন আমি packet পাঠানো শুরু করলাম আমার PC terminal থেকে
+  ```
+  telnet <public_ip> 8080 
+  ```
+<img width="419" alt="Screenshot 2023-07-31 at 3 34 31 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ee4b656d-a686-43ea-a117-bea4a77c5e93">
+
+- এখন আবার b VM থেকে inspect করি। দেখব, আমার PC থেকে b VM তে প্যাকেট আসতেছে আমার ISP এর through তে। 
+<img width="1127" alt="Screenshot 2023-07-31 at 3 35 26 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bc24cd0e-dab4-4975-827b-7331b0c9b666">
+
+- যখন আমি terminal থেকে `b VM` তে packet send করি, তখন আমার `ISP ip address` পাবে
+- কিন্তু যখন `ssh` করে browser থেকে packet send করি, তখন `IAM ip address` পাবে
+
+![Untitled-2023-07-31-1547](https://github.com/Mohsem35/DevOps/assets/58659448/b8ba5349-1422-41ed-988a-64c779f44563)
+
+##### C VPC তে আর একটা VM create করি
+
+- এটাতে public ip থাকবে
 
 
-##### IAP(Identitiy Access Management) ঠিক করতে হবে
+- এখন C VM থেকে b VM কে **`telnet`** করার try করব
+
+Q: C VM তে কোন public IP নাই, তবুও packet update নিচ্ছে কিভাবে?
+
+##### Investigate করব যখন packet C থেকে B তে যায়, তখন C এর IP address কি হবে?
+
+![Untitled-2023-07-31-1547(1)](https://github.com/Mohsem35/DevOps/assets/58659448/7951656d-a039-4aa3-bff5-61f0f779e248)
+
+- In c VM install following things
+  ```
+  sudo apt install telnet
+  telnet <b_publicIP> 8080
+  ```
+<img width="500" alt="Screenshot 2023-07-31 at 5 32 06 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/b1c59f5c-41fb-4ec9-9331-295ce1cfdf37">
+
+- In b VM tcpdump দিয়ে 8080 port তে listen করব 
+  ```
+  sudo tcpdump -i ens4 dst port 8080
+  ```
+- Now, send packet from c VM
+  ```C
+  hi
+  ```
+<img width="475" alt="Screenshot 2023-07-31 at 5 34 59 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e994537f-4049-41a8-9be8-41c44c6e446a">
+
+- এখন b VM থেকে investigate করি
+<img width="1000" alt="Screenshot 2023-07-31 at 5 37 06 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/540d64ff-58a7-4d1e-a0f3-fbad8037603a">
+
+- যেই IP টা পাইলাম, সেইটা [BGP Hurricane](https://bgp.he.net/) তে বসিয়ে দেখব এই IP টা কার
+
+- এতক্ষণ আমরা C সার্ভার থেকে B সার্ভারে **`telnet`** করলাম
+
+#### এক্ষণ আমরা B সার্ভার থেকে C সার্ভারে **`telnet`** করতে চাই
+
+- Possible না
+
+Q. তাইলে বাহিরে বের হচ্ছে কিভাবে?
+- SNAT করা আছে তাই
+
+কিন্তু যদি আমরা **`cloud NAT delete`** করে দেই, তাহলে B server internet পাবে না অর্থাৎ তখন আর কোন package installe করতে পারবে না
+
+<img width="1000" alt="Screenshot 2023-07-31 at 5 54 50 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c6dd8283-ff45-4742-bf29-b27680c06d8b">
+
+Tricky question: **`GCP তে কেউ যদি private network বানাতে চাই`**, like **`GKE cluster`** তাহলে কি কি must লাগবেই?
+
+- Cloud Router
+- NAT
+- এই দুইটা component এর কোন একটা ছাড়া **`GCP তে কেউ যদি private network`** বানানো possible না.
+
+Q: Cloud Router কেন লাগবে?
+
+- VPC এর under এ সবগুলো sub-net গুলোকে catch করার জন্য
+
+![Untitled-2023-07-31-1547(2)](https://github.com/Mohsem35/DevOps/assets/58659448/16c723bd-3a12-4430-a55a-51b1d45521aa)
+
+
+#### Gist
+
+- Private network যখন design করব, তখন একরকম হবে
+  - **`Cloud NAT`**, **`Cloud Router`**, **`IAP`**, **`Firewall rules`** এগুলো লাগবে
+
+- Public network যখন design করব, তখন আরেকরকম হবে
+  - public এ কিছুই লাগে না, just VM বানাই IP assign করে দিব
+
+
+- GCP তে entry হবে শুধু **`load balancer`** দিয়ে। load balancer বানানোর জন্য আলাদা একটা subnet আছে নাম **`proxy subnet`**
+
+##### IAP(Identitiy Access Management) ঠিক করতে হবে 
 
 search `iap` in search box -> `ENABLE API` in IAP -> GO TO IDENTITY-AWARE PROXY -> click on `CONFIGURE CONCENT SCREEN` -> select `external` -> Create -> App information App name `hi` ->  User support email -> Developer contact information -> Save and Continue.
 
@@ -302,4 +400,14 @@ search `iap` in search box -> `ENABLE API` in IAP -> GO TO IDENTITY-AWARE PROXY 
 
 
 <img width="750" alt="Screenshot 2023-07-31 at 10 56 54 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c4500d7-c120-4e2f-8b6a-5ee5df15fa5b">
+
+
+##### Create a Firewall rule for telnet
+
+VPC network -> Firewall -> Create a firewall rule -> Name `b-allow-all` -> Network `b` -> Direction of traffice `Ingress` -> Action on match `Allow` -> Targets `All instances in the network` -> Source IPv4 ranges `0.0.0.0/0` -> Protocols and Ports `Allow All` -> Create
+
+<img width="750" alt="Screenshot 2023-07-31 at 3 13 12 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/5781b5d7-9566-4891-9a82-d143e63d326e">
+
+
+<img width="750" alt="Screenshot 2023-07-31 at 3 18 53 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6f181b39-9b32-4bb2-9168-8338adccc9c9">
 
