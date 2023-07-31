@@ -386,9 +386,19 @@ Q: Cloud Router কেন লাগবে?
 
 - Public network যখন design করব, তখন আরেকরকম হবে
   - public এ কিছুই লাগে না, just VM বানাই IP assign করে দিব
+![Untitled-2023-07-31-1547(3)](https://github.com/Mohsem35/DevOps/assets/58659448/3d0ce077-7c3c-432f-9a4d-73e87e154dad)
 
 
 - GCP তে entry হবে শুধু **`load balancer`** দিয়ে। load balancer বানানোর জন্য আলাদা একটা subnet আছে নাম **`proxy subnet`**
+
+ 
+- Google এর **`managed servcie(mysql, redis)`** গুলো ওদের network তেই deploy হয়
+- আমার **`VPC থেকে google managed service গুলো privately access`** করতে হলে, **`peering connection`** করতে হবে
+- এটাকে google নাম দিছে **`private service connection`**
+- আমার **`Managed service গুলো কই deloy`** হবে, সেইটার **`IPv4 range`** আবার আলাদা করে declare করে দিতে হয়। যাতে আমার সব managed service গুলো একই subnet এ থাকে। 
+
+- Managed service(mysql with private IP) কিভাবে declare করতে হয়, সজল ভাই সেইটা ২ ক্লাসের লাস্টে দেখাইছে 
+
 
 ##### IAP(Identitiy Access Management) ঠিক করতে হবে 
 
