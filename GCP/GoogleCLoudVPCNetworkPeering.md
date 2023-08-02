@@ -42,3 +42,48 @@ Advanced options Networking:
     Subnetwork: subnet-apione IPv4 (198.168.0.0/24)
     External IPv4 addresses: Ephemeral
 ```
+
+#### Step 4: Create another VM inside APITwo VPC Network
+
+
+```
+Name: vm-apitwo
+Region: us-east1
+Zone: us-east1-b
+Machine Configuration series: E2
+Firewall: Allow both HTTP & HTTPS traffic
+Advanced options Networking:
+  Network interfaces:
+    Network: vpc-apitwo
+    Subnetwork: subnet-apitwo IPv4 (10.10.0.0/24)
+    External IPv4 addresses: Ephemeral
+```
+
+#### Step 5: Install the following commands on both VM(differnet region VPC)
+
+```
+sudo apt update -y
+sudo apt install telnet -y
+sudo apt install tcpdump -y
+sudo apt install iputils-ping
+```
+
+#### Step 6: Establish peering connections between 2 different region VPCs
+
+- peering ২ সাইড থেকেই করতে হবে
+- peering communication 2 সাইড থেকে **`না`** হলে, **`status == inactive`** দেখাবে
+
+VPC network -> VPC network peering -> CREATE CONNECTION -> CONTINUE -> CREATE
+```
+Name: vpc-api1-vpc-api2
+Your VPC network: vpc-apione
+VPC network name: vpc-apitwo
+```
+
+```
+Name: vpc-api2-vpc-api1
+Your VPC network: vpc-apitwo
+VPC network name: vpc-apione
+```
+
+<img width="800" alt="Screenshot 2023-08-03 at 12 15 35 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e38c8823-a09b-48f9-831e-078fe259da18">
