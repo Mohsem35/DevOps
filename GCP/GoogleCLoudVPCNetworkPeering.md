@@ -87,3 +87,45 @@ VPC network name: vpc-apione
 ```
 
 <img width="800" alt="Screenshot 2023-08-03 at 12 15 35 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e38c8823-a09b-48f9-831e-078fe259da18">
+
+#### Step 7: Ping private IP from one VM to another VM
+
+vm-apione IP : 192.168.0.2
+vm-apitwo IP : 10.10.0.2
+
+```
+# From VM 1
+ping 10.10.0.2
+```
+```
+# From VM 2
+ping 192.168.0.2
+```
+
+#### Step 7: Install nginx in vm-apione
+
+```
+sudo apt install nginx
+sudo systemctl status nginx
+```
+
+#### Step 8: Install nginx in vm-apitwo
+```
+# 1st try
+telnet <vm_apione_privateip> 80
+```
+
+```
+# 2nd try
+wget <vm_apione_privateip> 80
+```
+
+#### Step 9: Check 80 port of vm-apione through tcpdump
+
+```
+sudo tcpdump -i ens4 -v port 80
+```
+
+
+
+
