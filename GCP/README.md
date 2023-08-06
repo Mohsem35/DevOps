@@ -38,6 +38,8 @@ Q. একটা region এ database আছে, আরেকটা region এ ক
 
 ## Virtual Private Cloud (VPC) 
 
+- VPC একটা global resource object
+
 Virtual Private Cloud (VPC) provides **`networking functionality`** to Compute Engine virtual machine (VM) instances, Google Kubernetes Engine (GKE) clusters, and the App Engine flexible environment. VPC provides networking for your **`cloud-based resources and services`** that are global, scalable, and flexible.
 
 
