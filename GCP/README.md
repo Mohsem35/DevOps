@@ -252,7 +252,6 @@ create a VPC with `name(public-subnet-b)`, `region(us-east-1)`,`ip range(10.11.0
 
 create a VM instance `name(c)`, `region(us-east-1)`, `zone(us-east1-b)`, Advanced options -> Networking -> Edit network interface -> select `network(c)` ,`primary internal IPv4 addresses(Ephemeral(Automatic))`, `external IPv4 addresses(None)` [যেহেতু public IP দিব না] -> CREATE
 
-
 #### Step 4: Create cloud NAT gateway
 
 - NAT Gateway সবসময় **`cloud router`** এর সাথে **`attach`** হয়
@@ -267,55 +266,99 @@ Create a router -> `Name(c-router)`, `Network(c)`, `Region(us-east1)` -> CREATE
 <img width="750" alt="Screenshot 2023-07-31 at 10 17 29 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bcad99e5-cb77-432e-b777-676b34b0e6ca">
 
 
-##### B VPC তে একটা VM create করি
+#### Step 5: একটা vm/instance create করি b VPC তে
 
-create a VM instance 
-- with network b
-- External network not `none`
+- এই vm তে public IP থাকবে
+
+create a VM instance `name(b)`, `region(us-east-1)`, `zone(us-east1-b)`, Advanced options -> Networking -> Edit network interface -> select `network(b)` ,`primary internal IPv4 addresses(Ephemeral(Automatic))`, `external IPv4 addresses(Ephemeral)` -> CREATE
+
 
 <img width="750" alt="Screenshot 2023-07-31 at 10 39 10 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/f30bed90-8c52-4476-8125-542355595fd0">
 
 <img width="750" alt="Screenshot 2023-07-31 at 10 40 49 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/757a1881-6d25-46c9-8c34-d6e5cbbb4233">
 
-- এখানে **`b VM`** public ip পাইছে, কিন্তু c VM public IP পায় নাই
+#### Step 6: আমার pc termianl থেকে b vm/instance কে ping দিব
+
+- যেহেতু **`b vm/instance`** public ip পাইছে, তারমানে ping করলে b vm কে পাওয়া যাবে।
 - আমার pc terminal থেকে ping পাচ্ছে
  
 <img width="422" alt="Screenshot 2023-07-31 at 10 43 09 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d849ede6-a1dc-41e3-912e-8125d47a4003">
 
+- যেহেতু public ip দিয়ে b vm কে ping করা যাচ্ছে, তারমানে সেই public ip translate হয়ে b vm এর private ip কে reach করা যাচ্ছে
+
 - b VM তে ঢুকতে গেলে **`IAP access ON`** করে দিয়ে আসতে hobe
-- তারপর b VM এর পাশে যে **`ssh`** button টা click korle **`b VM তে ঢুকতে পারব`**
-- কিছু প্যাকেজ install করব b VM তে
-  ```
-  sudo apt install tcpdump
-  sudo apt install net-tools
-  ip addr
-  ```
+
+#### Step 7: Confiure IAP for accessing the b vm/instance
+
+- এখানে একটা consent দিতে হয়, যে google cloud আমার IAP use করবে
+
+**`1st step`** 
+
+Search `Identity-Aware-Proxy` in search box -> `enable api` -> `go to identity-aware-proxy` -> `configure consent screen` -> `User Type(External)` -> Create -> App information -> `App name(hi)`, `User support mail(select from dropdown)`, `Developer contact information(user_mail)` -> save & continue -> Scopes(save & continue) -> Test users(save & continue) -> Summary(back to dashboard)
+
+**`2nd step`**
+
+Search `Identity-Aware-Proxy` in search box -> `SSH AND TCP RESOURCES` tab -> tick `b`, `c` -> click `add principle` to right side of the page -> Add principles -> `new principles(paste_aCloudGuru_studentAccount_emai)` -> Assign roles -> Role(IAP-secure tunnel user) [select this from dropdwon] -> Save
+
+- IAP configured হয়ে গেল
+- এখন b vm/instance এর পাশে **`ssh`** button টা click korle **`b vm তে ঢুকতে পারব`**
+
+
+<img width="750" alt="Screenshot 2023-08-08 at 7 42 08 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/0e2f8c27-01b3-4e1a-88cd-0bb2a597f67e">
+
+
+#### Step 8: telnet form my pc
+
+- **`telnet`** করব আমার pc termianl থেকে **`b vm/instance তে`**
+
+```
+telent <b_vm_publicIP> 22
+```
+
+#### Step 9: কিছু প্যাকেজ install করব b vm/instance তে
+
+```
+sudo apt install tcpdump
+sudo apt install net-tools
+ip addr
+```
   
 <img width="565" alt="Screenshot 2023-07-31 at 11 17 49 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/30026191-28ec-4dcc-a1ac-df447f8a3c62">
 
-  ```
-  sudo tcpdump -i ens4 dst dst port 
-  ```
+
+#### Step 10: b vm/instance কে inspect করব tcpdump দিয়ে
+
+ ```
+ sudo tcpdump -i ens4 dst dst port 
+ ```
+- চেক করলে দেখা যাবে, **`IAP`** থেকে packet গুলো আসতাছে `35.235.240.0/20` এই রেঞ্জ থেকে 
+
 <img width="750" alt="Screenshot 2023-07-31 at 11 20 34 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/643dcdc1-e817-4200-9c53-d25989a63a42">
 
-- চেক করলে দেখা যাবে, IAP থেকে packet গুলো আসতাছে
-- এখন একটা সার্ভার open করতে হবে। **`netcat`** দিয়ে open করব। `b VM` তে netcat package টা install করব এবং নিচের command চালাব
-  ```
-  sudo apt-get install netcat
-  sudo nc -l -p 8080
-  ```
-  - netcat 8080 port এ listen করতেছে
-- এখন আমাদের **`firewall rule`** declare করতে হবে **`b VPC`** এর জন্য, যাতে আমরা **`telnet`** করতে পারি **`b VM`** কে
+#### Step 11: How packet travels 
+
+- এখন একটা সার্ভার open করতে হবে। **`netcat`** দিয়ে open করব।
+- **`b`** তে **`netcat package`** টা install করব এবং নিচের command চালাব
+
+```
+sudo apt-get install netcat
+sudo nc -l -p 8080
+```
+- netcat 8080 **`port`** এ **`listen`** করতেছে
+
+
+- এখন আমাদের **`firewall rule`** declare করতে হবে **`b VPC`** এর জন্য, যাতে আমরা **`telnet`** করতে পারি **`b vm/instance`** কে
 - b VM থেকে packet inspect করব 8080 port তে tcpdump দিয়ে
-  ```
-  sudo tcpdump - i ens4 dst post 8080
-  ```
+
+```
+sudo tcpdump - i ens4 dst post 8080
+```
 <img width="600" alt="Screenshot 2023-07-31 at 3 31 08 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c442d77c-7c2f-4c8f-b1ca-a88f77ac8428">
 
-- এখন আমি packet পাঠানো শুরু করলাম আমার PC terminal থেকে
-  ```
-  telnet <public_ip> 8080 
-  ```
+- এখন আমি packet পাঠানো শুরু করলাম আমার pc terminal থেকে
+```
+telnet <public_ip> 8080 
+```
 <img width="419" alt="Screenshot 2023-07-31 at 3 34 31 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ee4b656d-a686-43ea-a117-bea4a77c5e93">
 
 - এখন আবার b VM থেকে inspect করি। দেখব, আমার PC থেকে b VM তে প্যাকেট আসতেছে আমার ISP এর through তে। 
