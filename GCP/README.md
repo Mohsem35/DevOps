@@ -344,59 +344,91 @@ ip addr
 sudo apt-get install netcat
 sudo nc -l -p 8080
 ```
-- netcat 8080 **`port`** এ **`listen`** করতেছে
+
+- b vm/instance netcat করে 8080 **`port`** এ **`listen`** করতেছে
+
+##### 'Firewall rule' declare করতে হবে 'b vpc' এর জন্য 
+
+- যাতে আমরা **`telnet`** করতে পারি **`b vm/instance`** কে
+
+left side `vpc network` tab -> firewall -> create a firewall rule -> `name(b-allow-all)`, `network(b)`, `direction of traffic(ingress)`, `Action on match(allow)`, `targets(all instances in the network)`, `source IPv4 ranges(0.0.0.0/0)`, `protocols and ports(allow all)` -> CREATE
+
+<img width="750" alt="Screenshot 2023-08-08 at 9 08 45 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/4de61e96-4022-406f-9429-6d21f064201b">
 
 
-- এখন আমাদের **`firewall rule`** declare করতে হবে **`b VPC`** এর জন্য, যাতে আমরা **`telnet`** করতে পারি **`b vm/instance`** কে
-- b VM থেকে packet inspect করব 8080 port তে tcpdump দিয়ে
+- এখন আমি packet পাঠানো শুরু করলাম আমার pc terminal থেকে
+```
+telnet <b_vm_public_ip> 8080 
+```
+
+- এখন ssh তে click করে, আরেকটা b vm/instance open করে, packet inspect করব 8080 port তে tcpdump দিয়ে
 
 ```
 sudo tcpdump - i ens4 dst post 8080
 ```
 <img width="600" alt="Screenshot 2023-07-31 at 3 31 08 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c442d77c-7c2f-4c8f-b1ca-a88f77ac8428">
 
-- এখন আমি packet পাঠানো শুরু করলাম আমার pc terminal থেকে
-```
-telnet <public_ip> 8080 
-```
+- এখন আমি packet পাঠানো শুরু করব, আমার pc terminal থেকে `hello`
+
 <img width="419" alt="Screenshot 2023-07-31 at 3 34 31 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ee4b656d-a686-43ea-a117-bea4a77c5e93">
 
-- এখন আবার b VM থেকে inspect করি। দেখব, আমার PC থেকে b VM তে প্যাকেট আসতেছে আমার ISP এর through তে। 
+- এখন আবার b vm/intance এর 2nd tab যেইটা থেকে tcpdump থেকে inspect করতেছিলাম দেখব, আমার PC থেকে b vm/intance তে প্যাকেট আসতেছে আমার ISP এর through তে
+  
 <img width="1127" alt="Screenshot 2023-07-31 at 3 35 26 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bc24cd0e-dab4-4975-827b-7331b0c9b666">
 
-- যখন আমি terminal থেকে `b VM` তে packet send করি, তখন আমার `ISP ip address` পাবে
-- কিন্তু যখন `ssh` করে browser থেকে packet send করি, তখন `IAM ip address` পাবে
+#### Gist
+
+- যখন আমি terminal থেকে `b VM` তে packet send করি, তখন আমার **`ISP ip address`** পাবে
+- কিন্তু যখন `ssh` করে browser থেকে packet send করি, তখন **`IAM ip address`** পাবে
 
 ![Untitled-2023-07-31-1547](https://github.com/Mohsem35/DevOps/assets/58659448/b8ba5349-1422-41ed-988a-64c779f44563)
 
-##### C VPC তে আর একটা VM create করি
+## Experiment করব
 
-- এটাতে public ip থাকবে
+#### Step 1: c vpc তে একটা vm/instance create করব c2 নামে 
+
+- এই vm তে কোন public IP থাকবে
+
+create a VM instance `name(c-2)`, `region(us-east-1)`, `zone(us-east1-b)`, Advanced options -> Networking -> Edit network interface -> select `network(c)` ,`primary internal IPv4 addresses(Ephemeral(Automatic))`, `external IPv4 addresses(Ephemeral)` -> CREATE
 
 
-- এখন C VM থেকে b VM কে **`telnet`** করার try করব
+#### Step 2: এখন c vm থেকে b vm কে **`telnet`** করার try করব
 
-Q: C VM তে কোন public IP নাই, তবুও packet update নিচ্ছে কিভাবে?
+
+- b vm থেকে netcat open করে রাখব
+```
+sudo nc -l -p 8080
+```
+- এখন c vm/intance তে ঢুকব
+```
+sudo apt install net-tools
+ip a
+sudo apt install telnet
+```
+```
+telnet <b_vm_public_ip> 8080
+```
+##### Q: c vm তে কোন public IP নাই, তবুও packet update নিচ্ছে কিভাবে?
+
+#### Step 3: Run the experiment
+
+- এখন **`b`** vm/instance থেকে **`tcpdump`** দিয়ে 8080 port তে listen করব 
+
+```
+sudo tcpdump -i ens4 dst port 8080
+```
+
+- Now, send packet from **`c`** vm/instance
+```
+hi
+```
 
 ##### Investigate করব যখন packet C থেকে B তে যায়, তখন C এর IP address কি হবে?
 
 ![Untitled-2023-07-31-1547(1)](https://github.com/Mohsem35/DevOps/assets/58659448/7951656d-a039-4aa3-bff5-61f0f779e248)
 
-- In c VM install following things
-  ```
-  sudo apt install telnet
-  telnet <b_publicIP> 8080
-  ```
 <img width="500" alt="Screenshot 2023-07-31 at 5 32 06 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/b1c59f5c-41fb-4ec9-9331-295ce1cfdf37">
 
-- In b VM tcpdump দিয়ে 8080 port তে listen করব 
-  ```
-  sudo tcpdump -i ens4 dst port 8080
-  ```
-- Now, send packet from c VM
-  ```C
-  hi
-  ```
 <img width="475" alt="Screenshot 2023-07-31 at 5 34 59 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e994537f-4049-41a8-9be8-41c44c6e446a">
 
 - এখন b VM থেকে investigate করি
