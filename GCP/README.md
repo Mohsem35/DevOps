@@ -153,7 +153,7 @@ Private Google Access enabled allows VM instances that only have internal IP add
 
 GCP এর একপ্রকার **`proxy system`** । আপনি কোন **`identity`** থেকে সার্ভার/VM তে access করতে চাচ্ছেন সেই identity সম্পর্কে IAM জানে। Authentication তা Google নিজে maintain করতেছে । 
 
-- Google cloud যখন IPA থেকে আমার VM তে connect করার চেষ্টা করবে, তখন `35.235.240.0/20` এই রেঞ্জ থেকে randomly একটা ip নিবে
+- Google cloud যখন IPA থেকে আমার VM তে connect করার চেষ্টা করবে, তখন `35.235.240.0/20` এই রেঞ্জ থেকে randomly একটা ip নিয়ে connect হবে
 
 Network services
 #### Cloud NAT(Network services)
@@ -235,31 +235,37 @@ Click on the **`SSH`** কিন্তু ঢুকবে না, কারণ *
 
 <img width="750" alt="Screenshot 2023-07-29 at 10 19 45 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/f92e04d6-2a4b-42f9-86ca-0f6ccd923e47">
 
-#### Create Cloud NAT Gateway
+
+## ভিন্ন ভিন্ন VPC গুলো কিভাবে নিজেদের মধ্যে communicate করে
+
+#### Step 1: c নামে একটা VPC create করি
+
+create a VPC with `name(private-subnet-c)`, `region(us-east-1)`,`ip range(10.10.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC
+
+#### Step 2: b নামে আরেকটা VPC create করি
+
+create a VPC with `name(public-subnet-b)`, `region(us-east-1)`,`ip range(10.11.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC
+
+#### Step 3: একটা vm/instance create করি c VPC তে 
+
+- এই vm তে কোন public IP থাকবে না
+
+create a VM instance `name(c)`, `region(us-east-1)`, `zone(us-east1-b)`, Advanced options -> Networking -> Edit network interface -> select `network(c)` ,`primary internal IPv4 addresses(Ephemeral(Automatic))`, `external IPv4 addresses(None)` [যেহেতু public IP দিব না] -> CREATE
+
+
+#### Step 4: Create cloud NAT gateway
 
 - NAT Gateway সবসময় **`cloud router`** এর সাথে **`attach`** হয়
 - তাই এখানে `CREATE NEW ROUTER` make করতে হয় while createing Cloud NAT Gateway
 
+Search `cloud nat` in search box ->  Click `+` button `CREATE CLOUD NAT GATEWAY` -> `Gateway name(c-nat)` -> Select Cloud Router -> `Network(c)`, `Region(us-east1)`, `Cloud Router(CREATE NEW ROUTER)` ->  `c-router` create করব -> ADVANCED CONFIGURATIONS -> Just check options if you undersatnd -> CREATE
 
-search `cloud nat` in search box ->  Click `+` button `CREATE CLOUD NAT GATEWAY` -> Gateway name `c-nat` -> Choose `Network c` in Select Cloud Router section -> choose region -> `CREATE NEW ROUTER` in cloud Router section -> CREATE ROUTER -> ADVANCED CONFIGURATIONS -> Just check options if you undersatnd -> CREATE NAT
+- এখন new router c কিভাবে বানাতে হবে?
+
+Create a router -> `Name(c-router)`, `Network(c)`, `Region(us-east1)` -> CREATE 
 
 <img width="750" alt="Screenshot 2023-07-31 at 10 17 29 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bcad99e5-cb77-432e-b777-676b34b0e6ca">
 
-#### ভিন্ন ভিন্ন VPC গুলো কিভাবে নিজেদের মধ্যে communicate করে
-
-##### C নামে একটা VPC create করি
-
-create a VPC with `name(private-subnet-c)`, `region(us-east-1)`,`ip range(10.10.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC\
-
-##### C VPC তে একটা VM create করি
-
-create a VM instance 
-- with network c
-- External network `none`
-
-##### B নামে আরেকটা VPC create করি
-
-create a VPC with `name(public-subnet-b)`, `region(us-east-1)`,`ip range(10.11.0.0/16)`, `subnet`, `allow all firewall rules` > create VPC
 
 ##### B VPC তে একটা VM create করি
 
