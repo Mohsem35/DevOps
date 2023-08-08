@@ -4,26 +4,103 @@
 ```delete VM -> delete subnet -> delete VPC```
 - VM/Instance creation এর সময়, **`boot disk`** একটা option দেখতে পাই। যেই disk থেকে VM boot হয়, তাকেই boot disk বলে।
 
-## IAP(Identitiy Access Management) ঠিক করতে হবে 
+## 'Network tag' এর use cases
 
-search `iap` in search box -> `ENABLE API` in IAP -> GO TO IDENTITY-AWARE PROXY -> click on `CONFIGURE CONCENT SCREEN` -> select `external` -> Create -> App information App name `hi` ->  User support email -> Developer contact information -> Save and Continue.
+#### Step 1: Create a vpc with subnet
 
+- choose individual names for **`vpc`** and **`subnet-name`**
 
-
-<img width="750" alt="Screenshot 2023-07-31 at 10 46 21 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c26ca9c5-8336-4c1d-bf2b-c15bc1fb45ba">
-
-
-<img width="750" alt="Screenshot 2023-07-31 at 10 56 54 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c4500d7-c120-4e2f-8b6a-5ee5df15fa5b">
+`vpc name(a)`,`subnet-name(a-subnet)`,`region(us-east1)`, `IPv4 range(10.10.0.0/16)`, `IPv4 firewall rules(allow all)` -> create
 
 
-## Create a Firewall rule for telnet
+#### Step 2: Create a vm/instance within a-subnet
 
-VPC network -> Firewall -> Create a firewall rule -> Name `b-allow-all` -> Network `b` -> Direction of traffice `Ingress` -> Action on match `Allow` -> Targets `All instances in the network` -> Source IPv4 ranges `0.0.0.0/0` -> Protocols and Ports `Allow All` -> Create
+`name(a)`,`region(us-east1)`,`firewall(allow both http/https traffic)` -> Advanced options -> networkig -> **`network tags(ingress)`**, `network interface(a-subnet)` -> create
 
-<img width="750" alt="Screenshot 2023-07-31 at 3 13 12 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/5781b5d7-9566-4891-9a82-d143e63d326e">
+#### Step 3: Install packages in the 'a' vm/instance and telnet form my pc
+
+- `ssh` তে click করে `a vm/instance` তে ঢুকব
+```
+# check boot disk size
+sudo lsblk
+sudo apt-get install netcat
+sudo netcat -l -p 8080
+```
+- আমার pc terminal থেকে telnet করব `a` vm কে
+
+```
+telnet <a_vm_public_ip> 8080
+```
+কিছু পাব না, কিন্তু 22 port দিয়ে telent করলে `a` vm কে পাব
+
+```
+telnet <a_vm_public_ip> 22
+```
+
+<img width="500" alt="Screenshot 2023-08-08 at 11 02 57 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/16d9c87b-5e1c-4b9f-b6b8-9f2cec081a26">
 
 
-<img width="750" alt="Screenshot 2023-07-31 at 3 18 53 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6f181b39-9b32-4bb2-9168-8338adccc9c9">
+#### Step 4: Firewall rule create করব
+
+
+Firewall rule 3 ভাবে create করা যায়
+1. `tag` এর উপড়ে [best practice]
+2. সবার উপড়ে গণ [bad practice]
+3. `service account` introduce করে [key দিয়ে]। এই key use করে যারা যারা connection করতে চাইবে, তাদেরকে আমি ঢুকতে দিব। এইটা হচ্ছে **`software layer`** 
+
+- যেহেতু 8080 port দিয়ে `a` vm কে access করা গেল না, তাই আমরা firewall rull বসাব
+- আমরা আগে `ingress` নামে যে tag create করছিলাম `a vm` creation এর সময়, এখানে সেটা declare করব firewall rule এ 
+
+cloud firewall -> firewall policies -> create a firewall policy -> `name(a-subnet-firewall)`, `network(a vpc)`, `Targets(specified target tags)`, `Target tags(ingress)`, `source ipv4 ranges(my_isp_ip/32)` [যেহেতু একটা মাত্র ip allow করতে চাচ্ছি] -> Protocols and ports(specified protocols and ports)` -> tick `TCP` -> Ports(8080) -> create
+
+> **_NOTE:_**  firewall rull যখনি overlap করবে অর্থাৎ rule একই হয়ে গেলে, তখন যার priority বেশি হবে সেই `firewall rule follwed` হবে । পুরা system এর সব জায়গায় যদি এরমকম priority বসাই তাহলে সেটা খুব বাজে system হবে
+
+
+#### What is 'service account' and how does it work?
+
+
+#### Step 5: Update package and telnet form my pc terminal
+
+- `a vm` তে ঢুকব
+```
+sudo apt install netcat
+sudo netcat -l -p 8080
+```
+- এখন আমার pc terminal থেকে `telnet` করব
+```
+telnet <a_vm_public_ip> 8080
+```
+
+<img width="450" alt="Screenshot 2023-08-08 at 11 52 24 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/cba2ddf3-72fe-442f-82e2-411a6d6ec465">
+
+
+![Untitled-2023-08-08-2315](https://github.com/Mohsem35/DevOps/assets/58659448/fd203579-5890-4a72-a011-374be7297a34)
+##### it works
+
+#### Step 6: এখন 9090 port allow করতে চাচ্ছি
+
+- যেহেতু `9090 port allow` করতে চাচ্ছি, তাহলে `ingress firewall policy` টা আমাদের update করতে হবে 
+
+cloud firewall -> firewall policies -> `ingress policy` -> Edit -> Protocols and ports(specified protocols and ports)` -> `TCP` -> **Ports(8080, 9090)** -> save
+
+- `a vm` তে ঢুকব
+```
+sudo netcat -l -p 9090
+```
+
+- এখন আমার pc terminal থেকে `telnet` করব 9090 port এ 
+```
+telnet <a_vm_public_ip> 9090
+```
+
+## Local pc থেকে direct এর GCP vm/instance তে ঢুকব
+
+#### Step 1: Create public/private key for maly
+
+```
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f /path/to/custom/directory/
+cat 
+```
 
 
 
