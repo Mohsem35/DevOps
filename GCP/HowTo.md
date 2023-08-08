@@ -4,6 +4,30 @@
 ```delete VM -> delete subnet -> delete VPC```
 - VM/Instance creation এর সময়, **`boot disk`** একটা option দেখতে পাই। যেই disk থেকে VM boot হয়, তাকেই boot disk বলে।
 
+## IAP(Identitiy Access Management) ঠিক করতে হবে 
+
+search `iap` in search box -> `ENABLE API` in IAP -> GO TO IDENTITY-AWARE PROXY -> click on `CONFIGURE CONCENT SCREEN` -> select `external` -> Create -> App information App name `hi` ->  User support email -> Developer contact information -> Save and Continue.
+
+
+
+<img width="750" alt="Screenshot 2023-07-31 at 10 46 21 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c26ca9c5-8336-4c1d-bf2b-c15bc1fb45ba">
+
+
+<img width="750" alt="Screenshot 2023-07-31 at 10 56 54 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c4500d7-c120-4e2f-8b6a-5ee5df15fa5b">
+
+
+## Create a Firewall rule for telnet
+
+VPC network -> Firewall -> Create a firewall rule -> Name `b-allow-all` -> Network `b` -> Direction of traffice `Ingress` -> Action on match `Allow` -> Targets `All instances in the network` -> Source IPv4 ranges `0.0.0.0/0` -> Protocols and Ports `Allow All` -> Create
+
+<img width="750" alt="Screenshot 2023-07-31 at 3 13 12 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/5781b5d7-9566-4891-9a82-d143e63d326e">
+
+
+<img width="750" alt="Screenshot 2023-07-31 at 3 18 53 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6f181b39-9b32-4bb2-9168-8338adccc9c9">
+
+
+
+
 ## Network Tag
 
 - Network tag টা অনেকটা তারের মধ্যে tag লাগানোর মত
