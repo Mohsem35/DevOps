@@ -192,9 +192,11 @@ sudo chmod a+w /copy/storage/directory/from/pwd
 Run the following commands from `a vm`
 
 ```
+# find the UID of sdb
 sudo blkid /dev/sdb
 ```
 ```
+# showing boot disk UID
 sudo vim cat /etc/fstab
 ```
 
