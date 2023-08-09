@@ -148,7 +148,7 @@ ssh -i /path/to/custom/directory/ maly@public_ip_a_vm
 sudo lsblk
 ```
 
-#### Step 2: Create disk space and attach the disk to 'a vm'
+#### Step 2: Create disk space and attach the disk to 'a vm' from GUI
 
 search `create a disk` in the search box -> `name(disk-1)`, `locatio(single zone)` [regional দিলে replica তৈরি হবে, একটা fail করলেও অন্যটায় data থাকবে], `region(us-east1)` -> Disk settings -> `size(100)` -> Encryption -> `google-managed encryption key` -> create
 
@@ -156,6 +156,20 @@ search `create a disk` in the search box -> `name(disk-1)`, `locatio(single zone
 এখন `a vm/intance` তে ঢুকব from UI -> edit -> additional disks -> click + button to `attach existing disk` -> `Existing disk` tab pop up -> `Disk(disk-1)`, `Mode(read/write)` -> `save` of `Existing disk` tab -> `save` of `a vm` 
 
 
+#### Step 3: Attach Mount Restart disk from `a vm`
+
+
+
+```
+lsblk
+```
+- দেখব `sdb` নামের আরেকটা disk but সেইটা attach হয় নাই `sda` এর সাথে
+
+Format the disk using the **`mkfs tool`**. This command **`deletes all data`** from the specified disk, so make sure that you specify the disk device correctly.
+
+```
+sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb 
+```
 
 
 
