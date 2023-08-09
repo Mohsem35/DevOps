@@ -156,9 +156,7 @@ search `create a disk` in the search box -> `name(disk-1)`, `locatio(single zone
 এখন `a vm/intance` তে ঢুকব from UI -> edit -> additional disks -> click + button to `attach existing disk` -> `Existing disk` tab pop up -> `Disk(disk-1)`, `Mode(read/write)` -> `save` of `Existing disk` tab -> `save` of `a vm` 
 
 
-#### Step 3: Attach Mount Restart disk from `a vm`
-
-
+#### Step 3: Attach, Mount from `a vm`
 
 ```
 lsblk
@@ -170,12 +168,37 @@ Format the disk using the **`mkfs tool`**. This command **`deletes all data`** f
 ```
 sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb 
 ```
+- এখন আমি `storage` নামের একটা directory করব, যাতে আমি `sdb` disk টা mount করব
 
-
+```
+mkdir storage
+cd /home/ubuntu/storage
+pwd
+```
+```
+sudo mount -o discard,defaults /dev/sdb /copy/storage/directory/from/pwd
+```
+```
+sudo chmod a+w /copy/storage/directory/from/pwd
+```
 
 [Add a persistent disk to your VM documentation](https://cloud.google.com/compute/docs/disks/add-persistent-disk)
 
 [Format and mount a non-boot disk on a Linux VM documentation](https://cloud.google.com/compute/docs/disks/format-mount-disk-linux)
+
+
+#### Step 4: Configure automatic mounting on VM restart
+
+Run the following commands from `a vm`
+
+```
+sudo blkid /dev/sdb
+```
+```
+sudo vim cat /etc/fstab
+```
+
+
 
 ## Network Tag
 
