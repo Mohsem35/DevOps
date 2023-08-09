@@ -97,13 +97,71 @@ telnet <a_vm_public_ip> 9090
 
 #### Step 1: Create public/private key for maly
 
+maly user এর জন্য `ssh-keygen` তৈরি করব
+
 ```
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f /path/to/custom/directory/
-cat 
 ```
 
+```
+ssh-keygen -t rsa -b 4096 -C "your_name" -f /path/to/custom/directory/
+```
+
+```
+# select this one
+ssh-keygen -C maly -f /path/to/custom/directory/
+cat /path/to/custom/directory/maly.pub
+```
+
+#### Step 2: Add public key to the vm/instance
+
+- `maly.pub` key টা cat করে copy করব
+
+computer engine -> click on `a vm` -> edit -> SSH keys -> `+` add item -> paste the `maly.pub` -> save
+
+- চেক করে দেখতে হবে, কোন `username` তে আমরা নতুন key টা `ssh-keys` তে add করলাম
+ 
+
+[Use another SSH client documentation](https://cloud.google.com/compute/docs/connect/standard-ssh#openssh-client)
+
+```
+ssh -i PATH_TO_PRIVATE_KEY USERNAME@EXTERNAL_IP
+```
+
+```
+ssh -i /path/to/custom/directory/ maly@public_ip_a_vm
+```
+
+## Attach disk to a GCP vm/instance 
+
+#### Step 1: Check disk status of 'a vm' 
+
+- আমার pc termianl থেকে gcp `a vm/intance` তে ঢুকব আগে
+
+```
+ssh -i /path/to/custom/directory/ maly@public_ip_a_vm
+```
+
+- Then run the following command in the `a vm` 
+
+```
+sudo lsblk
+```
+
+#### Step 2: Create disk space and attach the disk to 'a vm'
+
+search `create a disk` in the search box -> `name(disk-1)`, `locatio(single zone)` [regional দিলে replica তৈরি হবে, একটা fail করলেও অন্যটায় data থাকবে], `region(us-east1)` -> Disk settings -> `size(100)` -> Encryption -> `google-managed encryption key` -> create
 
 
+এখন `a vm/intance` তে ঢুকব from UI -> edit -> additional disks -> click + button to `attach existing disk` -> `Existing disk` tab pop up -> `Disk(disk-1)`, `Mode(read/write)` -> `save` of `Existing disk` tab -> `save` of `a vm` 
+
+
+
+
+
+[Add a persistent disk to your VM documentation](https://cloud.google.com/compute/docs/disks/add-persistent-disk)
+
+[Format and mount a non-boot disk on a Linux VM documentation](https://cloud.google.com/compute/docs/disks/format-mount-disk-linux)
 
 ## Network Tag
 
