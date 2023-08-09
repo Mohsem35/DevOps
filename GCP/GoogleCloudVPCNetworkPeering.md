@@ -109,7 +109,7 @@ sudo apt install nginx
 sudo systemctl status nginx
 ```
 
-#### Step 8: Install nginx in vm-apitwo
+#### Step 8: telnet/wget from vm-apitwo
 ```
 # 1st try
 telnet <vm_apione_privateip> 80
