@@ -227,6 +227,7 @@ curl <banckend_2nd_vm_private_ip>
 
 #### Step 11: Configure nginx server for backend
 
+```
 events {
     # empty placeholder
 }
@@ -256,4 +257,4 @@ http {
         server <backend_private_ip_2nd>;
     }
 }
-
+```
