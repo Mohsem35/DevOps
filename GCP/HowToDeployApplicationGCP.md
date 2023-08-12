@@ -97,6 +97,8 @@ search `cloud NAT` in search box -> get started -> `gateway name(app-gw-1)` -> s
 
 #### Step 8: Access(ssh) to 'app-frontend-1' vm and install nodejs
 
+- nodejs version +16 লাগেবে for this task
+- react app initialize করব for example purpose
 
 [NodeJS installation for Debian documentation](https://github.com/nodesource/distributions)
 
@@ -122,6 +124,7 @@ project name: <project_name>
 select a framework: React
 select a variant: typescript + swc
 ```
+<img width="700" alt="Screenshot 2023-08-12 at 1 58 32 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/0efee5b7-ed1e-4a93-b008-07aa007a3a2d">
 
 ```
 cd /<project_name_directory>
@@ -129,8 +132,17 @@ yarn
 yarn run build
 yarn preview
 ```
+
+- private ip দিয়ে **`4173`** port তে request করলে কোন response আসবে না। 80 port তে mapping করব 
+
 ```
 # expose the port of the host machine for react app
-yarn preview --host --port 80
+sudo yarn preview --host --port 80
 sudo 
+```
+- তারপরে ও acces করতে পারব না, কারণ nginx configure করা হয় নাই
+
+#### Step 8: Access(ssh) to 'app-lb-1' vm and configure nginx
+```
+sudo apt install -y telnet net-tools
 ```
