@@ -24,43 +24,34 @@ In a stateless communication model, each **`request`** from a client to a server
 In a stateful communication model, the **`server maintains information about the client's context and previous interactions`**. This allows the server to remember things like **`session data`**, **`user authentication status`**, and other details. As a result, subsequent requests can build upon the context of previous requests. Protocols that rely on stateful communication often require some form of session management to keep track of client-specific information.
 
 
-### Steps need to be done for deploying a application in GCP
+### Steps need to be done for deploying an application in GCP
 
 #### Step 1: Create a VPC 
 
-search `vpc networks` in search box -> `create vpc network` -> `name(app-vpc-1)`, `subnet name(app-subnet-1)`, `region(us-central-1)`, `ipv4 range(192.168.0.0/24)`, `ipv4 firewall rules(allow all)` -> create
+search `vpc networks` in search box -> create vpc network -> `name(app-vpc-1)`, `subnet name(app-subnet-1)`, `region(us-central-1)`, `ipv4 range(192.168.0.0/24)`, `ipv4 firewall rules(allow all)` -> create
 
 #### Step 2: Create an instance template vm as we will need multiple vm/instances
 
-search `compute engine` in search box -> click `+` button for `create instance` -> choose 2nd option named as `new vm instance from template` from left sidebar -> create instance template -> `name(app-instance-template-1)`, `series(E2)`, `firewall(allow both http & https traffic)` -> advanced options -> networking -> network interfaces -> `network(app-vpc-1)`, `subnetwork(app-subnet-1(us-central-1))`, `external ipv4 address(none)` -> create
+search `compute engine` in search box -> click `+` button for 'create instance' -> choose 2nd option named as `new vm instance from template` from left sidebar -> create instance template -> `name(app-instance-template-1)`, `series(E2)`, `firewall(allow both http & https traffic)` -> advanced options -> networking -> network interfaces -> `network(app-vpc-1)`, `subnetwork(app-subnet-1(us-central-1))`, `external ipv4 address(none)` -> create
 
 <img width="750" alt="Screenshot 2023-08-12 at 12 08 33 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/b980a1cc-3977-4fbd-bf05-cabc98c64416">
 
 
-#### Step 3: Create an vm/instance for load balancing & reverse proxy
+#### Step 3: Create a vm/instance for load balancing & reverse proxy
 
 - load balance & reverse proxy vm তে public IP লাগবে 
 
-search `compute engine` in search box -> create instance -> choose 2nd option named as `new vm instance from template` from left sidebar -> select `app-instance-template-1` -> continue -> `name(app-lb-1)` -> advanced options -> networking -> network interfaces -> external ipv4 address(ephemeral) -> create
+search `compute engine` in the search box -> create instance -> choose 2nd option named as `new vm instance from template` from left sidebar -> select `app-instance-template-1` -> continue -> `name(app-lb-1)` -> advanced options -> networking -> network interfaces -> external ipv4 address(ephemeral) -> create
 
 
-#### Step 4: Create an vm/instance for frontend server[no public IP]
+#### Step 4: Create a vm/instance for frontend server[no public IP]
 
 - frontend server তে কোন public IP থাকবে না
 
 search `compute engine` in search box -> create instance -> choose 2nd option named as `new vm instance from template` from left sidebar -> select `app-instance-template-1` -> continue -> `name(app-frontend-1)` -> create
 
-#### Step 5: Create two vms for backend server[no public IP]
 
-- backend server তে কোন public IP থাকবে না
-
-search `compute engine` in search box -> create instance -> choose 2nd option named as `new vm instance from template` from left sidebar -> select `app-instance-template-1` -> continue -> `name(app-backend-1)` -> create
-
-for 2nd vm: follow the above vm creation criteria with name `name(app-backend-2)`
-
-<img width="750" alt="Screenshot 2023-08-12 at 12 27 56 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/37979722-aa04-497e-9406-61cdedc85932">
-
-#### Step 6: Access(ssh) to 'lb & reverse proxy' vm and install nginx 
+#### Step 5: Access(ssh) to 'lb & reverse proxy' vm and install nginx 
 
 - install nginx
 
@@ -85,7 +76,7 @@ sudo nginx -s reload
 ```
 
 
-#### Step 7: Create 'cloud NAT' for private vm/instances
+#### Step 6: Create 'cloud NAT' for private vm/instances
 
 - frontend and backend সার্ভারগুলো তে **`private ip`** দেয়া, কোন public ip দেয়া হয় নাই। তাই বাহিরের internet এর সাথে communicate করার জন্য **`Cloud NAT`** লাগবে যাতে করে **`egress`** করা পসিবল হয়
 
@@ -95,7 +86,7 @@ search `cloud NAT` in search box -> get started -> `gateway name(app-gw-1)` -> s
 
 - এখন frontend & backend server গুলোতে package update চালালে package update হবে, কেননা **`VPC তে NAT Gateway attach করা হয়েছে`**
 
-#### Step 8: Access(ssh) to 'app-frontend-1' vm and install nodejs
+#### Step 7: Access(ssh) to 'app-frontend-1' vm and install nodejs
 
 - nodejs version +16 লাগেবে for this task
 - react app initialize করব for example purpose
@@ -140,9 +131,129 @@ yarn preview
 sudo yarn preview --host --port 80
 sudo 
 ```
+- now go to `app-lb-1` vm and curl the `app-frontend-1 vm`
+
+```
+curl <frontend_vm_ip>
+```
+
+
 - তারপরে ও acces করতে পারব না, কারণ nginx configure করা হয় নাই
 
 #### Step 8: Access(ssh) to 'app-lb-1' vm and configure nginx
 ```
 sudo apt install -y telnet net-tools
 ```
+- configure nginx from `nginx.conf` file 
+```
+events {
+    # empty placeholder
+}
+
+http {
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://frontend;
+        }
+    }
+
+    upstream frontend {
+        server <frontend_vm_private-ip>:80;
+    }
+}
+```
+```
+# check nginx configuration status
+sudo nginx -t
+sudo nginx -s reload
+```
+
+- now, if we request from the browser with `app-lb-vm`'s public ip, we will get the front page of the vite+react app page
+
+#### Step 9: Create two VMs for backend server[no public IP]
+
+- backend server তে কোন public IP থাকবে না
+
+search `compute engine` in search box -> create instance -> choose 2nd option named as `new vm instance from template` from left sidebar -> select `app-instance-template-1` -> continue -> `name(app-backend-1)` -> create
+
+for 2nd vm: follow the above vm creation criteria with name `name(app-backend-2)`
+
+<img width="750" alt="Screenshot 2023-08-12 at 12 27 56 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/37979722-aa04-497e-9406-61cdedc85932">
+
+#### Step 10: Configure two backend vm
+
+- install packages for both vm
+```
+sudo apt update -y
+sudo su
+curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - &&\
+apt-get install -y nodejs
+```
+```
+# for 2nd vm
+mkdir be2
+cd be2
+sudo corepack enable
+npm init -y
+yarn add express
+vim index.js
+```
+```
+const express = require('express');
+const app = express();
+const port = 80;
+
+app.get('/', (req, res) => {
+  res.send('Hello, World from backend 2!');
+});
+
+app.listen(port, () => {
+  console.log(`Server is listening at http://localhost:${port}`);
+});
+```
+```
+sudo node index.js
+```
+- now curl app-backend-2 from app-backend-1
+  
+```
+curl <banckend_2nd_vm_private_ip>
+```
+
+##### Do the same above task in app-backend-1 vm
+
+#### Step 11: Configure nginx server for backend
+
+events {
+    # empty placeholder
+}
+
+
+http {
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://frontend;
+        }
+
+        location /api/ {
+            rewrite ^/api/(.*)$ /$1 break;
+            proxy_pass http://backend;
+        }
+    }
+
+    upstream frontend {
+        server <frontend_private_ip>:80;
+    }
+
+    upstream backend {
+        server <backend_private_ip_1st>;
+        server <backend_private_ip_2nd>;
+    }
+}
+
