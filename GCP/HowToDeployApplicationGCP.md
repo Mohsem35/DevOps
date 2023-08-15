@@ -41,7 +41,7 @@ search `compute engine` in search box -> click `+` button for 'create instance' 
 
 - load balance & reverse proxy vm তে public IP লাগবে 
 
-search `compute engine` in the search box -> create instance -> choose 2nd option named as `new vm instance from template` from left sidebar -> select `app-instance-template-1` -> continue -> `name(app-lb-1)` -> advanced options -> networking -> network interfaces -> external ipv4 address(ephemeral) -> create
+search `compute engine` in the search box -> create instance -> choose 2nd option named as `new vm instance from template` from left sidebar -> select `app-instance-template-1` -> continue -> `name(app-lb-1)` -> advanced options -> networking -> network interfaces -> `external ipv4 address(ephemeral)` -> create
 
 
 #### Step 4: Create a vm/instance for frontend server[no public IP]
@@ -129,7 +129,6 @@ yarn preview
 ```
 # expose the port of the host machine for react app
 sudo yarn preview --host --port 80
-sudo 
 ```
 - now go to `app-lb-1` vm and curl the `app-frontend-1 vm`
 
@@ -144,7 +143,10 @@ curl <frontend_vm_ip>
 ```
 sudo apt install -y telnet net-tools
 ```
-- configure nginx from `nginx.conf` file 
+- configure nginx from `nginx.conf` file
+```
+sudo vim /etc/nginx/nginx.conf
+```
 ```
 events {
     # empty placeholder
@@ -191,6 +193,8 @@ sudo apt update -y
 sudo su
 curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - &&\
 apt-get install -y nodejs
+node -v
+exit
 ```
 ```
 # for 2nd vm
@@ -201,6 +205,8 @@ npm init -y
 yarn add express
 vim index.js
 ```
+- paste the following code if works properly 
+
 ```
 const express = require('express');
 const app = express();
@@ -224,8 +230,14 @@ curl <banckend_2nd_vm_private_ip>
 ```
 
 ##### Do the same above task in app-backend-1 vm
+<img width="500" alt="Screenshot 2023-08-15 at 11 45 03 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/ce7ae257-8a00-4d02-bb05-fedb45c836f5">
+<img width="500" alt="Screenshot 2023-08-15 at 11 47 11 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/52db17ff-77ac-4cf3-9397-6172f50ff3d9">
 
 #### Step 11: Configure nginx server for backend
+
+```
+sudo vim /etc/nginx/nginx.conf
+```
 
 ```
 events {
@@ -258,3 +270,12 @@ http {
     }
 }
 ```
+
+```
+# check nginx configuration status
+sudo nginx -t
+sudo nginx -s reload
+```
+<img width="500" alt="Screenshot 2023-08-15 at 11 53 18 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e6d9431b-bfe3-4cae-866c-5dafa7af1e3e">
+
+<img width="500" alt="Screenshot 2023-08-15 at 11 53 27 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e2b4bde2-8aa4-4996-8355-5d3f95cd8c35">
