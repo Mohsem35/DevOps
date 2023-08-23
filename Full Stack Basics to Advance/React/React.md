@@ -57,7 +57,7 @@ JSX (JavaScript XML) is an extension to the JavaScript language syntax that allo
 
 The App.jsx component serves as the `entry point for the React application` and typically `represents the top-level component that encapsulates the entire application's functionality and UI structure.`
 
-```
+```js
 import React from 'react';
 
 function App() {
@@ -116,7 +116,7 @@ function App() {
 - `every time the state of an object changes, the component is re-rendered onto the screen`
 
 
-```
+```js
 const [counter, setCounter] = useState(0)
 
 setCounter(counter+1);
