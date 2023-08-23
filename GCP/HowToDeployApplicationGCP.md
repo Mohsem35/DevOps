@@ -207,7 +207,7 @@ vim index.js
 ```
 - paste the following code if works properly 
 
-```
+```node
 const express = require('express');
 const app = express();
 const port = 80;
@@ -223,8 +223,7 @@ app.listen(port, () => {
 ```
 sudo node index.js
 ```
-- now curl app-backend-2 from app-backend-1
-  
+- now curl app-backend-2 from app-backend-1 
 ```
 curl <banckend_2nd_vm_private_ip>
 ```
