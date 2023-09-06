@@ -1,3 +1,16 @@
+- `Google SDK` use করে `node.js` দিয়ে pub/sub model introduce করা হইছে, যাতে `service to service` communicate করা যাইতে পারে।
+- যেই চ্যানেলে message গুলি আইসা জমা হইতাছে তাদেরকে বলা হয় **`topic`** GCP তে
+
+- RestAPI reponse দেয় request পুরাটা processing করার পরে, কিন্তু Pub/Sub হচ্ছে information processing হোক বা না হোক সে response পাঠাই দিচ্ছে
+- Pub/Sub, RestAPI থেকে অনেক বেশি faster
+
+**`fire and forget`** architecture
+
+kafka = PubSub + Queue
+
+**`vertical scaling`** : infrastructure বাড়ানো like ram 
+
+**`horizontal scaling`** : নতুন instance বাড়ানো 
 
 #### GUI
 
