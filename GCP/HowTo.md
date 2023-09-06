@@ -99,38 +99,41 @@ telnet <a_vm_public_ip> 9090
 
 maly user এর জন্য `ssh-keygen` তৈরি করব
 
+
 ```
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f /path/to/custom/directory/
+ssh-keygen -t rsa -b 2048 -C "<COMMENT>" -f /home/maly/.ssh/<KEY_FILENAME>
 ```
 
 ```
-ssh-keygen -t rsa -b 4096 -C "your_name" -f /path/to/custom/directory/
+ssh-keygen -C "generate a key for test" -f /home/maly/.ssh/test
+cat /path/to/custom/directory/test.pub
 ```
 
-```
-# select this one
-ssh-keygen -C maly -f /path/to/custom/directory/
-cat /path/to/custom/directory/maly.pub
-```
+এইদিকে আমার test নামের একটা public and একটা private key generate হবে 
+
 
 #### Step 2: Add public key to the vm/instance
 
-- `maly.pub` key টা cat করে copy করব
+- `test.pub` key টা cat করে copy করব
 
-computer engine -> click on `a vm` -> edit -> SSH keys -> `+` add item -> paste the `maly.pub` -> save
+computer engine -> click on `a vm` -> edit -> SSH keys -> `+` add item -> paste the `test.pub` -> save
+
+এখন আমার pc terminal থেকে gcp instance ssh করব
+
+```
+ssh test@<vm_public_ip>
+```
 
 - চেক করে দেখতে হবে, কোন `username` তে আমরা নতুন key টা `ssh-keys` তে add করলাম
  
+##### Another Approach:
 
-[Use another SSH client documentation](https://cloud.google.com/compute/docs/connect/standard-ssh#openssh-client)
+
 
 ```
 ssh -i PATH_TO_PRIVATE_KEY USERNAME@EXTERNAL_IP
 ```
-
-```
-ssh -i /path/to/custom/directory/ maly@public_ip_a_vm
-```
+[Use another SSH client documentation](https://cloud.google.com/compute/docs/connect/standard-ssh#openssh-client)
 
 ## Attach disk to a GCP vm/instance 
 
