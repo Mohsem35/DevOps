@@ -11,9 +11,14 @@
 [AWS — Difference between Internet Gateway and NAT Gateway](https://medium.com/awesome-cloud/aws-vpc-difference-between-internet-gateway-and-nat-gateway-c9177e710af6)
 
 
+![Untitled-2023-09-09-2204](https://github.com/Mohsem35/DevOps/assets/58659448/8394288e-c131-4fa8-a1ab-47a0901e5a0f)
+
+
 - AWS তে VPC বানানোর সাথে সাথে subnet বানানো লাগে, মানে **`CIDR`** দেয়া লাগে।
 - VPC এর under এ প্রতিটা subnet এর জন্য ও CIDR দেওয়া লাগবে এবং **`subnet গুলোর CIDR, VPC CIDR থেকে ছোট হতে হবে`**
 - VPC এর মধ্যে (L2 level) `switch` বানানো মানে **`subnet`** বানানো
+- যদি new ২ টা vm/intance create করি, তাহলে সেই vm/intance গুলোর IP allocation হবে subnet থেকে, VPC থেকে নয়
+- AWS তে **`route table`** manipulate করতে হয়, documentation এর কোথাও router এর উল্লেখ নাই কিন্তু route table এর আছে। তার মানে for sure router ও আছে যেইটা **`abstraction`** করা 
   
 Ex - 
 ```
@@ -36,4 +41,20 @@ An Internet Gateway is **`not automatically created`** when you create a VPC. In
 
 - SG এর একটা rule কে multiple resource এর সাথে attach করতে পারি। resource বলতে compute resource বুঝাচ্ছে like `vm`, `load balancer`, `DB`
 - **`GCP তে যেইটা Firewall Rules`** সেইটাই AWS তে সেইটাই SG(Security groups)
-- GCP তে আমরা `Firewall Rules` টা `network tag` এর সাথে attach করতাম SG(Security groups) তে কোন **`network tag থাকে না`**
+- **`GCP`** তে আমরা Firewall Rules টা network tag  এর সাথে **`attach`** করতাম, AWS SG(Security groups) তে কোন **`network tag থাকে না`**
+- AWS তে tag আছে but ওইটা metadata হিসেবে কাজ করে
+
+![Untitled-2023-09-09-2204](https://github.com/Mohsem35/DevOps/assets/58659448/e9a768ca-abc9-45dc-a845-a98c8a9b1e6a)
+
+
+- যদি একটা instance/vm create করি যাতে public IP থাকবে, সেই public IP অবশ্যই বাহিরে allocate হবে। vm/instance এর ভিতরে হবে না
+
+VPC - 10.10.0.0/16
+
+Subnet - 10.10.0.0/24 **`হবে না`** 
+
+![Untitled-2023-09-09-2204](https://github.com/Mohsem35/DevOps/assets/58659448/70eee6b2-c210-4efb-8c67-11207522d241)
+
+
+
+
