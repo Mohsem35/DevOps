@@ -41,3 +41,34 @@ Now change the configuration file of lb nginx server(public ip)
 ```
 sudo vim /etc/nginx/nginx.conf
 ```
+```
+events {
+    # empty placeholder
+}
+
+
+http {
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://frontend;
+        }
+    }
+
+    upstream frontend {
+        server <frontend_private_ip>:80;
+    }
+}
+```
+```
+sudo nginx -t
+sudo nginx -s reload
+```
+
+এখন আমরা browser দিয়ে access করার try করব, কিন্তু কিছু দেখতে পারব না। তার কারণ, app-private-ip-vm তে 80 পোর্ট open করা নাই
+
+app1 -> security tab -> security groups -> edit inbound rules -> http -> 0.0.0.0/0 -> save rule
+
+all done
