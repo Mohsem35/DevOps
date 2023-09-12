@@ -8,6 +8,8 @@
 
 [AWS re:Invent 2015 | (NET403) Another Day, Another Billion Packets](https://www.youtube.com/watch?v=3qln2u1Vr2E&ab_channel=AmazonWebServices)
 
+[Bring your own IP addresses (BYOIP) in Amazon EC2 for Bank](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html)
+
 
 Search `vpc` in search box -> create vpc -> resources to create(`vpc only`) ->  name tag(`vpc-a`) -> ipv4 cidr(`10.10.0.0/16`) -> create vpc 
 
@@ -133,3 +135,23 @@ dashboard left sidebar named `virtual private cloud` -> subnets -> select `web-s
 
 
 dashboard left sidebar named `virtual private cloud` -> subnets -> select `data-b` -> select `route table` tab -> click `route table`  -> select route table id -> edit routes -> add route -> destination(`10.10.0.0/16`), target(`peering connection pcx`) -> save changes
+
+
+এখন আমি vm-b তে mysql install করলাম, তাই vm-a থেকে 3306 port ধরে vm-b তে access করতে চাই। কিন্তু access করতে পারব না, কারণ `security group` enable করা নাই
+
+- এখন তাহলে vm-b তে ঢুকে `edit inbound rules` তে গিয়া security group add করতে হবে। range দিব private range(10.0.0.0/8)
+
+- যেই সার্ভারে ঢুকতে চাইব, সে সার্ভার/instance তে rule add করতে হবে। যেমন- vm-b তে আমি ঢুকতে চাচ্ছি from vm-a, তাহলে আমার vm-b তে inbound rules edit করতে হবে। যাতে বাহিরে থেকে vm-b এর mysql তে access করতে পারে   
+
+
+```
+# from vm-a
+telnet <vm-b-private-ip> 3306
+```
+
+<img width="800" alt="Screenshot 2023-09-12 at 6 35 58 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/710c6720-e71a-4eb7-9d98-8156fd4162f0">
+
+- এখন যদি আমি কোন instance/ip reboot দেই, তাহলে public ip change হবে
+
+- AWS তে যেইটা esastic ip, GCP তে সেইটা ephemeral ip
+- For this reason, we have to ask cloud providers to give static ip
