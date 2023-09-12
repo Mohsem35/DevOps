@@ -6,6 +6,8 @@
 
 [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918)
 
+[AWS re:Invent 2015 | (NET403) Another Day, Another Billion Packets](https://www.youtube.com/watch?v=3qln2u1Vr2E&ab_channel=AmazonWebServices)
+
 
 Search `vpc` in search box -> create vpc -> resources to create(`vpc only`) ->  name tag(`vpc-a`) -> ipv4 cidr(`10.10.0.0/16`) -> create vpc 
 
@@ -88,4 +90,46 @@ dashboard left sidebar named `subnets` -> select specific subnet(`data-b`) -> cl
 <img width="800" alt="Screenshot 2023-09-12 at 4 44 21 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/77553e88-bfb4-4d46-8ba3-ae009b840e78">
 
 
-now ping will work
+now ping from vm-1 to vm-2 through public ip and NAT gateway
+
+কিন্তু private ip ধরে ping করলে response পাব না
+
+- cloud resource গুলোকে নামকরণের আলাদা way আছে like variables
+
+dashboard left sidebar named `virtual private cloud` -> peering connections -> create peering connection -> name(`vpca-vpcb`) -> vpc id(`vpc-a`)requester -> vpc id(`vpc-a`) accepter -> create peering connection 
+
+- vpc peering এর নামগুলো শুরু হয় `pcx` দিয়ে 
+
+এখন request accept করতে হবে `vpc a to vpc b`
+
+<img width="800" alt="Screenshot 2023-09-12 at 5 34 21 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/a664ace1-b7c2-4db5-be0b-56def1391a43">
+
+<img width="550" alt="Screenshot 2023-09-12 at 5 35 42 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/705c88f2-012b-4939-a291-9ba7b091e4c0">
+
+peering on হয়ে গেল কিন্তু route করা হয় নাই, তার মানে route table এ entry দিতে হবে
+
+
+ping from vm-b to vm-a
+
+```
+telnet <vm-b-private-ip> 22
+```
+
+now run tcpdump from vm-a
+
+```
+# find the interface first
+ip a
+```
+
+```
+sudo tcpdump -i eth0 src <vm-b-private-ip>
+```
+packet এখনো reach করে নাই, কারণ আমরা route define করি নাই তাই 
+
+Step 6: Add routing to VPC to VPC
+
+dashboard left sidebar named `virtual private cloud` -> subnets -> select `web-subnet-a` -> select `route table` tab -> click `route table`  -> select route table id -> edit routes -> add route -> destination(`10.20.0.0/16`), target(`peering connection pcx`) -> save changes
+
+
+dashboard left sidebar named `virtual private cloud` -> subnets -> select `data-b` -> select `route table` tab -> click `route table`  -> select route table id -> edit routes -> add route -> destination(`10.10.0.0/16`), target(`peering connection pcx`) -> save changes
