@@ -146,3 +146,121 @@ dekhbo connect hoye geche
 amader volume gulo kothay ache ta jodi dekhte chai, ec2 dashboar left side bar -> elastic block store -> volumes -> seikhane 20GB block storage dekhte pabo. state dewa `in use` mane currently they are connected correctly. `available`
 mane je keu use korte parbe kintu attache nai
 
+
+ekhon newvm-1 te storage attach korte hobe
+
+volumes page -> actions -> attach volume -> select instance(newvm-1), device name(/dev/sdf) -> attach
+
+tar mane newvm-1 er sathe ami 20 GB attach korlam, age jeita unattach korchilam for oldvm-1 
+
+matro attach korlam, ekhon ager moto mount oisob korbo
+
+run the following commands from newvm-1
+
+
+
+```
+lsblk
+```
+<img width="650" alt="Screenshot 2023-09-18 at 6 49 15 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d3385412-0048-4ea6-9279-fa4a88616b58">
+jehetu xvdf dekha jacche, sehetu
+
+```
+sudo file -s /dev/xvdf
+```
+
+```
+mkdir another_folder
+cd another_folder
+```
+
+jehetu file system paiya geche, majher 2 ta step bad dibo
+
+```
+sudo mount /dev/xvdf /home/ubuntu/another_folder
+ls
+```
+
+mysql e ja ja information chilo sob amra retrive kore felchi
+
+```
+sudo vim docker-compose.yml
+```
+
+```
+version: "3"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: a
+      MYSQL_DATABASE: db
+      MYSQL_USER: a
+      MYSQL_PASSWORD: a
+    volumes:
+      - ./another_folder:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+```
+
+```
+sudo docker compose up
+```
+
+then onno browser tab diye newvm-1 open kori
+
+```
+sudo docker ps
+sudo docker exec -it db bash
+mysql -u root -p 
+```
+
+```
+show databases;
+use db;
+show tables;
+select * from person;
+```
+
+
+ELK
+
+
+```
+version: "3.7"
+
+services:
+  elasticsearch:
+  image: docker.elastic.co/elasticsearch/elasticsearch: 7.15.0
+  container_name: elasticsearch
+  environment:
+    - node.name=elasticsearch
+    - discovery.type=single-node
+    - "ES_JAVA_OPTS=-Xmx512m -Xms512m"
+  ports:
+    - 9200:9200
+  networks:
+    - elk-network
+
+kibana:
+  image: docker.elastic.co/kibana/kibana:7.15.0
+  container_name: kibana
+  environment:
+    - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  ports:
+    - 5601:5601
+  networks:
+    - elk-network
+
+
+networks:
+  elk-network:
+    driver: bridge
+```
+
+pura kaj ta korar jonn elastic search sdk ta lagbe
+
+ELK te data insert korar jonno age index korte hoy 
