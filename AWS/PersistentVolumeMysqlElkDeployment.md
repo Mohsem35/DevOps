@@ -1,61 +1,98 @@
-Dashboard -> EC2 -> EC2 Dashboard -> Instances(running) -> Launch instances -> name(old-1), ubuntu, instance type(t2.micro) -> Key pair(processed without  a key pair) -> Network settings -> network, subnet(default subnet), auto-assign
-public ip -> Configure storage -> Add new volume 20GB -> launch instances
+Agenda of today's class:
+
+- Persistent volume show 
+- MySQL deployment on EC2
+- Elasticsearch deployment on EC2
+
+<img width="800" alt="Screenshot 2023-09-18 at 9 45 51 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/342c6b25-23a4-4625-becd-331167314348">
 
 
-Dashboard -> EC2 -> EC2 Dashboard -> Instances(running) -> Launch instances -> name(new-1), ubuntu, instance type(t2.micro) -> Key pair(processed without  a key pair) -> launch instances (কোন extra storage দিব না)
+### EC2 Instance Naming Conventions
+
+Default Pattern Format:
+
+```ec2-RegionCode-AvailabilityZoneCode-EnvironmentCode-ApplicationCode.```
+
+## How can you demonstrate data persistence between two different MySQL databases hosted on two separate EC2 instances using Elastic Block Storage (EBS)?
+
+#### Create 2 EC2 instances 
+
+Dashboard -> `EC2` -> EC2 Dashboard -> click on `instances(running)` -> click on `launch instances` -> name and tags(`ec2-old-1`) -> application and os images(`ubuntu`) -> instance type(`t2.micro`) -> Key pair(`processed without  a key pair`) -> network settings (`default-vpc-network`), subnet(`default subnet`), auto-assign public ip(`enable`) -> configure storage -> click on `add new volume 20GB` -> launch instances
 
 
-![Screenshot from 2023-09-13 19-51-20](https://github.com/Mohsem35/DevOps/assets/58659448/35bcb06d-12d6-4955-bf6e-ab6be9fb5c83)
+Dashboard -> EC2 -> EC2 Dashboard -> click on `instances(running)` -> click on `launch instances` -> name and tags(`ec2-new-1`) -> application and os images(`ubuntu`) -> instance type(`t2.micro`) -> Key pair(`processed without  a key pair`) -> network settings (`default-vpc-network`), subnet(`default subnet`), auto-assign public ip(`enable`) -> launch instances (কোন extra storage দিব না)
 
-Step 1: install docker on both vms
+
+#### Step 1: install docker on both ec2 instances
 
 [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+
+```
+sudo apt update -y
+sudo apt -y install net-tools docker.io
+```
 
 Verify that the Docker Engine installation is successful by running the hello-world image.
 
 ```
-$ sudo service docker start
-$ sudo docker run hello-world
+sudo service docker start
+sudo docker run hello-world
 ```
 
 
-Step 2: Mount 20GB volume to old-1 vm. run commands in old-1 vm
+#### Step 2: Mount 20GB volume to the `ec2-old-1` instance 
 
-find out the storages first
+Run the following commands in ec2-old-1. Find out the storage first
+
 ```
 lsblk
 pwd
-mkdir mydata 
+mkdir mysql_data
 ```
 
-```
-sudo mount /dev/xvdb /home/ubuntu/mydata/
-```
-- error show korbe, karon ami jei storage ta add korte chacchi sei storage tar moddhe kono dhoroner filesystem nai
+<img width="500" alt="Screenshot 2023-09-18 at 10 20 43 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/e9bb5394-ee3d-4b3d-832e-49d55d23e4a4">
 
-- check korte hobe, filesystem eikhane actually ache kina. nicher command diye check korbo
+We will see an extra storage of 20GB `xvdb`name
+
 ```
+sudo mount /dev/xvdb /home/ubuntu/mysql_data/
+```
+
+<img width="1440" alt="Screenshot 2023-09-18 at 10 25 39 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/2a488ed1-a97b-42ed-ac54-8769da16d759">
+
+**`Error`** show করবে। আমি যেই extra volume storage(20GB) add করতে চাচ্ছি, সেই storage টার মধ্যে কোন ধরনের **`filesystem নাই`** । Check করতে হবে, filesystem এইখানে actually exist করতেছে কিনা। 
+
+```
+# check the file system
 sudo file -s /dev/xvdb
 ```
-tate dekhabe filesystem banano nai, tahole age file system banai cholen
+তাতে দেখাবে filesystem বানানো নাই, তাহলে আগে filesystem বানাতে হবে
 
 ```
+# create filesystem
 sudo mkfs -t xfs /dev/xvdb
 ```
-filesystem banano hoye gelo. now check again and mount now
+
+filesystem বানানো হয়ে গেছে। Now check again and mount now
 
 ```
 sudo file -s /dev/xvdb
 ```
-```
-sudo mount /dev/xvdb /home/ubuntu/mydata/
-```
-
-
-Step 3: Create docker compose file in old-vm1 home directory
+<img width="500" alt="Screenshot 2023-09-18 at 10 37 06 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/774ac532-e932-499e-b9bf-af59d04e496b">
 
 ```
-vim docker-compose.yml
+cd /home/ubuntu/mysql_data/
+sudo mount /dev/xvdb /home/ubuntu/mysql_data/
+```
+<img width="500" alt="Screenshot 2023-09-18 at 10 40 03 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/7f555936-ef22-4937-b61f-5184ef5fd15d">
+
+
+#### Step 3: Create a docker-compose file in `ec2-old-1` instance
+
+```
+mkdir docker
+cd /home/ubuntu/docker
+sudo vim docker-compose.yml
 ```
 
 ```
@@ -77,39 +114,44 @@ services:
     restart: always
 ```
 ```
-sudo docker-compose up
+sudo docker-compose.yml up
 ```
-ekta teminal stick hoye ache jehetu docker run hoiche
+teminal stuck হয়ে আছে যেহেতু docker run হচ্ছে। now open a new tab for ec2-old-1 instance from the broswer 
 
-- ekhon arekta terminal launch kori of oldvm1
-jehetu amra vm te atkai gechi, tahole amra tmux use korte pari
+solution: আমরা **`tmux`** use করতে for this above problem
 
 [Tmux Cheat Sheet & Quick Reference](https://tmuxcheatsheet.com/)
 
 
-Step 4: Access the docker container
+#### Step 4: Access the newly created docker container
 
 ```
 sudo docker exec -it db bash
 ```
 ```
 mysql -u root -p
+Enter password: a
 ```
-ekhon ami container theke mysql er vitore dukhe gechi
+এখানে আমি container থেকে mysql database সার্ভারে access করলাম 
 
+#### Step 5: Populate the database
 
-Step 5: Populate the database
 
 ```
-code for mysql
-creating a table
+show databases;
+use db;
+```
+
+```
+# code for mysql
+# creating a table
 CREATE TABLE person (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     age INT
 );
 
-adding dummy data
+# adding dummy data
 INSERT INTO person (name, age) VALUES
 ('John Doe', 30),
 ('Jane Smith', 25),
@@ -117,11 +159,9 @@ INSERT INTO person (name, age) VALUES
 ('Alice Brown', 35),
 ('Eva Davis', 28);
 ```
-
 ```
-show databases;
-use db;
 show tables;
+select * from person;
 ```
 
 ```
