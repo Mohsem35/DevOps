@@ -108,13 +108,13 @@ services:
       MYSQL_USER: a
       MYSQL_PASSWORD: a
     volumes:
-      - ./mydata:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: always
 ```
 ```
-sudo docker-compose.yml up
+sudo docker compose up
 ```
 teminal stuck হয়ে আছে যেহেতু docker run হচ্ছে। now open a new tab for ec2-old-1 instance from the broswer 
 
@@ -168,42 +168,59 @@ select * from person;
 exit
 ```
 
-ekhon check kori amar mydata folder e kichu ache kina. giya dekhbo onek kichu ache seikhane
+Now, check the `mysql_data` directory if anything exists. We should see MySQL configuration files
 
 
-Step 6: Security group enbale kore dite hobe
+#### Step 6: Enable `security group` for accessing the `ec2-old-1` instance
 
-old instance e dukhbo -> securoty group -> edit inbound rules -> ssh dewa ache, http dewa nai -> all tcp, CIDR 0.0.0.0/0 -> save rules
+Dashboard -> `EC2` -> EC2 Dashboard -> click on `instances(running)` -> click on the instance id of `ec2-old-1` -> security tab -> security groups -> click on the `sg.....` -> click on `edit inbound rules` -> ssh is OK, http দেয়া নাই
+-> click `add rule` -> Type (`all tcp`), Source(`Anywhere-IPv4`), CIDR (`0.0.0.0/0`) -> save rules
 
-ekhon vm-new1 theke telenet korbo oldvm-1 ke public ip dhore
+এখন `ec2-new-1` instance থেকে telenet করব `ec2-old-1` instance কে public ip ধরে
 
 ```
-telnet <old_vm_public_ip> 3306
+telnet <ec2-old-1_public_ip> 3306
 ```
-dekhbo connect hoye geche
+We will see that `ec2-old-1 connects `ec2-old-1` simply
 
 
-amader volume gulo kothay ache ta jodi dekhte chai, ec2 dashboar left side bar -> elastic block store -> volumes -> seikhane 20GB block storage dekhte pabo. state dewa `in use` mane currently they are connected correctly. `available`
-mane je keu use korte parbe kintu attache nai
+#### Step 7: Detach volume and add the volume to the `ec2-new-1` instance
 
 
-ekhon newvm-1 te storage attach korte hobe
-
-volumes page -> actions -> attach volume -> select instance(newvm-1), device name(/dev/sdf) -> attach
-
-tar mane newvm-1 er sathe ami 20 GB attach korlam, age jeita unattach korchilam for oldvm-1 
-
-matro attach korlam, ekhon ager moto mount oisob korbo
-
-run the following commands from newvm-1
+If we want to see our `Elastic Block Storage (EBS) volumes`:
 
 
+EC2 dashboard left sidebar -> elastic block store -> click on `volumes` -> we will see 20GB block EBS, type(`gp3`), size(`20GiB`) 
+
+volume state:
+
+- **`In-use`**: means EBS is attached to instance
+- **`Available`**: means the EBS is not attached and free for use
+
+Now detach the 20GB volume from the `ec2-old-1` instance and 
+
+EC2 dashboard left sidebar -> elastic block store -> click on `volumes` -> tick on the 20GiB volume -> `actions` -> detach volume -> detach
+
+![Screenshot from 2023-09-19 19-58-11](https://github.com/Mohsem35/DevOps/assets/58659448/02954168-5d1b-4ae3-8f61-a29cc38b74ab)
+
+![Screenshot from 2023-09-19 20-00-39](https://github.com/Mohsem35/DevOps/assets/58659448/75c5329c-7fda-4f4e-b859-36b5ab640f0a)
+
+
+Now, attach the volume to the `ec2-new-1`
+
+EC2 dashboard left sidebar -> elastic block store -> click on `volumes` -> tick on the 20GiB volume -> `actions` -> attach volume -> instance(`ec2-new-1`), device name(`/dev/sdf`) -> attach volume
+
+![Screenshot from 2023-09-19 20-03-50](https://github.com/Mohsem35/DevOps/assets/58659448/baa6aab7-ab86-4edc-a7b1-036ab8fc7f3b)
+
+- তার মানে `ec2-new-1` এর সাথে আমরা 20 GB attach volume attach করলাম, যেইটা deattach করছিলাম from `ec2-old-1`
+- মাত্র attach করলাম, এখন আগের মত mount করতে হবে
+
+Run the following commands in `ec2-new-1`
 
 ```
 lsblk
 ```
 <img width="650" alt="Screenshot 2023-09-18 at 6 49 15 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/d3385412-0048-4ea6-9279-fa4a88616b58">
-jehetu xvdf dekha jacche, sehetu
 
 ```
 sudo file -s /dev/xvdf
@@ -214,14 +231,14 @@ mkdir another_folder
 cd another_folder
 ```
 
-jehetu file system paiya geche, majher 2 ta step bad dibo
+যেহেতু filesystem পাওয়া গেছে, মাঝের 2 টা step skip করব
 
 ```
 sudo mount /dev/xvdf /home/ubuntu/another_folder
 ls
 ```
 
-mysql e ja ja information chilo sob amra retrive kore felchi
+MySQL এর যা যা file and information ছিল, সব আমরা retrive করতে পেরেছি 
 
 ```
 sudo vim docker-compose.yml
@@ -250,7 +267,7 @@ services:
 sudo docker compose up
 ```
 
-then onno browser tab diye newvm-1 open kori
+Run the follwing commands in `ec2-new-1`
 
 ```
 sudo docker ps
@@ -266,7 +283,7 @@ select * from person;
 ```
 
 
-ELK
+### ELK Deployment Docker File
 
 
 ```
@@ -301,6 +318,6 @@ networks:
     driver: bridge
 ```
 
-pura kaj ta korar jonn elastic search sdk ta lagbe
-
-ELK te data insert korar jonno age index korte hoy 
+- To complete the task, `elastic search sdk` লাগবে
+- ELK তে data insert করার জন্য age indexing করতে হয়
+ 
