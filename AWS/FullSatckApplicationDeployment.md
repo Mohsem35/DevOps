@@ -123,19 +123,34 @@ sudo vim /etc/hosts
 
 ```
 server {
-listen 80;
-server_name example.com;
-location / {
-proxy_pass http://frontend;
+  listen 80;
+  server_name example.com;
+
+  location / {
+    proxy_pass http://frontend;
+  }
 }
-}
+
 server {
-listen 80;
-server_name api.example.com;
-location / {
-proxy_pass http://backend;
+  listen 80;
+  server_name api.example.com;
+
+  location / {
+    proxy_pass http://backend;
+  }
 }
-}
+```
+
+```
+# in fe-1
+cd vite-project/src
+
+vim App.tsx
+paste code from chat gpt
+pnpm add axios
+pnpm build
+sudo pnpm preview --host --port 80
+
 ```
 
 gcp te nat gateway nai, ora use kore `identity aware proxy`
@@ -143,3 +158,6 @@ gcp te nat gateway nai, ora use kore `identity aware proxy`
 
 run the following commands in fe-1 instance
 
+
+আমরা প্রথমে frontend কে hit করতেছি from browser, frontend থেকে একটা payload আসে browser তে। তখন browser সেই payload টা পড়ে। পড়ার পরে browser যখন বুঝে তাকে backend তে hit 
+করতে হবে, তখন browser থেকে request টা যায় backend এ 
