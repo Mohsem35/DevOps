@@ -37,7 +37,7 @@ Dashboard -> EC2 -> EC2 Dashboard -> click on instances(running) -> click on `la
 
 now change the instances name:
 
-EC2 dashbaod -> click on `instances` -> click on the instances `name` -> edit and change the instances name
+EC2 dashbaod -> click on `instances` -> click on the instances `name` -> **`edit and change`** the instances name
 
 ![Screenshot from 2023-09-21 18-29-02](https://github.com/Mohsem35/DevOps/assets/58659448/fff57cb5-2ccb-4349-8027-86fc34ffc6c1)
 
@@ -59,11 +59,14 @@ now **`paste`** the .pem file context to the newly created sshkey.pem file in lb
 
 ```
 # now change the access config key
-chmod 400 sshkey.pem
+sudo chmod 400 sshkey.pem
 ```
 
 ```
 sudo ssh -i sshkey.pem ubuntu@<frontend_private_ip>
+```
+```
+sudo hostnamectl set-hostname <frontend_name>
 ```
 
 ### Step 4: Initialize a react app in the frontend instance
@@ -96,7 +99,7 @@ gcp te jeivabe nodejs ar corepack install korechilam oi vabe 2 ta korbo
 
 ```
 sudo corepack enable
-pnpm -v
+pnpm -v                                    # initialize react app via pnpm
 pnpm create vite
 project name: vite-project
 framework: react
@@ -112,14 +115,18 @@ sudo pnpm preview --host --port 80            # have to define port number
 <img width="600" alt="Screenshot 2023-09-22 at 9 06 42 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/86fbd7c5-23d5-4c4d-9e01-c5a0c0adec15">
 
 
+### Step 5: Telnet from lb instance to frontend instance if everything is OK
+
 ```
 # in lb-1
-telnet <fe-1_private_ip> 80
-curl <fe-1_private_ip> 80
+telnet <frontend_private_ip> 80
+curl <frontend_private_ip> 80
+```
 
-
+```
 sudo vim /etc/nginx/nginx.conf
-
+```
+```
 # nginx code in lb-1
 events {
     # empty placeholder
@@ -140,53 +147,124 @@ http {
     }
 }
 ```
-
-
-
 ```
-# in be-1 168
-install node js
-same steps from gcp
+# check nginx configuration status
+sudo nginx -t
+sudo nginx -s reload
 ```
 
+- now, if we request from the browser with lb-1 instance's public IP, we will get the **`front page`** of the vite+react app page
+
+
+### Step 6: Install node.js in backend instances and write code
+
+Run the following commands for both backend instances
+
+যেহেতু backend instances গুলোতে direct internet access নাই, সেহেতু lb-1 instance থেকে backend instance গুলোতে ঢুকে package update করব
 
 ```
-# in be-1 115
-install node js
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+NODE_MAJOR=18
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+sudo apt-get update
+sudo apt-get install nodejs -y
+```
+```
+# for 2nd instance
+mkdir be2
+cd be2
+sudo corepack enable
+npm init -y
+yarn add express
+vim index.js
+```
+Paste the following code 
+```
+const express = require('express');
+const app = express();
+const port = 80;
+
+app.get('/', (req, res) => {
+  res.send('Hello, World from backend 2!');
+});
+
+app.listen(port, () => {
+  console.log(`Server is listening at http://localhost:${port}`);
+});
+```
+```
+sudo node index.js
+```
+
+- now curl backend-2 from backend-1 for **`sanity check`**
+```
+curl <banckend2_instance_private_ip>
+```
+
+#### Do the same above task in backend-1 instance
+
+
+### Step 7: Configure nginx server 
+```
+sudo vim /etc/nginx/nginx.conf
 ```
 
 ```
-# in lb-1 te
+events {
+#empty
+}
+
+http {
+    upstream frontend {
+        server <frontend_private_ip>:80;
+    }
+
+    upstream backend {
+        server  <backend1_private_ip>:80;
+        server  <backend2_private_ip>:80;
+    }
+
+    server {
+        listen 80;
+        server_name example.com;
+
+        location / {
+            proxy_pass http://frontend;
+        }
+    }
+
+    server {
+        listen 80;
+        server_name api.example.com;
+
+        location /api {
+            proxy_pass http://backend;
+        }
+    }
+}
+```
+```
+# check nginx configuration status
+sudo nginx -t
+sudo nginx -s reload
+```
+
+### Step 8: DNS entry for backend and frontend instances
+
+```
+# in lb-1
 sudo vim /etc/hosts
 <lb-1-private-ip> example.com
 <lb-1-private-ip> api.example.com
-
-
-```
-
-
-```
-server {
-  listen 80;
-  server_name example.com;
-
-  location / {
-    proxy_pass http://frontend;
-  }
-}
-
-server {
-  listen 80;
-  server_name api.example.com;
-
-  location / {
-    proxy_pass http://backend;
-  }
-}
 ```
 
 ```
-# in fe-1
+# in frontend instance
 cd vite-project/src
 
 vim App.tsx
@@ -194,10 +272,9 @@ paste code from chat gpt
 pnpm add axios
 pnpm build
 sudo pnpm preview --host --port 80
-
 ```
 
-gcp te nat gateway nai, ora use kore `identity aware proxy`
+- GCP তে nat gateway nai, তারা **`identity aware proxy`** use করে 
 
 
 run the following commands in fe-1 instance
