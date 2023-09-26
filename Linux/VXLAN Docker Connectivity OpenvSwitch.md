@@ -1,16 +1,18 @@
+### Create communication between containers using openvswitch
+
 ![vxlan-demo](https://github.com/Mohsem35/DevOps/assets/58659448/39a7e998-9034-4004-ba44-2843db682910)
 
 #### Prerequisite
-- For this demo, as I am going to keep everything simple and only focus on _vxlan_ feature, anyone can deploy two VM on any hypervisor or virtualization technology.
-- Make sure they are on the **`same network`** thus hosts can communicate with each other.
+- For this demo, as I am going to keep everything simple and only focus on _vxlan_ feature, anyone can deploy two VMs on any hypervisor or virtualization technology.
+- Make sure they are on the **`same network`** so hosts can communicate with each other.
 - For communication purpose Uncomplicated Firewall **`(UFW/Firewalld)`** should be **`turned off`** on both VM. Otherwise, they can't ping with each other.
 
 ```
-# check ufw status
+# Check UFW status
 sudo systemctl status ufw
 ```
 ```
-# stop and disbale ufw
+# stop and disable ufw
 sudo systemctl stop ufw
 sudo systemctl disable ufw
 sudo systemctl status ufw
@@ -19,12 +21,12 @@ sudo systemctl status ufw
 
 #### What are we going to cover in this hands-on demo?
 
-- We will use two VM for this, will install **`OpenVSwitch`**, **`docker`** on them
+- We will use two VMs for this, and will install **`OpenVSwitch`**, **`docker`** on them
 - Then we will **`create two bridges`** via OpenVSwitch and configure them
 - Then we will **`create docker container`** with none network and will **`connect`** them to the previously created **`bridges`**
 - After that the main part of this demo, we will create **`VXLAN Tunneling`** between VM's and make the **`overlay network`**
 - We will how we can ping one host to each other
-- Last not least will configure iptables for communicating with the **`outer world`**.
+- Last but not least will configure iptables for communicating with the **`outer world`**.
 
 #### Open vSwitch
 
@@ -38,25 +40,25 @@ OpenvSwitch provides a flexible and scalable networking solution for virtualized
 
 Let's start...
 
-Host Machine 01 - 172.16.6.18
+#### Host Machine 01 - 172.16.6.18
 
-Host Machine 02 - 172.16.6.57
+#### Host Machine 02 - 172.16.6.57
 
-- 4 টা bridge কে same network এর under এ নিয়ে আসতে পারব
+- 4 টা bridge কে **`same network`** এর under এ নিয়ে আসতে পারব
 - 2 VM এর configuration same, Just **`same VNI`** এর under এ নিয়ে আসতে হবে
 - VXLAN is a kind of **`encapsulation`**. Packet encapsulation করার জন্য GRE(Generic Routing Encapsulation) লাগে। Generic Routing Encapsulation (GRE) is a protocol that encapsulates packets in order to route other protocols over IP networks.
 - main packet এর উপড়ে আরেকটা packet বসিয়ে encapsulate করা হয়। বাহিরের packet এর কাজ হচ্ছে main packet কে just অন্য node এ নিয়ে যাওয়া। যাইতে হবে কোন node এ info টা বাহিরের packet এ দেওয়া থাকে । তারপর বাহিরের packet নিজেই vanish হয়ে যাবে
 
 #### For Host-01 (172.16.6.18) 
-#### Step-00 
-At first, please make sure host machines can communicate with each other. It can be done by **`ping utility`**. It's important because it means that our **`UNDERLAY`** network is working properly. Then _update packeages_ and install essential packeges **`net-tools`**, **`docker`** and **`openvswitch`** for this demo on both VM.
+#### Step-00 Install dependent packages
+First, please make sure host machines can communicate with each other. It can be done by **`ping utility`**. It's important because it means that our **`UNDERLAY`** network is working properly. Then _update packeages_ and install essential packeges **`net-tools`**, **`docker`** and **`openvswitch`** for this demo on both VM.
 
 ```
 sudo apt update
 sudo apt -y install net-tools docker.io openvswitch-switch
 ```
 
-#### Step-01 
+#### Step-01 Virtual bridges configuration
 
 Create two bridges using Open vSwitch **`ovs-vsctl`** utility
 
@@ -68,7 +70,7 @@ sudo ovs-vsctl add-br ovs-br1
 - **`add-br`**: This subcommand instructs ovs-vsctl to **`add a new bridge`**
 - **`ovs-br0`**: This is the **`name given to the new bridge`** being created.
 
-#### _Step-01.01 Then create the internal port/interfaces to the ovs-bridge_
+#### _Step-01.01 Create the internal port/interface to the ovs-bridge_
 
 ```
 # add port/interfaces to bridges
@@ -111,9 +113,9 @@ ip a
 ![rsz_1screenshot_2023-07-19_at_103345_pm](https://github.com/Mohsem35/DevOps/assets/58659448/af10ac8e-cb8a-42c6-a83a-2b92bbf87c6c)
 
 
-#### Step-02 
+#### Step-02 Container configuration
 
-It's time to set docker **`container`** with **`None network`**. Also as container will not get any internet connection for now, we will need some tools to analysis so I have wriiten a **`Dockerfile`** for this. Build the image first then run the container.
+It's time to set docker **`container`** with **`None network`**. Also as the container will not get any internet connection for now, we will need some tools to analyze so I have written a **`Dockerfile`** for this. Build the image first then run the container.
 
 #### _Step-02.01 Create a docker image from the Dockerfile_ 
 
@@ -134,6 +136,7 @@ CMD ["sleep", "72000"]
 ```
 
 ```
+# create image from dockerfile
 cd <Dockerfile_directory> 
 sudo docker build . -t ubuntu-docker
 ```
@@ -156,7 +159,7 @@ sudo docker run -d --net=none --name docker2 ubuntu-docker
 - **`ubuntu-docker`**: This is the **`name of the Docker image`** from which the container will be created.
 
 
-#### _Step-02.02 Check container status and ip_ 
+#### _Step-02.03 Check container status and ip_ 
 ```
 sudo docker ps
 sudo docker exec docker1 ip a
@@ -166,9 +169,10 @@ sudo docker exec docker2 ip a
 
 > **_NOTE:_**  See that, docker1 and docker2 didn't get any IP
 
-#### _Step-02.03 add ip address to the container using `ovs-docker` utility_ 
+#### _Step-02.04 Add IP address to the containers using `ovs-docker` utility_ 
 
 ```
+# container 1
 sudo ovs-docker add-port ovs-br0 eth0 docker1 --ipaddress=192.168.1.11/24 --gateway=192.168.1.1
 sudo docker exec docker1 ip a
 ```
@@ -180,21 +184,22 @@ sudo docker exec docker1 ip a
 - **`--gateway=192.168.1.1`**: This flag sets the default gateway for the container's network interface to 192.168.1.1.
 
 ```
+# container 2
 sudo ovs-docker add-port ovs-br1 eth0 docker2 --ipaddress=192.168.2.11/24 --gateway=192.168.2.1
 sudo docker exec docker2 ip a
 ```
 <img width="652" alt="Screenshot 2023-07-19 at 11 55 54 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/18355766-5575-43e1-87cd-f74bbf23e047">
 
 
-#### _Step-02.04 Ping the gateway to check if container connected to ovs-bridges_
+#### _Step-02.05 Ping the gateway to check if containers are connected to ovs-bridges_
 ```
 sudo docker exec docker1 ping 192.168.1.1
 sudo docker exec docker2 ping 192.168.2.1
 ```
 <img width="504" alt="Screenshot 2023-07-19 at 11 59 02 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9f7d188e-f70d-473d-bb98-17f23917f3aa">
 
-#### Step 3 
-Now we are going to establish the **`VXLAN TUNNELING between the two VM`**. Most importantly the vxlan ID or VNI and udp port 4789 is important. Also we have to configure the remote IP which is opposite VM IP.
+#### Step 3 VXLAN tunneling
+Now we are going to establish the **`VXLAN TUNNELING between the two VM`**. Most importantly the **`vxlan ID`** or VNI and udp port 4789 is important. Also we have to configure the remote IP which is opposite VM IP.
 
 ```
 # One thing to check; as vxlan communicate using udp port 4789, check the current status
@@ -217,7 +222,25 @@ The command is used to add a **`VXLAN port named vxlan0`** to the **`Open vSwitc
 - **`options:remote_ip=10.0.1.169`**: This sets the remote IP address for the VXLAN tunnel
 - **`options:key=1000`**: This sets the VXLAN network identifier (VNI) or **`VXLAN Network Identifier (VNI)`**. It's used to segregate VXLAN traffic from different virtual networks
 
-#### _Step-03.02 Check the port again, it should be listening_
+#### _Step-03.02 Configure NAT rules for both veth0 and veth1_
+
+```
+sudo iptables --append FORWARD --in-interface veth0 --jump ACCEPT
+sudo iptables --append FORWARD --out-interface veth0 --jump ACCEPT
+sudo iptables --table nat --append POSTROUTING --source 192.168.1.0/24 --jump MASQUERADE
+```
+```
+sudo iptables --append FORWARD --in-interface veth1 --jump ACCEPT
+sudo iptables --append FORWARD --out-interface veth1 --jump ACCEPT
+sudo iptables --table nat --append POSTROUTING --source 192.168.2.0/24 --jump MASQUERADE
+```
+
+```
+# check the iptable rules
+sudo iptables -t nat -L -n -v
+```
+
+#### _Step-03.03 Check the port again, it should be listening_
 
 ```
 netstat -ntulp | grep 4789
@@ -329,6 +352,25 @@ netstat -ntulp
 sudo ovs-vsctl add-port ovs-br0 vxlan0 -- set interface vxlan0 type=vxlan options:remote_ip=172.16.6.18 options:key=1000
 sudo ovs-vsctl add-port ovs-br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=172.16.6.18 options:key=2000
 ```
+
+
+```
+sudo iptables --append FORWARD --in-interface veth0 --jump ACCEPT
+sudo iptables --append FORWARD --out-interface veth0 --jump ACCEPT
+sudo iptables --table nat --append POSTROUTING --source 192.168.1.0/24 --jump MASQUERADE
+```
+```
+sudo iptables --append FORWARD --in-interface veth1 --jump ACCEPT
+sudo iptables --append FORWARD --out-interface veth1 --jump ACCEPT
+sudo iptables --table nat --append POSTROUTING --source 192.168.2.0/24 --jump MASQUERADE
+```
+
+```
+# check the iptable rules
+sudo iptables -t nat -L -n -v
+```
+
+
 ```
 # check the port again; it should be listening
 netstat -ntulp | grep 4789
