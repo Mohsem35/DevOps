@@ -1,23 +1,40 @@
-```
-docker run -d --name master -e MYSQL_ROOT_PASSWORD=pass -e MYSQL_DATABASE=mydb mysql:8.0-debian 
-docker run -d --name slave -e MYSQL_ROOT_PASSWORD=pass -e MYSQL_DATABASE=mydb mysql:8.0-debian
-```
-```
-# in master
-CREATE USER 'repl'@'%' IDENTIFIED BY 'password';
-GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+Create and configure **`MySQL primary database`** docker container
 
-# To complete(lock previlege) the execution
-FLUSH PRIVILEGES;
-FLUSH TABLES WITH READ LOCK;
-SHOW MASTER STATUS;
+```
+docker run -d --name primary -e MYSQL_ROOT_PASSWORD=pass -e MYSQL_DATABASE=mydb mysql:8.0-debian 
+docker inspect primary | grep IPAddress
+docker exec -it primary bash
+
+# mysql configuration at container
+mysql --version
+apt update -y
+mysql -u root -p
+
+mysql> SHOW DATABASES;
+mysql> CREATE USER 'repl'@'%' IDENTIFIED BY 'password';    # creates a user named 'repl' that can connect from any host ('%')
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';    # grants REPLICATION SLAVE privilege on all databases and tables (*.*) to user 'repl' from any host ('%')
+mysql> FLUSH PRIVILEGES;                                # to complete(lock privilege) the execution
+mysql> FLUSH TABLES WITH READ LOCK;                    # preventing any write operations (such as INSERT, UPDATE, DELETE) on those tables
+mysql> SHOW MASTER STATUS;
+```
+<img width="548" alt="Screenshot 2023-09-28 at 7 04 08 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/313c4b3f-c3cd-44e5-86ed-b95e8bfdd051">
+
+- In MySQL, the **`binary log`** (often referred to as the "binlog") is a transaction log that contains a **`record of all changes`** to the database's data. database একটা state-machine এর মত। সে state wise চিন্তা করে, আগের state এ কি ছিল, পরের state এ কি হইছে। এই **`state change`** হওয়ার বিষয়টা **`binlog`** এর মধ্যে save হয়। 
+
+
+```
+docker run -d --name secondary -e MYSQL_ROOT_PASSWORD=pass -e MYSQL_DATABASE=mydb mysql:8.0-debian
+
+```
+
+```
+
 ```
 
 state-machine কি জিনিষ ? 
 
 10 > 5 > 7
 
-- database একটা state-machine এর মত। সে state wise চিন্তা করে, আগের state এ কি ছিল, পরের state এ কি হইছে। এই **`state change`** হওয়ার বিষয়টা **`binlog`** এর মধ্যে save হয়। 
 
 
 
