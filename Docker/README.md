@@ -12,7 +12,7 @@
 1. [Basic Commands](#basic-commands)
 2. [Attaching container with port commands](#attaching-container-with-port-commands)
 3. [Image commands](#image-commands)
-4. Deubugging[#deubugging]
+4. [Deubugging](#deubugging)
 
 #### Basic Commands
 
@@ -60,7 +60,7 @@ docker logs <container_id>
 ```
 docker run -d -p <host_port>:<container_port> --name <container_specific_name> <image_name>:<tag>
 docker run -d -p 6000:6379 --name redis-older redis:latest
-
+```
 
 #### Attaching container with port commands
 
@@ -123,8 +123,6 @@ docker history <image_id>
 docker system df -v
 ```
 
-
-```
 #### Dubugging
 
 - **`Debugging`** docker container
@@ -135,3 +133,29 @@ docker exec -it <container_id> /bin/bash
 ```
 docker exec -u 0 -it <container_id> /bin/bash
 ```
+
+### Dockerfile
+
+RUN: container এর ভিতরে কোন command execute করতে হইলে আমরা `RUN` use করব
+
+WORKDIR: WORKDIR instruction is used to set the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD instructions that follow it in the Dockerfile. It essentially changes the current directory within the container where subsequent commands will be executed.
+
+CMD ["node", "index.js"]
+CMD ["npm", "run start"]
+
+- Dockerfile এ যা যা লিখতেছি, প্রতিটা line হল docker এর জন্য এক একটা layer.
+- Dockerfile এর যত উপরের layer তে change করব, তার নিচের সব layer আবার rebuild হবে
+-  
+
+যেই directory তে Dockerfile টা আছে, run the following command to that directory 
+
+Find error
+```
+# directory তে কি কি আছে সেইটা আমি দেখতে পাচ্ছি 
+RUN ls -la && sleep 24000 
+```
+docker build .
+
+```
+
+
