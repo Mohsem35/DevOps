@@ -12,7 +12,7 @@
 1. [Basic Commands](#basic-commands)
 2. [Attaching container with port commands](#attaching-container-with-port-commands)
 3. [Image commands](#image-commands)
-4. [Deubugging](#deubugging)
+4. [Debugging](#debugging)
 
 #### Basic Commands
 
@@ -123,7 +123,7 @@ docker history <image_id>
 docker system df -v
 ```
 
-#### Dubugging
+#### Debugging
 
 - **`Debugging`** docker container
 ```
@@ -136,26 +136,62 @@ docker exec -u 0 -it <container_id> /bin/bash
 
 ### Dockerfile
 
-RUN: container এর ভিতরে কোন command execute করতে হইলে আমরা `RUN` use করব
+**`RUN`**: container এর ভিতরে কোন command execute করতে হইলে আমরা `RUN` use করব
 
-WORKDIR: WORKDIR instruction is used to set the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD instructions that follow it in the Dockerfile. It essentially changes the current directory within the container where subsequent commands will be executed.
+**`WORKDIR`**: WORKDIR instruction is used to set the working directory for any _RUN_, _CMD_, _ENTRYPOINT_, _COPY_, and _ADD_ instructions that follow it in the Dockerfile. It essentially _changes the current directory within the container_ where subsequent commands will be executed.
 
+- _working directory_ আমরা **`root থেকে count করব`**, নাহলে directory থেকে বের হয়ে যাবে  
+
+```
+WORKDIR /app/api-service/
+```
+
+```
 CMD ["node", "index.js"]
 CMD ["npm", "run start"]
+```
 
-- Dockerfile এ যা যা লিখতেছি, প্রতিটা line হল docker এর জন্য এক একটা layer.
-- Dockerfile এর যত উপরের layer তে change করব, তার নিচের সব layer আবার rebuild হবে
--  
+- Dockerfile এ যা যা লিখতেছি, _প্রতিটা line হল_ docker এর জন্য এক একটা **`layer`**
+- Dockerfile এর যত উপরের layer তে change করব, তার নিচের সব **`layer rebuild`** আবার হবে, তাই আমরা cache এর benefits টা নিতে পারব না 
+
 
 যেই directory তে Dockerfile টা আছে, run the following command to that directory 
 
-Find error
+```
+docker build .
+```
+
+Find errors about directory 
 ```
 # directory তে কি কি আছে সেইটা আমি দেখতে পাচ্ছি 
 RUN ls -la && sleep 24000 
 ```
-docker build .
+
+#### How to clone git repository project and work within in Dockerfile
 
 ```
+# for nodejs project
+RUN apt-get update
+RUN apt-get install nodejs-y
 
+RUN apt-get install git -y
+
+RUN git clone https://<project_link>
+WORKDIR /app/api-service/
+RUN git checkout <git_branch_name>      
+WORKDIR /app/api-service/api
+
+RUN npm install 
+```
+![Untitled-2023-10-03-1938](https://github.com/Mohsem35/DevOps/assets/58659448/2dd3a8d0-2feb-4d52-88de-16383bb8d433)
+
+যখনি আমরা _image থেকে container তে যাব_ তখন following part **`execute`** হবে 
+
+```
+CMD ["node", "index.js"]
+```
+
+- _গিট clone করার পরে, branch তে গিয়ে checkout করতে হবে_। নাইলে desired directory তে আমরা enter করতে পারব না
+- checkout করার পরে, আমরা api directory এত ঢুকতে পারব, এবং সেখানে _index, json ফাইলগুলি দেখতে পাব_
+- `npm install` না করলে, `node_modules` টা আসবে না 
 
