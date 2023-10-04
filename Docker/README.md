@@ -193,5 +193,6 @@ CMD ["node", "index.js"]
 
 - _গিট clone করার পরে, branch তে গিয়ে checkout করতে হবে_। নাইলে desired directory তে আমরা enter করতে পারব না
 - checkout করার পরে, আমরা api directory এত ঢুকতে পারব, এবং সেখানে _index, json ফাইলগুলি দেখতে পাব_
-- `npm install` না করলে, `node_modules` টা আসবে না 
+- `npm install` না করলে, `node_modules` টা আসবে না
 
+command override করতে চাইলে `CMD + ENTRYPOINT` এর combination use করা যাইতে পারে
