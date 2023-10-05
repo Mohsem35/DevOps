@@ -152,13 +152,16 @@ CMD ["npm", "run start"]
 ```
 
 - Dockerfile এ যা যা লিখতেছি, _প্রতিটা line হল_ docker এর জন্য এক একটা **`layer`**
-- Dockerfile এর যত উপরের layer তে change করব, তার নিচের সব **`layer rebuild`** আবার হবে, তাই আমরা cache এর benefits টা নিতে পারব না 
+- Dockerfile এর যত উপরের layer তে change করব, তার নিচের সব **`layer rebuild`** আবার হবে, তাই আমরা cache এর benefits টা নিতে পারব না
+- In Dockerfile, First we have to clone code from git. Then, we will install `npm insall`. Cause npm will install the project required dependencies after cloning the project 
+
+> **_NOTE:_**  যেই code গুলো frequently change হবে, সেগুলি Dockerfile এর নিচের layer তে রাখব। উপড়ের দিকে থাকে _apt update, curl, net-tools_ installation এইসব 
 
 
 যেই directory তে Dockerfile টা আছে, run the following command to that directory 
 
 ```
-docker build .
+docker build -t <custom_image_name>:<custome_tag_name> .
 ```
 
 Find errors about directory 
@@ -169,7 +172,7 @@ RUN ls -la && sleep 24000
 
 #### How to clone git repository project and work within in Dockerfile
 
-```
+```Dockerfile
 # for nodejs project
 RUN apt-get update
 RUN apt-get install nodejs-y
@@ -196,3 +199,40 @@ CMD ["node", "index.js"]
 - `npm install` না করলে, `node_modules` টা আসবে না
 
 command override করতে চাইলে `CMD + ENTRYPOINT` এর combination use করা যাইতে পারে
+
+
+
+
+### Docker Multi-stage Builds
+
+Docker multi-stage builds are a _feature in Docker_ that allow you to create **`more efficient and smaller Docker images`** by using **`multiple build stages within a single Dockerfile`**. This feature is particularly useful when building _complex applications or services that require various build tools and dependencies during the build process_ but do not need all of them in the final runtime image.
+
+
+```Dockerfile
+# Build Stage 1: Use a Node.js development environment to build the app
+FROM node:14 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Build Stage 2: Use a lightweight Node.js runtime environment
+FROM node:14-alpine
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+CMD ["node", "./dist/server.js"]
+```
+
+- stage-1 name = **`builder`**
+- এর মানে হচ্ছে, stage-1 তে যা যা build হইছে তার `/app/dist` directory থেকে সবকিছু copy করে stage-2 এর `./dist` তে রাখবে
+- Final stage এর os alpine use করার try করব। কিন্তু PRISMA like applications develope করতে গেলে base image alpine os নেওয়ার পরে, যা যা os buindings লাগবে for running the PRISMA app, সেইগুলি আলাদা করে install করে নিতে হবে
+```Dockerfile
+FROM node:20-alpine
+RUN apk add <package_name>
+```  
+- Final যেই stage, সেইটাই আমরা docker hub তে push করব। cause, for it's optimization
+
+### Docker Compose
+
