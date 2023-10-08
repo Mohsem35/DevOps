@@ -136,6 +136,8 @@ docker exec -u 0 -it <container_id> /bin/bash
 
 ### Dockerfile
 
+- Dockerfile যতবার **`change`** করব, ততবার **`docker build`** করতে হয়
+
 **`RUN`**: container এর ভিতরে কোন command execute করতে হইলে আমরা `RUN` use করব
 
 **`WORKDIR`**: WORKDIR instruction is used to set the working directory for any _RUN_, _CMD_, _ENTRYPOINT_, _COPY_, and _ADD_ instructions that follow it in the Dockerfile. It essentially _changes the current directory within the container_ where subsequent commands will be executed.
@@ -233,6 +235,22 @@ FROM node:20-alpine
 RUN apk add <package_name>
 ```  
 - Final যেই stage, সেইটাই আমরা docker hub তে push করব। cause, for it's optimization
+
+#### CMD ENTRYPOINT
+
+```dockerfile
+FROM ubuntu:22.04
+
+CMD ["echo", "default print"]    # default command
+
+ENTRYPOINT ["echo"]              # default command with arguments
+```
+```
+docker build -t <custom_image_name>:<custome_tag_name> .
+docker run <custom_image_name> "hey, hello"
+```
+- `ENTRYPOINT` Dockerfile এ যা কিছু আছে তা show করবে, সাথে `Hey, hello` print করবে additionally
+
 
 ### Docker Compose
 
