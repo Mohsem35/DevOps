@@ -1,3 +1,4 @@
+Read/Write query segregate nginx করতে পারে না, তাই database replication তে nginx কাজে দিবে না। তার জন্য লাগবে **`proxysql`**
 
 will help to understand proxy or load balancer
 
@@ -54,5 +55,72 @@ server {
 - semicolon(;) after each statement
 
 
-### HTTP load balancing
+### HTTP load balancing configuration (L7)
 
+#### Stateless
+
+**`HTTP header`**, Path header গুলো নিয়ে কাজ করে 
+
+In the context of Nginx, **`upstream`** refers to a configuration **`block`** that defines a **`group of servers`** that can handle requests together. These servers are typically used to **`distribute the load`** among them or to provide failover support
+
+**`proxy_pass`** is a **`directive`** in Nginx used to instruct the server to **`pass client requests`** to a specified backend server
+
+- user **`downstream`** এ থাকে, upstream  এ থাকে server গুলো 
+
+```
+# backend is the name of the upstream group
+upstream backend {
+    server backend1.example.com;
+    server backend2.example.com;
+}
+
+
+location / {
+    proxy_pass http://backend;
+}
+```
+
+![Untitled-2023-10-14-1836](https://github.com/Mohsem35/DevOps/assets/58659448/530e1d30-7642-45c5-84db-f202c6311783)
+
+Common question in DevOps: HTTPS টা  terminate করতেছি কোথায় ? 
+
+
+### TCP load balancing (L4)
+
+
+#### Stateful
+
+- TCP load balancer শুধুমাত্র port দেখে. কোন server এর **`কোন port`** এ connect হইতে হবে, সে শুধুমাত্র সেই কাজটাই করবে 
+- database load balancing এর ব্যাপার আসলে TCP load balancing লাগবে, cause database তে কোন http endpoint নাই। তারমানে L7 load-balancing possible না এইখানে 
+
+![Untitled-2023-10-14-1836](https://github.com/Mohsem35/DevOps/assets/58659448/0c55871a-9baa-4232-a649-c04bdb03f37b)
+
+```
+# wraping
+stream {
+
+  upstream mysql-backend {
+
+    }
+}
+```
+
+user requests -> TCP load balancer -> creates **`tunnel`** for TCP connection -> sends **`HTTPS`** requests to nginx servers
+
+![Untitled-2023-10-14-1836](https://github.com/Mohsem35/DevOps/assets/58659448/cd9fe36d-6833-4aa5-8b97-3d1f3d5d99da)
+
+
+### Health check directory in nginx
+
+backend server ঠিক আছে নাকি failure করছে তা চেক করার জন্য  
+
+In Nginx, a health check is a **`mechanism`** used to **`periodically verify the status(like ping continuously)`** or availability of backend servers. This is crucial for ensuring that Nginx only forwards client requests to servers that are currently operational and capable of handling the requests
+
+```
+upstream backend {
+    server backend1.example.com;
+    server backend2.example.com;
+    check interval=3000 rise=2 fall=3 timeout=1000;
+}
+```
+check **`interval=3000 rise=2 fall=3 timeout=1000`** configures the health check parameters. This means that _checks will be performed every 3000 milliseconds_, a server will be marked as _"up" after 2 successful checks_, and it will be marked as _"down" after 3 consecutive failures_. The timeout for each check is set to 1000 milliseconds.
