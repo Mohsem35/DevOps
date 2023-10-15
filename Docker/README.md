@@ -13,6 +13,10 @@
 2. [Attaching container with port commands](#attaching-container-with-port-commands)
 3. [Image commands](#image-commands)
 4. [Debugging](#debugging)
+5. [Docker Volumes](#docker-volumes)
+6. [Docker Network](#docker-network)
+7. [Dockerfile](#dockerfile)
+8. [Docker Multi-stage Builds](#docker-multi-stage-builds)
 
 #### Basic Commands
 
@@ -61,6 +65,24 @@ docker logs <container_id>
 docker run -d -p <host_port>:<container_port> --name <container_specific_name> <image_name>:<tag>
 docker run -d -p 6000:6379 --name redis-older redis:latest
 ```
+
+#### Docker Network
+
+- Docker network **`list`**
+```
+docker network ls
+```
+- Network **`creation`** in docker 
+```
+docker network create \
+    --driver bridge \
+    --subnet 182.18.0.0/16 \
+    <network_name>
+
+docker network create mongo-network
+```
+
+
 
 #### Attaching container with port commands
 
@@ -134,6 +156,11 @@ docker exec -it <container_id> /bin/bash
 docker exec -u 0 -it <container_id> /bin/bash
 ```
 
+- **`Inspect`** docker container
+```
+docker inspect <container_id>
+```
+
 ### Dockerfile
 
 - Dockerfile যতবার **`change`** করব, ততবার **`docker build`** করতে হয়
@@ -148,23 +175,47 @@ docker exec -u 0 -it <container_id> /bin/bash
 WORKDIR /app/api-service/
 ```
 
+Example of node dockerfile 
+
 ```
-CMD ["node", "index.js"]
-CMD ["npm", "run start"]
+# Use the official Node.js image as the base image
+FROM node
+
+# Set environment variables for MongoDB
+ENV MONGO_DB_USERNAME=admin \
+    MONGO_DB_PWD=password
+
+# Create a directory inside the container
+RUN mkdir -p /home/app
+
+# Copy the contents of the current directory into the container at /home/app
+COPY . /home/app
+
+# Define the command to run when the container starts
+CMD ["node", "server.js"]
 ```
 
-- Dockerfile এ যা যা লিখতেছি, _প্রতিটা line হল_ docker এর জন্য এক একটা **`layer`**
+- Dockerfile এ যা যা লিখতেছি, **`প্রতিটা line`** হল docker এর জন্য এক একটা **`layer`**
 - Dockerfile এর যত উপরের layer তে change করব, তার নিচের সব **`layer rebuild`** আবার হবে, তাই আমরা cache এর benefits টা নিতে পারব না
-- In Dockerfile, First we have to clone code from git. Then, we will install `npm insall`. Cause npm will install the project required dependencies after cloning the project 
+- In Dockerfile, First we have to **`clone code from git`**. Then, we will install `npm insall`. Cause npm will install the project required dependencies after cloning the project 
 
 > **_NOTE:_**  যেই code গুলো frequently change হবে, সেগুলি Dockerfile এর নিচের layer তে রাখব। উপড়ের দিকে থাকে _apt update, curl, net-tools_ installation এইসব 
 
 
-যেই directory তে Dockerfile টা আছে, run the following command to that directory 
+- Run the Dockerfile
 
 ```
-docker build -t <custom_image_name>:<custome_tag_name> .
+docker build -t <custom_image_name>:<custome_tag_name> <location_of_docker_file>
 ```
+
+- **`Set env variables`** in container
+```
+docker run -e <set_variable_value> <image_name>
+
+docker run -e APP_COLOR=blue simple-webapp-color
+```
+
+
 
 Find errors about directory 
 ```
@@ -202,7 +253,47 @@ CMD ["node", "index.js"]
 
 command override করতে চাইলে `CMD + ENTRYPOINT` এর combination use করা যাইতে পারে
 
+#### CMD vs ENTRYPOINT
 
+```
+CMD ["sleep","5"]
+
+# sleep=command, 5=parameter
+```
+1. When specifying a CMD in **`JSON array format`**, the **`1st element`** of the array should be **`executable`**. `"sleep"` is the executable format
+2. Commands and parameters should be **`separate`** elements
+3. CMD is _hard coded_
+4. While running the container, we **`don’t have to pass any argument`** like
+
+~~docker run <image_name> sleep 5~~
+
+ENTRYPOINT 
+```
+["sleep"]
+```
+1. Just declare the command
+2. We have to **`pass the parameter value/argument`** while run the container like
+```
+docker run <image_name> 10
+```
+3. If you **`don’t pass`** the value while running the container, **`error`** will be occured
+
+
+```dockerfile
+FROM ubuntu:22.04
+
+CMD ["echo", "default print"]    # default command
+
+ENTRYPOINT ["echo"]              # default command with arguments
+```
+```
+docker build -t <custom_image_name>:<custome_tag_name> .
+docker run <custom_image_name> "hey, hello"
+```
+`ENTRYPOINT` Dockerfile এ যা কিছু আছে তা show করবে, সাথে `Hey, hello` print করবে additionally
+
+
+### 
 
 
 ### Docker Multi-stage Builds
@@ -236,21 +327,79 @@ RUN apk add <package_name>
 ```  
 - Final যেই stage, সেইটাই আমরা docker hub তে push করব। cause, for it's optimization
 
-#### CMD ENTRYPOINT
 
-```dockerfile
-FROM ubuntu:22.04
+#### Docker Volumes
 
-CMD ["echo", "default print"]    # default command
+- **`Create`** docker volume manually 
+```
+docker volume create <data_volume>
+```
+> **_Note_**: At first create data directory to host machine, then attach the container with that directory 
 
-ENTRYPOINT ["echo"]              # default command with arguments
+- Docker volume **`list`**
 ```
+docker volume ls
 ```
-docker build -t <custom_image_name>:<custome_tag_name> .
-docker run <custom_image_name> "hey, hello"
+- **`Inspect`** docker volume
+
 ```
-- `ENTRYPOINT` Dockerfile এ যা কিছু আছে তা show করবে, সাথে `Hey, hello` print করবে additionally
+docker volume <volume_name>
+```
+
+##### Docker volume types
+
+1. **`Host Volumes`**: _You decide where on the host_ file system the reference is made
+```
+docker run -v <host_directory>:<container_directory>
+
+docker run -v /home/mount/data:/var/lib/mysql mysql
+```
+
+2. **`Anonymous Volumes`**: For each container a folder is generated in host machine and _Docker takes care itself_
+```
+docker run -v <container_directory>
+
+docker run -v /var/lib/mysql/data
+```
+
+3. **`Named Volumes`**: You can reference the volume by name. **`Should be used in production`**
+
+```
+docker run -v <name>:/var/lib/mysql/data
+
+docker run --name <conatiner_name> -p 5432:5432 -v <volume_name>:/var/lib/postgresql/data <image_name>:<tag>
+
+docker run --name pg -p 5432:5432 -v postgres:/var/lib/postgresql/data postgres:14
+```
 
 
 ### Docker Compose
 
+- **`docker-compose`** is **`not installed by default`** with docker engine.
+- Create a file named _docker-compose.yml_ and **`make individual image of every application`**(using dockerfile) and give them specific name
+
+```
+version: '3'                        # Specifies the Docker Compose version being used.
+
+services:
+  mongodb:
+    image: mongo:latest          # Uses the latest version of the MongoDB Docker image.
+    ports:
+      - 27017:27017          # Maps the host's port 27017 to the container's port 27017.
+    volumes:
+      - mongo-data:/data/db  # Mounts a volume named 'mongo-data' to '/data/db' in the container.
+
+  db:
+    image: postgres         # Uses the latest version of the PostgreSQL Docker image.
+    restart: always         # Ensures the container restarts automatically.
+    environment:
+      POSTGRES_USER: example        # Sets the PostgreSQL username to 'example'.
+      POSTGRES_PASSWORD: example    # Sets the PostgreSQL password to 'example'.
+
+volumes:
+  mongo-data:
+    driver: local           # Defines a named volume 'mongo-data' with the local driver.
+
+```
+
+> **_Note_**: if image is not present in public docker hub, just replace image tag with build tag and declare the directory where the application code and DOCKERFILE with instructions to build the docker image is located 
