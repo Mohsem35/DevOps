@@ -1,3 +1,12 @@
+### Agendas
+
+- [Interface](#interface)
+- [Linux Namespcae](#linux-namespcae)
+- [CIDR - Classless Inter Domain Routing](#cidr---classless-inter-domain-routing)
+- [DHCP Server](#dhcp-server)
+- [Network Namespace](#network-namespace)
+- [Creating Two network namespaces and connect them with their virtual ethernet](#creating-two-network-namespaces-and-connect-them-with-their-virtual-ethernet)
+
 #### Interface
 
 In Linux networking, an interface refers to a network interface that connects a device, such as a computer or a server, to a network. 

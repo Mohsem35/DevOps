@@ -1,3 +1,13 @@
+#### Agendas
+
+1. [Set up the GitLab-Runner service on a VM](#set-up-the-gitlab-runner-service-on-a-vm)
+2. [Register Runner](#register-runner)
+3. [Register Runner on Docker executor](#register-runner-on-docker-executor) 
+4. [Specific Runner for multiple projects](#specific-runner-for-multiple-projects)
+
+
+
+
 [Install GitLab Runner Linux](https://docs.gitlab.com/runner/install/)
 
 ### Set up the GitLab-Runner service on a VM

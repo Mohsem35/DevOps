@@ -1,4 +1,26 @@
-## Introduction to CI/CD and GitLab
+### Agendas
+
+- [Introduction to CI/CD and GitLab](#introduction-to-cicd-and-gitLab)
+- [Core Concepts of GitLab CI/CD](#core-concepts-of-gitlab-cicd)
+  - [Jobs](#jobs)
+  - [Pipeline](#pipeline)
+  - [Stages](#stages)
+  - [Needs](#needs)
+  - [Scripts](#scripts)
+  - [Only](#only)
+  - [Except](#except)
+  - [Workflow rules](#workflow-rules)
+- [Custom Variables](#custom-variables)
+- [GitLab Architecture](#gitlab-architecture)
+  - [GitLab Server](#gitlab-server)
+  - [GitLab Runner](#gitlab-runner)
+  - [Override Docker Image](#override-docker-image)
+  - [Executors](#executors)
+  - [Docker Executor](#docker-executor)
+- [GitLab WorkFlow](#gitlab-workflow)
+
+
+### Introduction to CI/CD and GitLab
 CI - Continuous Integration
 
 CD - Continuous Deployment & Continuously Delivery
@@ -6,9 +28,9 @@ CD - Continuous Deployment & Continuously Delivery
 ![rsz_248164286-a7ec2869-8d1d-45a3-a7e8-1a52d9476bb7](https://github.com/Mohsem35/DevOps/assets/58659448/a75f2645-1c83-451e-9037-e746fa82981d)
 
 
-## Core Concepts of GitLab CI/CD
+### Core Concepts of GitLab CI/CD
 
-### Jobs:
+#### Jobs:
 
 A job in the **`.gitlab-ci.yml`** file represents a **`specific task or set of tasks`** that you want to execute as part of your CI/CD pipeline. Jobs are the most fundamental building block of a _.gitlab-ci.yml_ file.
 
@@ -17,7 +39,7 @@ A job in the **`.gitlab-ci.yml`** file represents a **`specific task or set of t
 - We can define as many jobs as we want
 - Jobs can have a variety of attributes and directives, including: **`script`**, **`tags`**, **`artifacts`**, **`stages`**, **`dependencies`**, **`before_script`**, **`after_script`**
 
-### Pipeline:
+#### Pipeline:
 
 A pipeline represents the **`entire sequence`** of stages, jobs, and steps defined in the configuration file. It defines the end-to-end workflow for building, testing, and deploying your code
 
@@ -40,7 +62,7 @@ _Left sidebar of `project repository` -> Build -> Pipelines_
 
 _Left sidebar `project repository` -> Build -> Pipeline Editor_
 
-### Stages:
+#### Stages:
 
 Stages allow you to **`divide`** your pipeline into **`logical sections`**, each representing a specific phase of your software development process. Stages are defined as a list of names at the top level of the _.gitlab-ci.yml_ file.
 
@@ -62,7 +84,7 @@ In this example, there are three stages defined: build, test, and deploy. Jobs a
 ![pipelines](https://github.com/Mohsem35/DevOps/assets/58659448/541b6bbb-3038-42ea-b386-0ed16cc23339)
 
 
-### Needs:
+#### Needs:
 
 The needs keyword is used to define **`dependencies`** between jobs.  It allows you to specify that a particular job depends on the **`successful completion`** of one or more previous jobs before it can start.
 
@@ -83,7 +105,7 @@ _Left sidebar `project repository` -> Build -> Pipeline Editor -> Visualize_
 
 
 
-### Scripts:
+#### Scripts:
 
 ##### Inline commands
 - Any valid shell commands or scripts that are necessary for the job
@@ -104,7 +126,7 @@ build_job:
  - ./<script_filename>.sh
 ```
 
-### Only:
+#### Only:
 
 The only keyword allows you to **`control`** the execution of jobs and ensure they run only in **`specific scenarios`** that meet the defined conditions.
 
@@ -125,7 +147,7 @@ only:
 ![rsz_248272921-336c22e5-83a8-4f72-808f-5ecebdcef0e3](https://github.com/Mohsem35/DevOps/assets/58659448/8fc8a934-b5c1-4f59-940c-a9ed86c53a38)
 
 
-### Except: 
+#### Except: 
 
 The except keyword is used to specify conditions under which a job should **`not`** be executed.
 
@@ -134,7 +156,7 @@ except:
   - feature/*
 ```
 
-### Workflow rules:
+#### Workflow rules:
 
 In GitLab, workflow rules are used to define the **`conditions`**(like if-else in programming) under which a job or a set of jobs should be executed in a CI/CD pipeline. They are defined within the _.gitlab-ci.yml_ file, which is the configuration file for GitLab CI/CD pipelines.
 
@@ -232,15 +254,15 @@ run_tests:
     before_script:
         - echo "ushing docker image $image_repository:image_tag to registry..."
 ```
-### Gitlab Architecture:
+### GitLab Architecture:
 
-#### Gitlab Server
+#### GitLab Server
 - Main component
 - Pipeline configuration
 - Manage the pipeline execution
 - Stores the pipeline results
   
-#### Gitlab Runner
+#### GitLab Runner
 
 GitLab Runner is a program that you should install on a machine, that's seperate from the one that hosts the GitLab instance.
 
@@ -268,7 +290,7 @@ image: node:20-alpine
 
 #### Executors:
 
-You need Gitlab Runner to run jobs in a pipeline. But you need **another component for the actual execution**
+You need GitLab Runner to run jobs in a pipeline. But you need **another component for the actual execution**
 
 Alternative Executors
 1. Shell
@@ -297,7 +319,7 @@ Ans: When you register a runner, you must choose an executor. **1 executor per r
 
 ### GitLab WorkFlow:
 
-Runner **requests jobs** from GitLab instance -> Runner **compiles and sends** job's plyload to Executor -> Executor **clones/download artifacts** for GitLab instance and **executes job** -> Executor resturns **job output to Runner** -> Runner updates **job output to Gitlab instance**
+Runner **requests jobs** from GitLab instance -> Runner **compiles and sends** job's plyload to Executor -> Executor **clones/download artifacts** for GitLab instance and **executes job** -> Executor resturns **job output to Runner** -> Runner updates **job output to GitLab instance**
 
 ![rsz_1248531016-31db0c11-df82-4983-991c-9941e7d0ea14](https://github.com/Mohsem35/DevOps/assets/58659448/832cc885-41f0-42c7-84fd-563a310b0d61)
 
