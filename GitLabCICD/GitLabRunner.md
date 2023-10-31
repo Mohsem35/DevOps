@@ -10,28 +10,28 @@
 
 [Install GitLab Runner Linux](https://docs.gitlab.com/runner/install/)
 
-### Set up the GitLab-Runner service on a VM
+### _Set up the GitLab-Runner service on a VM_
 
 1. Simply download one of the binaries for your system:
 For CentOS or Red Hat Enterprise Linux:
-```
+```bash
 # Replace ${arch} with any of the supported architectures, e.g. amd64, arm, arm64
 # A full list of architectures can be found here https://gitlab-runner-downloads.s3.amazonaws.com/latest/index.html
 sudo curl -L --output /usr/local/bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
 ```
 
 2. Give it permissions to execute:
-```
+```shell
 sudo chmod +x /usr/local/bin/gitlab-runner
 ```
 
 3. Create a GitLab CI user:
-```
+```shell
 sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
 ```
 
 4. Install and run as service:
-```
+```shell
 sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
 sudo gitlab-runner start
 gitlab-runner -version
@@ -40,14 +40,14 @@ sudo systemctl status gitlab-runner.service
 
 Ensure you have `/usr/local/bin/` in `$PATH` for root or you might get a `command not found` error. Alternately, you can install `gitlab-runner` in a different location, like `/usr/bin/.`
 
-### Register Runner
+### _Register Runner_
 
 ##### 1. Create a file named config.toml
 
-```
+```shell
 sudo vim /etc/gitlab-runner/config.toml
 ```
-```
+```shell
 # output
 concurrent = 1
 check_interval = 0
@@ -89,7 +89,7 @@ Configuration (with the authentication token) was saved in "/etc/gitlab-runner/c
 
 ##### 3. Start the Runner
 
-```
+```shell
 sudo gitlab-runner restart
 sudo gitlab-runner run
 sudo gitlab-runner status
@@ -97,7 +97,7 @@ sudo gitlab-runner status
 
 ##### 4. Check the config file at Runner machine
 
-```
+```shell
 sudo vim /etc/gitlab-runner/config.toml
 ```
 Output at CLI
@@ -163,7 +163,7 @@ run_tests:
 ```
 Output:
 
-```
+```shell
 Runtime platform                                    arch=amd64 os=linux pid=9462 revision=85586bd1 version=16.0.2
 Starting multi-runner from /etc/gitlab-runner/config.toml...  builds=0
 Running in system-mode.                            
