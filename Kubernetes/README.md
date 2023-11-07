@@ -1,12 +1,31 @@
-kubernetes container বানাইতেছে না, container গুলো manage করার responsibility হচ্ছে kubernetes এর 
+### Facts
 
-kubernetes lowest point of entity is **`pod`**. pod is a collection of containers. pod এর মধ্যে containers গুলো নিজেদের মধ্যে communicatuion করে নেয়(logically connected)
+- Image/Container create and up করার responsibility k8s এর **নয়**, সেগুলো handle করবে docker or podmand। container গুলো **`manage`** করার responsibility হচ্ছে kubernetes এর 
+
+#### Pods
+Kubernetes এর lowest point of entity is **`pod`**. pod is a collection of containers. pod এর মধ্যে containers গুলো নিজেদের মধ্যে communicatuion করে নেয়(logically connected)
+
+Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
+
+A Pod (as in a pod of whales or pea pod) is a **group of one or more containers**, with **shared storage and network resources**, and a specification for how to 
+run the containers
+
+#### Deployment
+
+
+A Deployment provides declarative updates for Pods and ReplicaSets.
+
+You describe a desired state in a Deployment, and the Deployment Controller changes the actual state to the desired state at a controlled rate. You can define 
+Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments.
+
 
 **`Deployment`** is responsible for handling multiple pods
 
 **`deployment.yml`**
 
 locally use করার জন্য **`minikube`**, k8 এর short version
+
+![Untitled-2023-11-03-1044](https://github.com/Mohsem35/DevOps/assets/58659448/5c52fef1-f216-4764-84e6-96435872e99e)
 
 ```
 kubectl get pods                             # List all pods in the namespace
@@ -58,6 +77,8 @@ Ideal case: 2 টা master node, 3 worker node. At a time master node একট
 
 pods যেকোন node এই থাকতে পারে, এইটা manage করবে k8
 
+![Untitled-2023-10-14-1836](https://github.com/Mohsem35/DevOps/assets/58659448/0a3f242e-3c29-4253-be7c-9fe24b304059)
+
 **Networking**
 
 nodes গুলো কিভাবে নিজেদের মধ্যে networking establish করবে, internal network টা কিভাবে হবে সেইটার জন্য different different implementation method আছে। nodes গুলো আলাদা আলাদা but they are logicall one
@@ -97,10 +118,6 @@ kubectl get ingress                            # List all ingress
 ```
 
 #### Deployments
-
-A Deployment provides declarative updates for Pods and ReplicaSets.
-
-You describe a desired state in a Deployment, and the Deployment Controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments.
 
 
 ```
