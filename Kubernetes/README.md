@@ -114,6 +114,7 @@ There are 3 types of service
 2. nodeIP
 3. load-balancer
 
+![Untitled-2023-11-07-1807](https://github.com/Mohsem35/DevOps/assets/58659448/dda87916-40dd-4bb3-bacd-484644518ea8)
 
 **`Cluster IP`** হচ্ছে k8s এর একটি entity, not a container. **একটি service**. k8s networking এর জন্য clusterIP use করে থাকে 
 
@@ -124,6 +125,8 @@ There are 3 types of service
 > _Note:_ port হবে container এর 
 
 বাহিরে থেকে আমি **direct container** কে port দিয়ে access করতে পারব **না**, আমাকে clusterIP এর through তেই যেতে হবে। container এর কোন particular port এর জন্য clusterIP এর কোন port টা forward করতে হবে বলে দিতে হয় 
+
+![Untitled-2023-11-07-1807(1)](https://github.com/Mohsem35/DevOps/assets/58659448/6e6012ea-a5f5-4d59-8bb8-2f19baf30f81)
 
 
 #### Ingress
