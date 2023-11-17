@@ -203,4 +203,27 @@ cluster এর internal & external যেই communication গুলো লা�
 
 apiVersion হচ্ছে api group + version এর combination
 
-1:34:44
+
+**kubebuilder**
+
+**CRD**
+
+behind the scene বুঝাটাই বেশি important kubernetes এ, কিভাবে কি কাজ করে। 
+
+[Kubernetes Components](https://kubernetes.io/docs/concepts/overview/components/)
+
+[Cluster Architecture](https://kubernetes.io/docs/concepts/architecture/)
+
+[Workloads](https://kubernetes.io/docs/concepts/workloads/)
+
+[Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+
+[Pods](https://kubernetes.io/docs/concepts/workloads/pods/)
+
+[StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+
+[Services, Load Balancing, and Networking](https://kubernetes.io/docs/concepts/services-networking/)
+
+[Storage](https://kubernetes.io/docs/concepts/storage/)
+
+[Policies](https://kubernetes.io/docs/concepts/policy/)
