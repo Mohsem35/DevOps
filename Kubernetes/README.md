@@ -51,6 +51,11 @@ kubectl get node                              # List all nodes
 ```shell
 kubectl delete pod <pod_name>                # Delete specific pod
 ```
+
+```shell
+kubectl get namespaces                        # List all namespaces
+```
+
 ```shell
 kubectl get services                            # List all services
 ```
@@ -152,3 +157,50 @@ kubectl get ingress                            # List all ingress
 ```
 kubectl apply -f .              # build all files in a directory
 ```
+
+
+### Class 2
+
+1st task is to install kubectl, kind, minikube
+
+**`kind`** - K8s in docker. Loacl clusters for testing K8s
+
+এই command use করলে একটা cluster ready হয়ে যাবে 
+
+```shell
+# cluster creation
+kind create cluster
+
+# deletion
+kind create cluster
+```
+
+- Check the current-context
+```shell
+kubectl config current-context
+```
+
+
+ K8s এর main feature হল High availability and scaling
+
+ K8s হল একটা RESTful API server
+
+ Pod is a abstraction mostly, pod  এর namespace and network namespace আলাদা থাকে 
+
+A **`ReplicaSet (RS)`** is a Kubernetes object used to maintain a stable set of **replicated pods** running _within a cluster at any given time_
+
+ReplicaSet কে manage করে **deployment**
+
+K8s er entry point হচ্ছে তার API server and সেটা হচ্ছে RESTful
+
+প্রতিটা node এই **kubelet** আর **kubeproxy** থাকে 
+
+kubelet check করে, pods live আছে নাকি dead
+
+cluster এর internal & external যেই communication গুলো লাগে, সেগুলো **kubeproxy** handle করে থাকে 
+
+- Pod এর `.yaml` ফাইলগুলো কে **manifest** বলে 
+
+apiVersion হচ্ছে api group + version এর combination
+
+1:34:44
