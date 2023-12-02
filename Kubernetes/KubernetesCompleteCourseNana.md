@@ -1,7 +1,10 @@
 Chapters
 
 1. [What is Kubernetes?](#what-is-kubernetes)
+2. [K8s Components](#k8s-components)
 
+
+A **`Kubernetes (K8s) cluster`** is a **grouping of nodes** that **run containerized apps** in an efficient, automated, distributed, and scalable manner. K8s clusters allow engineers to orchestrate and monitor containers across multiple physical, virtual, and cloud servers
 
 
 #### What is Kubernetes? 
@@ -27,7 +30,7 @@ What features do orchestration tools offer?
 
 
 
-#### K8s Components Explanation
+#### K8s Components
 
 **`Node & Pod`**
 
@@ -60,6 +63,9 @@ A key aim of Services in Kubernetes is that you **don't** need to modify your ex
 
 - **Permanent IP address**
 - **Lifecycle of Pod and Service NOT connected**, so even if the Pod dies the service and it's IP address will stay. So you don't have to change that endpoint anymore
+- Service is also a **load-balancer**
+
+`Service` request catch করে, forward করে যেই node টা least busy আছে 
 
 > _Note:_ External services are services that opens the communication from external sources(browser) but you wouldn't want your database to be open to the public requests. For that আমি internal service use করব।
 
@@ -74,31 +80,66 @@ Ingress exposes HTTP and HTTPS **routes from outside** the cluster to services *
 An Ingress may be configured to give Services **externally-reachable URLs**, **load balance traffic**, **terminate SSL / TLS**, and offer name-based virtual hosting. An Ingress controller is responsible for fulfilling the Ingress.
 
 
-**`ConfigMap`** 
+**`ConfigMaps`** 
+
+A ConfigMap is an API object used to **store non-confidential data** in **key-value** pairs. Pods can consume ConfigMaps as _environment variables_, _command-line arguments_, or as _configuration files in a volume_.
+
+A ConfigMap allows you to **decouple environment-specific configuration** from your container images, so that your applications are easily portable.
 
 <img width="400" alt="Screenshot 2023-12-02 at 8 24 36 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c0c4c9f-33aa-43cf-b8d5-a0cfdc43b82f">
 
 
-and Secret
+
+**`Secrets`**
+
+A Secret is an object that contains a **small amount of sensitive data** such as a **password**, a **token**, or a **key**. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
+
+Secrets are **similar to ConfigMaps** but are specifically intended to hold confidential data.
+
+- Used to store secret data
+- **base64 encoded**
 
 <img width="400" alt="Screenshot 2023-12-02 at 8 26 53 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/fab6fdb8-ef95-4f1b-976d-71d2c92e37e5">
 
 
-A ConfigMap is an API object used to store non-confidential data in key-value pairs. Pods can consume ConfigMaps as environment variables, command-line arguments, or as configuration files in a volume.
+> _Note:_ The built-in security mechanism is not enabled in K8s by default!
 
-A ConfigMap allows you to decouple environment-specific configuration from your container images, so that your applications are easily portable.
+**`Volumes`**
 
-- External configuration of your application
-```
-DB_URL = mongo-db
-```
-- 
 
-Database URL usually in the built application
+A Kubernetes volume is a **directory containing data**, which can be accessed by containers in a Kubernetes pod. The location of the directory, the storage media that supports it, and its contents, depend on the specific type of volume being used
 
-Secret 
+_Storage on local machine, remote, outside of the K8s cluster_
 
-- Used to store secret data
-- base64 encoded
+> K8s doesn't manage data persistance!
 
-> _Note:_ The built-in security mechanism is not enabled by default!
+**`Deployment`** 
+
+A Deployment provides **declarative updates** for **Pods and ReplicaSets**.
+
+You describe a desired state in a Deployment, and the **Deployment Controller** changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments
+
+**Replicating** everything on **multiple servers/nodes**
+
+**Define blueprints** how many replicas do you want to use for Pods. এই blueprint টাকেই বলা হয় Deployment
+
+- Blueprint for _my-app_ Pods
+- You can create Deployments
+- **Abstraction of Pods**
+
+> `Deployment` for STATELESS apps
+
+**`StatefulSets`**
+
+StatefulSet is the workload API object used to **manage stateful applications**.
+
+Manages the deployment and scaling of a set of Pods, and **provides guarantees** about the **ordering and uniqueness of these Pods**.
+
+Like a Deployment, a StatefulSet manages Pods that are based on an **identical container spec**. Unlike a Deployment, a StatefulSet maintains a sticky identity for each of its Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.
+
+Database এর data তে যাতে কোন data inconsistness না হয়, তার জন্য `StatefulSets` use করতে হবে 
+- For **STATEFUL** apps
+
+but deploying `StatefulSet` for database is not easy
+
+> `StatefulSets` for STATEFUL apps or Databases
