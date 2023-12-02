@@ -4,6 +4,7 @@ Chapters
 2. [K8s Components](#k8s-components)
 
 
+
 A **`Kubernetes (K8s) cluster`** is a **grouping of nodes** that **run containerized apps** in an efficient, automated, distributed, and scalable manner. K8s clusters allow engineers to orchestrate and monitor containers across multiple physical, virtual, and cloud servers
 
 
@@ -34,7 +35,8 @@ What features do orchestration tools offer?
 
 **`Node & Pod`**
 
-<img width="350" alt="Screenshot 2023-12-02 at 7 51 49 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/734d24d5-3b90-4378-b0f3-efaaca9a24aa">
+![image](https://github.com/Mohsem35/DevOps/assets/58659448/90bf46e3-e4b0-434b-8242-c4558b49b1ab)
+![image](https://github.com/Mohsem35/DevOps/assets/58659448/ad18dd32-199a-469e-bad5-f4615840799e)
 
 
 Pods are the **smallest deployable units** of computing that you can create and manage in Kubernetes.
@@ -45,7 +47,10 @@ A Pod (as in a pod of whales or pea pod) is a **group of one or more containers*
 - **Abstraction over container**
 - Usually 1 application per Pod
 - **Each Pod gets its own IP address**
-- If any Pod dies, new IP address on re-creation
+- If any Pod dies, a new IP address on re-creation
+
+<img width="350" alt="Screenshot 2023-12-02 at 7 51 49 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/734d24d5-3b90-4378-b0f3-efaaca9a24aa">
+
 
 > _Note:_ You only interact with the Kubernetes layer
 
@@ -92,6 +97,8 @@ A ConfigMap allows you to **decouple environment-specific configuration** from y
 
 **`Secrets`**
 
+![image](https://github.com/Mohsem35/DevOps/assets/58659448/78e7b654-c5a8-4b63-9658-54ea2800b7a6)
+
 A Secret is an object that contains a **small amount of sensitive data** such as a **password**, a **token**, or a **key**. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
 
 Secrets are **similar to ConfigMaps** but are specifically intended to hold confidential data.
@@ -106,6 +113,8 @@ Secrets are **similar to ConfigMaps** but are specifically intended to hold conf
 
 **`Volumes`**
 
+![image](https://github.com/Mohsem35/DevOps/assets/58659448/d0492bb0-a641-43ab-b899-0e7f787d6008)
+
 
 A Kubernetes volume is a **directory containing data**, which can be accessed by containers in a Kubernetes pod. The location of the directory, the storage media that supports it, and its contents, depend on the specific type of volume being used
 
@@ -114,6 +123,9 @@ _Storage on local machine, remote, outside of the K8s cluster_
 > K8s doesn't manage data persistance!
 
 **`Deployment`** 
+
+![image](https://github.com/Mohsem35/DevOps/assets/58659448/16100a2a-9927-4171-8e75-f3c0ff9f8560)
+
 
 A Deployment provides **declarative updates** for **Pods and ReplicaSets**.
 
@@ -129,7 +141,13 @@ You describe a desired state in a Deployment, and the **Deployment Controller** 
 
 > `Deployment` for STATELESS apps
 
+<img width="450" alt="Screenshot 2023-12-02 at 11 46 29 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/a7f901db-54d0-4edb-896b-8b40b85155fc">
+
+
 **`StatefulSets`**
+
+![image](https://github.com/Mohsem35/DevOps/assets/58659448/5f4cd083-5a62-4335-9d77-db2c180c9ae2)
+
 
 StatefulSet is the workload API object used to **manage stateful applications**.
 
@@ -137,9 +155,12 @@ Manages the deployment and scaling of a set of Pods, and **provides guarantees**
 
 Like a Deployment, a StatefulSet manages Pods that are based on an **identical container spec**. Unlike a Deployment, a StatefulSet maintains a sticky identity for each of its Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.
 
+<img width="450" alt="Screenshot 2023-12-02 at 11 50 01 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/05812e77-2bb6-4251-b11f-c212ba0a1ae2">
+
+
 Database এর data তে যাতে কোন data inconsistness না হয়, তার জন্য `StatefulSets` use করতে হবে 
 - For **STATEFUL** apps
 
-but deploying `StatefulSet` for database is not easy
+but deploying `StatefulSet` for the database is not easy
 
 > `StatefulSets` for STATEFUL apps or Databases
