@@ -26,9 +26,13 @@ What features do orchestration tools offer?
 - **Disaster recovery** - backup and restore
 
 
+
 #### K8s Components Explanation
 
 **`Node & Pod`**
+
+<img width="350" alt="Screenshot 2023-12-02 at 7 51 49 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/734d24d5-3b90-4378-b0f3-efaaca9a24aa">
+
 
 Pods are the **smallest deployable units** of computing that you can create and manage in Kubernetes.
 
@@ -46,6 +50,9 @@ A Pod (as in a pod of whales or pea pod) is a **group of one or more containers*
 
 **`Service`**
 
+<img width="550" alt="Screenshot 2023-12-02 at 8 00 03 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/f8843ac1-7383-44ab-a529-e5775ca55b4b">
+
+
 In Kubernetes, a Service is a **method** for **exposing a network application** that is running as one or more Pods in your cluster.
 
 A key aim of Services in Kubernetes is that you **don't** need to modify your existing application to use an unfamiliar service discovery mechanism. You can run code in Pods, whether this is a code designed for a cloud-native world, or an older app you've containerized. You use a Service to **make** that set of **Pods available on the network** so that **clients can interact** with it.
@@ -54,7 +61,9 @@ A key aim of Services in Kubernetes is that you **don't** need to modify your ex
 - **Permanent IP address**
 - **Lifecycle of Pod and Service NOT connected**, so even if the Pod dies the service and it's IP address will stay. So you don't have to change that endpoint anymore
 
-> _Note:_ External services are services that opens the communication from external sources(browser) but you wouldn't want your database to be open to the public requests. For that আমি internal service use করব।  
+> _Note:_ External services are services that opens the communication from external sources(browser) but you wouldn't want your database to be open to the public requests. For that আমি internal service use করব।
+
+![ingress](https://github.com/Mohsem35/DevOps/assets/58659448/2bfc8f66-eec4-4e7c-8271-14b1107e7a7b)
  
 **`Ingress`**
  
@@ -67,7 +76,13 @@ An Ingress may be configured to give Services **externally-reachable URLs**, **l
 
 **`ConfigMap`** 
 
+<img width="400" alt="Screenshot 2023-12-02 at 8 24 36 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/6c0c4c9f-33aa-43cf-b8d5-a0cfdc43b82f">
+
+
 and Secret
+
+<img width="400" alt="Screenshot 2023-12-02 at 8 26 53 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/fab6fdb8-ef95-4f1b-976d-71d2c92e37e5">
+
 
 A ConfigMap is an API object used to store non-confidential data in key-value pairs. Pods can consume ConfigMaps as environment variables, command-line arguments, or as configuration files in a volume.
 
