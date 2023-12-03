@@ -2,6 +2,7 @@ Chapters
 
 1. [What is Kubernetes?](#what-is-kubernetes)
 2. [K8s Components](#k8s-components)
+3. [K8s Architecture](#k8s-architecture)
 
 
 
@@ -164,3 +165,98 @@ Database এর data তে যাতে কোন data inconsistness না হ
 but deploying `StatefulSet` for the database is not easy
 
 > `StatefulSets` for STATEFUL apps or Databases
+
+
+#### K8s Architecture
+
+**3 Node Worker processes**
+
+1. **`Kubelet`**
+2. **`Kube Proxy`**
+3. **`Container runtime`**
+
+Each node has multiple Pods on it. Three(3) processes **must be installed on every Node** that are used to **schedule and manage those pods**. Worker Nodes do the actual work
+
+ **`container runtime`**
+
+1st process that needs to run on every node is the **`container runtime`**
+
+**`Kubelet`**
+
+
+1. Kubelet **interacts with both** - the container runtime and node 
+2. Kubelet **starts the pod** with a container inside
+3. **Assigning resources** from that node to the container like CPU, RAM and storage
+
+Usually, **Kubernetes cluster** is made up of **multiple nodes** which also must have **container runtime and Kubelet services installed**. 
+
+এবং multiple যে nodes থাকে তারা নিজেদের মধ্যে communication করে via services
+
+**`Kube Proxy`**
+
+KubeProxy must be installed on every node
+
+KubeProxy has actually intelligient forwarding logic inside that makes sure the communication also works in a performant way with low overhead 
+
+
+Q: How do you interact with this cluster ?
+
+How to
+  - schedule pod?
+  - monitor?
+  - re-schedule/re-start pod?
+  - join a new Node?
+
+All the **managing processes** are done by Master Nodes
+
+
+**Master Processes**
+
+4 processes run on every master node that control that Cluster state and Worker nodes
+
+1. API Server
+2. Scheduler
+3. Controller manager
+4. etcd
+
+**`API Server`**
+
+- Cluster gateway which gets initail request for any update or query into cluster
+- Acts as a gatekeeper for authentication
+- Only 1 entrypoint into the cluster
+
+**`Scheduler`**
+
+Scheduler has the whole intelligent way of deciding on which specific worker node the next pod will be scheduled or next component will be scheduled
+
+তাই প্রথমে request টা দেখবে and see how much resources the application that you want to schedule will need (CPU, RAM)। তারপর scheduler worker nodes গুলোতে যাবে and see the available resources on each one of them। যেই node টা কম use হচ্ছে, সেই node এই নতুন pod deploy করবে 
+
+Scheduler **just decides** on which Node new Pod should be scheduled
+
+**`Controller manager`**
+
+- Detects cluster state changes
+Pods destroy হয়ে গেলে controller manager সেইটা detect করে এবং cluster state recover করার try করে as soon as possible
+
+এজন্য সে scheduler কে request করে for re-schedule the dead Pods এবং সেই আগের cycle চালু হয়ে যাবে যেইটা scheduler চালায় 
+
+**`etcd`**
+
+- etcd is the **cluster brain**!
+- Any kind of **Cluster changes get stored** in the key value store 
+- **Distributed storage** across all master nodes
+Key-Value store of a cluster state. Cluster brain হিসেবে চিন্তা করতে পার 
+
+What resources are available or did the cluster state change or is the cluster healthy? এইসব question করতে হলে `etcd` তে যাইতে হবে কারণ etcd তে সব রকমের information save করা আছে 
+
+> Application data is NOT stored in etcd !
+
+Usually Kubernetes cluser is made of multiple master nodes
+
+Add new Master/Node server:
+
+1. get new bare server
+2. install all the master/worker node processes
+3. add it to the cluster
+
+#### Minikube and kubectl (Local Setup)
