@@ -1,8 +1,10 @@
+
 Chapters
 
 1. [What is Kubernetes?](#what-is-kubernetes)
 2. [K8s Components](#k8s-components)
 3. [K8s Architecture](#k8s-architecture)
+
 
 
 
@@ -238,6 +240,9 @@ Scheduler **just decides** on which Node new Pod should be scheduled
 - Detects cluster state changes
 Pods destroy হয়ে গেলে controller manager সেইটা detect করে এবং cluster state recover করার try করে as soon as possible
 
+<img width="500" alt="Screenshot 2023-12-03 at 11 50 25 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/df7b2aec-2774-445d-bf2e-554b6497e45d">
+
+
 এজন্য সে scheduler কে request করে for re-schedule the dead Pods এবং সেই আগের cycle চালু হয়ে যাবে যেইটা scheduler চালায় 
 
 **`etcd`**
@@ -245,7 +250,9 @@ Pods destroy হয়ে গেলে controller manager সেইটা detect �
 - etcd is the **cluster brain**!
 - Any kind of **Cluster changes get stored** in the key value store 
 - **Distributed storage** across all master nodes
-Key-Value store of a cluster state. Cluster brain হিসেবে চিন্তা করতে পার 
+Key-Value store of a cluster state. Cluster brain হিসেবে চিন্তা করতে পার
+
+<img width="500" alt="Screenshot 2023-12-03 at 11 57 05 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/bb10d5b2-3051-4987-85b3-8042c43278e7">
 
 What resources are available or did the cluster state change or is the cluster healthy? এইসব question করতে হলে `etcd` তে যাইতে হবে কারণ etcd তে সব রকমের information save করা আছে 
 
@@ -260,3 +267,6 @@ Add new Master/Node server:
 3. add it to the cluster
 
 #### Minikube and kubectl (Local Setup)
+
+
+<img width="500" alt="Screenshot 2023-12-04 at 12 00 01 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c0384c4f-df9f-4e7a-a14b-487297f84e23">
