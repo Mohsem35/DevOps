@@ -1,7 +1,7 @@
 
 
 
-```
+```yaml
 workflow:
   rules:
     - if: $CI_COMMIT_BRANCH != "main" && $CI_PIPELINE_SOURCE != "merge_request_event"      
