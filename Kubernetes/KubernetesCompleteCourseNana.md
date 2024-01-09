@@ -270,3 +270,41 @@ Add new Master/Node server:
 
 
 <img width="500" alt="Screenshot 2023-12-04 at 12 00 01 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/c0384c4f-df9f-4e7a-a14b-487297f84e23">
+
+
+Production Cluster Setup
+
+- Multiple master & worker nodes
+- Seperate virtual ot physical machines
+
+কিন্তু আমি যদি full setup টা locally করতে চাই, তবে এত এত node resources(CPU,RAM) আমার কাছে নাই। 
+
+#### minikube
+
+Exactly for this use case, there is a open source tool called **`minikube`**
+
+**`minikube`** is a one node cluster, যেখানে **master and worker processes both run on one node** এবং এই node এর মধ্যে docker container runtime pre-installed থাকবে। তাই আমরা containers and pods with containers run করতে পারব on this node.
+
+ভার্চুয়াল নোড on your local machine
+
+- minikube creates Virtual Box on your laptop
+- Node runs in that virtual box
+- 1 Node K8s cluster
+- for testing purpose
+
+minikube টা configuration করতে, interaction করতে kubectl লাগবে 
+
+kubectl is a command line tool for K8s cluster.
+
+
+[minikube start documentation ](https://minikube.sigs.k8s.io/docs/start/)
+
+>_Note:_ Virtualization on your machine needed
+
+Check if vitualization is enabled, otherwise minikube will not work properly
+
+```shell
+sudo apt install cpu-checker
+kvm-ok
+```
+
