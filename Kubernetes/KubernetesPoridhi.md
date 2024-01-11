@@ -21,3 +21,24 @@ PCI-DSS rules of Bangladesh bank
 Managed sercice (AES, GKS) gives you the managed load balancers.
 
 Book: Kubernetes in Action
+
+
+
+### Class 4
+
+Instructor: Shajal
+
+নিজেরা একটা microservice লিখব যেইটা আরেকটা microservice কে call দিবে 
+
+সেই ২ টা microservice আমরা kubernetes cluster এ deploy করব and দেখব তারা নিজেদের মধ্যে কিভাবে communication করতেছে 
+
+আমার machine এ অনেকগুলো cluster থাকলে check করব 
+
+```shell
+kubectx
+
+# switch to a specific cluster
+kubectx <cluster_name>
+```
+
+Makefile দিয়ে docker hub এ কিভাবে image push করতে হয় দেখানো হইছে এইখানে
