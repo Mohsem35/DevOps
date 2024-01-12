@@ -42,3 +42,14 @@ kubectx <cluster_name>
 ```
 
 Makefile দিয়ে docker hub এ কিভাবে image push করতে হয় দেখানো হইছে এইখানে
+
+### Class 5
+
+আজকে আমরা নিজেরা একটা cluster বানাব 
+
+AWS তে একটা vpc নিব, তার ভিতরে একটা subnet থাকবে, একটা worker node আর আরেকটা master node থাকবে । আমরা directly worker node এ traffic পাঠাব 
+
+**`CrashLoopBackOff`** মানে container বার বার up হচ্ছে এবং up হওয়ার পর পরই আবার crash করতেছে  
+
+
+[Play with Kubernetes](https://labs.play-with-k8s.com/)
