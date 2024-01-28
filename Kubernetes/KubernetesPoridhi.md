@@ -53,3 +53,25 @@ AWS তে একটা vpc নিব, তার ভিতরে একটা su
 
 
 [Play with Kubernetes](https://labs.play-with-k8s.com/)
+
+
+### Class 6
+
+
+AWS এর managed k8s service কে বলা হয় EKS , আজকে EKS launch করার try করব
+
+AWS শুধুমাত্র **`Control Plane`** টা manage করবে, বাকিটা নিজেদের manage করতে হবে । AWS whole kubernetes infrastructure টা নিজে ম্যানেজ করবে, আমরা শুধু application টা ম্যানেজ করব  
+
+Control plane ২ রকমের হতে পারে । public & private
+
+- আমরা যখন `kubectl get pods` command টা দেই, তখন সেইটা যাচ্ছে **`API Server`** এর কাছে। আর সেই API Server, etcd এইসব locate করতেছে control plane এর মধ্যে 
+
+- private network এর মধ্যে CICD করতে হলে, private network এর under এ যেকোন vm/server তে **`Gitlab Runner`** install করা থাকতে হবে। code push করে repository তে, আর application deploy করতেছে kubernetes cluster এর ভিতরেই। মানে কাউকেই বাহিরে যেতে হচ্ছে না private cluster এ 
+
+**`Docker in Docker`** 
+
+EKS তে load balancer(**L7-HTTPS**)আছে যেই 3/4 টা node আছে সেগুলোকে **`AutoScaling Group`** এর মধ্যে ফেলে 
+
+**`AutoScaling Group`** এ suppose আমার একটা vm আছে, যদি দরকার পড়ে আমরা সেই group এর মধ্যে 20 টা vm declare করতে পারব
+
+kubernetes টা managed service হিসেবে চালাব 
