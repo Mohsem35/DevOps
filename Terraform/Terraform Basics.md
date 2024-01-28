@@ -22,4 +22,6 @@ ls /root/terraform-local-file/.terraform
 
 যেই directory তে `.tf` extension সহ Terraform এর configuration ফাইল পাওয়া যাবে সেইটাই configuraton directory
 
+<img width="541" alt="Screenshot 2024-01-28 at 11 45 04 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9ae658e6-41ad-4468-8ca5-4e49b4cbd12a">
+
 একটা singel configuration ফাইলে multiple configuration blocks থাকতে পারে এবং সেইটার নাম হবে **`main.tf`**
