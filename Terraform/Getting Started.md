@@ -30,6 +30,10 @@ Terraform supports over 100 providers
 }
 ```
 
+<img width="956" alt="Screenshot 2024-01-28 at 9 10 00 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/da9fd6e5-e26b-4f14-9757-4500d45db24b">
+
+
+
 Block contains information about the infrastructure platform and a set of resources within that platform
 
 Create a configuration file in local system where Terraform is installed
