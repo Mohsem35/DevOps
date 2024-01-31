@@ -198,7 +198,12 @@ terraform apply
 terraform apply -var-file customname.tfvars
 ```
 
-Variable definition precedence
+##### Variable definition precedence
+
+Number 4 is the highest priority and number 1 has the least
+
+
+<img width="500" alt="Screenshot 2024-02-01 at 12 38 39 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9ee77d7c-7dec-4d55-bf5b-442f1709ad8f">
 
 
 ### Resource Attributes
