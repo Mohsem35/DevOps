@@ -146,4 +146,59 @@ List: A list is a numbered collection of values. First element of the list at in
 
 Map: A Map is data represented in the format of key-value pairs. `default` curly braces এর মধ্যে multiple key-value pair declare করতে পারি 
 
-Set: Similar to the list. Difference between set and list is set can't have duplicate elements
+Set: Similar to the list. **Difference between `set` and `list` is set can't have duplicate elements**
+
+
+### Using Variables in Terraform
+
+#### Command line flags
+
+```shell
+terraform apply -var "filename=/root/pets.txt" -var "content=We lovePets!" -var "prefix=Mrs" -var "separator=." -var "length=2"
+```
+
+With this method, we can pass as many variables as we want by using `-var` flag
+
+#### Environment variables
+
+```shell
+$ export TF_VAR_filename="/root/pets.txt"
+$ export TF_VAR_content="We love pets!"
+$ export TF_VAR_prefix="Mrs"
+$ export TF_VAR_separator="." 
+$ export TF_VAR_length="2"
+$ terraform apply
+```
+
+We can declare environment variables by using `TF_VAR_` followed by the name of a declared variable like this.
+
+#### Variable Definition Files
+
+Finally, when we are dealing with a lot of variables we can load values by making use of variable definition files like this.
+
+এই variable definition ফাইলের নাম যেকোন কিছু হতে পারে কিন্তু `.tfvars` অথবা `.tfvars.json` extension থাকতে হবে 
+
+Automatically Loaded = `*.auto.tfvars` or `*.auto.tfvars.json`
+
+```shell 
+# terraform.tfvars
+filename = "/root/pets.txt"
+content = "We love pets!"
+prefix = "Mrs"
+separator = "." 
+length = "2"
+```
+```shell
+terraform apply
+```
+
+যদি variable definition ফাইলের নাম custom হয়, তবে 
+
+```shell
+terraform apply -var-file customname.tfvars
+```
+
+Variable definition precedence
+
+
+### Resource Attributes
