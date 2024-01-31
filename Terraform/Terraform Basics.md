@@ -22,7 +22,7 @@ ls /root/terraform-local-file/.terraform
 
 যেই directory তে `.tf` extension সহ Terraform এর configuration ফাইল পাওয়া যাবে সেইটাই configuraton directory
 
-<img width="541" alt="Screenshot 2024-01-28 at 11 45 04 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9ae658e6-41ad-4468-8ca5-4e49b4cbd12a">
+<img width="500" alt="Screenshot 2024-01-28 at 11 45 04 PM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9ae658e6-41ad-4468-8ca5-4e49b4cbd12a">
 
 একটা singel configuration ফাইলে multiple configuration blocks থাকতে পারে এবং সেইটার নাম হবে **`main.tf`**
 
@@ -109,6 +109,26 @@ The variable block in Terraform access 3 parameters
 1. `default` parameters
 2. `type` = string, number, bool, any
     -  addtional types are list, map, object, tuple
+      
+<img width="350" alt="Screenshot 2024-01-29 at 7 54 34 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/fed213f6-6e34-453e-ae90-9b1f5bcaeeeb">
+
+- Example of `List` variable
+
+<img width="600" alt="Screenshot 2024-01-29 at 7 57 27 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/486b61da-de4b-493d-a1a7-614b5cf372a3">
+
+List of `type`
+
+<img width="600" alt="Screenshot 2024-01-29 at 8 02 08 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/9827c83d-9a89-4b65-9677-e5cc5e69049b">
+
+
+- Example of `Map` variable
+
+<img width="600" alt="Screenshot 2024-01-29 at 8 00 24 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/caea535d-a133-4466-88e4-2f7b2aa221bb">
+
+
+
+
+
 3. `description`
 
 `type` parameter হচ্ছে optional। By default হচ্ছে `any`, যদি type declare করা না হয়ে থাকে   
