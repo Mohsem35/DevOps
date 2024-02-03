@@ -111,7 +111,10 @@ Data sources **allow Terraform to read attributes** from resources which are **p
 
 মানে Terraform ছাড়া আমরা manually যদি কোন resource provisioned করে থাকি যেইটা out scope of Terraform সেইটা **read করতে গেলে** `data source` লাগে 
 
-Suppose, আমি Terrafrom দিয়ে `pets.txt` file provisioned করেছি এবং manually `touch` command দিয়ে `dogs.txt` file provisioned করলাম। তাহলে `dogs.txt` file is out of scope for Terraform
+Suppose, আমি Terrafrom দিয়ে `pets.txt` file provisioned করেছি এবং manually `touch` command দিয়ে `dogs.txt` file provisioned করলাম। তাহলে `dogs.txt` file is **out of scope for Terraform**
+
+<img width="650" alt="Screenshot 2024-02-02 at 11 19 15 AM" src="https://github.com/Mohsem35/DevOps/assets/58659448/0c6e0c9a-55c5-4664-ae1e-eac3aa037a5b">
+
 
 কিন্তু চাইলে আমরা `dogs.txt` নিয়ে কাজ করতে পারি with Terraform
 
@@ -125,6 +128,9 @@ data "local_file" "dog" {
     filename ="/root/dog.txt"
 }
 ```
+
+
+
 
 ### Meta Arguments
 
