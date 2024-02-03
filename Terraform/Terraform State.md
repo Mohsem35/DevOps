@@ -24,3 +24,12 @@ Terraform **stores a cache of attribute values** for all resources in the state
 _Q: Which option should we use to disable state?_
 
 We can't disable state
+
+
+### Terraform State Considerations
+
+State is a non optional feature in Terraform
+
+1. State file content are sensetive and should keep in secure storage
+
+> Note: We should never manually attempt to edit the state files ourselves.
