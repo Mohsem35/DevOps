@@ -1,6 +1,9 @@
 
 [AWS managed policies for job functions ](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
 
+![Screenshot from 2024-02-07 16-33-21](https://github.com/Mohsem35/DevOps/assets/58659448/b133e91c-95a5-4577-98ba-fefa38bbc560)
+
+
 
 ASW-Cli credentials and configuration are stored inside a hidden directory
 
