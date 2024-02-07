@@ -24,6 +24,22 @@ aws <command> help
 aws iam help
 ```
 
+```hcl
+provider "aws" {
+    region = "us-west-2"
+    access_key = "AKIAI44QH8DHBEXAMPLE" 
+    secret_key = "je7MtGbClwBF/2tk/h3yCo8n..."
+}
+
+resource "aws_iam_user" "admin-user" {
+    name = "lucy"
+    tags = {
+        Description = "Technical Team Leader"
+    }
+}
+```
+
+
 
 _Q: Grant mary full administrator access by making use of the policy called AdministratorAccess._
 ```shell
