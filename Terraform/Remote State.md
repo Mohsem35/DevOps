@@ -11,3 +11,72 @@ State locking typically **involves acquiring a lock on the remote state file** b
 
 ### Remote Backends with S3
 
+আমরা যদি state file অন্য কোথাও save করে রাখতে চাই, তাহলে নিচের approach follow করতে পারি 
+
+
+We want to configure a remote backend for storing the state file
+
+`key` is an S3 object part where the state file should be stored. In this case, we want to store the terraform state file within a directory called `finance`
+
+`tfstate` ফাইল locally create করে পরে, remote S3 তে `tfstate` ফাইল object হিসেবে save করে রাখতে পারি 
+
+```hcl
+# main.tf
+resource "local_file" "pet" {
+filename = "/root/pets.txt"
+content = "We love pets!"
+}
+```
+```hcl
+# terraform.tf
+terraform {
+    backend "s3" {
+        bucket = "kodekloud-terraform-state-bucket01"
+        key = "finance/terraform.tfstate"
+        region = "us-west-1"
+        dynamodb_table = "state-locking"
+    }
+}
+```
+
+```shell
+terraform init
+terraform apply
+```
+
+
+### Terraform State Commands
+
+Terraform state file is stored at JSON format and it shuld not be edited manually
+
+**Subcommand:** `list`, `mv`, `pull`, `rm`, `show`
+
+```shell
+terraform state <subcommand> [options] [args] 
+
+# list all the resources recorded within terrraform state file
+terraform state list
+
+# get detailed information about resource from state file
+terraform state show aws_s3_bucket.finance-2020922
+
+# move items in a terraform state file
+# moving a resource from its current resource address to another
+# renaming a resource
+terraform state mv [options] SOURCE DESTINATION
+
+# suppose dynamodb তে table name change করতে চাচ্ছি তাহলে following command use করব 
+# just table name change করব(state-locking to state-locking-db), contents in table remain same
+terraform state mv aws_dynamodb_table.state-locking aws_dynamodb_table.state-locking-db
+
+
+# download and display remote state file
+terraform state pull
+
+# delete items from terraform state file
+terraform state rm ADDRESS
+terraform state rm aws_s3_bucket.finance-2020922
+```
+
+
+resource removed from state file are not actually destroyed from the real world infrastructure   
