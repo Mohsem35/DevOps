@@ -63,6 +63,6 @@ deploy-in-dev(172.16.6.26):
     - ssh ${REMOTE_USER}@${REMOTE_MACHINE_IP} "cd ${DEPLOYMENT_SOFT_LINK} ; nohup ${JAVA_EXECUTABLE} -jar java-app-1.0-SNAPSHOT.jar > /dev/null 2>&1 &"
   after_script:
     - sleep 20
-    - echo 'CICD Done '
+    - echo 'CICD Done'
 
 ```
