@@ -189,7 +189,7 @@ Submitting job to coordinator...ok                  bytesize=1699 checksum=crc32
 
 ### Register Runner on Docker executor 
 
-- Insatll Docker in local machine first
+- Install Docker in local machine first
 - Add user to Docker group
 ```
 sudo usermod -aG docker $USER
