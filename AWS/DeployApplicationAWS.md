@@ -5,7 +5,7 @@ chmod 400 any.pem
 ```
 
 ```
-ubuntu -i any.pem ubuntu@<vm_public_ip>
+ssh -i any.pem ubuntu@<vm_public_ip>
 ```
 ```
 sudo apt update -y
