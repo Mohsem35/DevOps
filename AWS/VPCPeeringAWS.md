@@ -10,6 +10,7 @@
 
 [Bring your own IP addresses (BYOIP) in Amazon EC2 for Bank](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html)
 
+#### VPC Peering
 
 Search `vpc` in search box -> create vpc -> resources to create(`vpc only`) ->  name tag(`vpc-a`) -> ipv4 cidr(`10.10.0.0/16`) -> create vpc 
 
